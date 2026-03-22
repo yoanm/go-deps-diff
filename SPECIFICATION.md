@@ -4,7 +4,7 @@
 A Go module (library) that analyzes and compares two `composer.lock` file contents to identify differences in package dependencies. This module is designed to be imported and used by other Go projects.
 
 ## Project Goal
-Provide a reusable Go library that compares two composer.lock files (fileA and fileB) and returns structured data about the differences in package versions and availability.
+Provide a reusable Go library that compares two composer.lock files (previous and current) and returns structured data about the differences in package versions and availability.
 
 ## Stack
 - **Language**: Go 1.23+ (latest available version)
@@ -25,43 +25,43 @@ The module exports a primary function for comparing composer.lock contents:
 ```go
 // Diff compares two composer.lock file contents and returns the differences.
 // Parameters:
-//   - composerLockA: byte slice containing the first composer.lock file content (baseline/original)
-//   - composerLockB: byte slice containing the second composer.lock file content (comparison/target)
-//   - composerJsonA: (optional, only required if composerJsonB is provided) byte slice containing the CORRESPONDING composer.json file content for composerLockA
-//                    This file must be the composer.json that was used to generate composerLockA.
-//   - composerJsonB: (optional, only required if composerJsonA is provided) byte slice containing the CORRESPONDING composer.json file content for composerLockB
-//                    This file must be the composer.json that was used to generate composerLockB.
+//   - lockPrevious: byte slice containing the previous composer.lock file content (baseline/original)
+//   - lockCurrent: byte slice containing the current composer.lock file content (comparison/target)
+//   - reqPrevious: (optional, only required if reqCurrent is provided) byte slice containing the CORRESPONDING composer.json file content for lockPrevious
+//                    This file must be the composer.json that was used to generate lockPrevious.
+//   - reqCurrent: (optional, only required if reqPrevious is provided) byte slice containing the CORRESPONDING composer.json file content for lockCurrent
+//                    This file must be the composer.json that was used to generate lockCurrent.
 // Returns:
 //   - *Output: structured data containing identified differences (added, removed, updated packages)
 //   - error: non-nil if validation fails (invalid JSON, invalid format, etc.)
-func Diff(composerLockA, composerLockB, composerJsonA, composerJsonB []byte) (*Output, error)
+func Diff(lockPrevious, lockCurrent, reqPrevious, reqCurrent []byte) (*Output, error)
 ```
 
 **IMPORTANT: IsRootRequirement & IsRootDevRequirement Semantics**
 
 These fields default to `false` and can ONLY be determined if the corresponding composer.json file is provided:
 
-- **For added packages** (exist in B only): Use `composerJsonB` to determine flags
-  - IsRootRequirement = true if package is in `composerJsonB.require`
-  - IsRootDevRequirement = true if package is in `composerJsonB.require-dev`
+- **For added packages** (exist in current only): Use `reqCurrent` to determine flags
+  - IsRootRequirement = true if package is in `reqCurrent.require`
+  - IsRootDevRequirement = true if package is in `reqCurrent.require-dev`
   
-- **For removed packages** (exist in A only): Use `composerJsonA` to determine flags
-  - IsRootRequirement = true if package is in `composerJsonA.require`
-  - IsRootDevRequirement = true if package is in `composerJsonA.require-dev`
+- **For removed packages** (exist in previous only): Use `reqPrevious` to determine flags
+  - IsRootRequirement = true if package is in `reqPrevious.require`
+  - IsRootDevRequirement = true if package is in `reqPrevious.require-dev`
   
-- **For updated packages** (exist in both):Use `composerJsonB` to determine flags
-  - IsRootRequirement = true if package is in `composerJsonB.require`
-  - IsRootDevRequirement = true if package is in `composerJsonB.require-dev`
+- **For updated packages** (exist in both): Use `reqCurrent` to determine flags
+  - IsRootRequirement = true if package is in `reqCurrent.require`
+  - IsRootDevRequirement = true if package is in `reqCurrent.require-dev`
   
 - **If corresponding composer.json is NOT provided**: Both flags default to `false`
   - No fallback to composer.lock "packages" vs "packages-dev" section membership
 
 ### 2. Input Validation
 - **Parameters**:
-    - `composerLockA`: Byte slice of first composer.lock file (required)
-    - `composerLockB`: Byte slice of second composer.lock file (required)
-    - `composerJsonA`: Byte slice of first composer.json file (optional, can be nil)
-    - `composerJsonB`: Byte slice of second composer.json file (optional, can be nil)
+    - `lockPrevious`: Byte slice of previous composer.lock file (required)
+    - `lockCurrent`: Byte slice of current composer.lock file (required)
+    - `reqPrevious`: Byte slice of previous composer.json file (optional, can be nil)
+    - `reqCurrent`: Byte slice of current composer.json file (optional, can be nil)
     - **Mutual dependency rule**: Both composer.json parameters must be nil together or both must be provided. Providing only one is an error.
 - **Validation**:
     - Both lock files must be valid JSON
@@ -74,25 +74,25 @@ These fields default to `false` and can ONLY be determined if the corresponding 
 The tool must identify and categorize three types of differences:
 
 #### 3.1 Added Packages
-- **Definition**: Packages that exist in fileB but not in fileA
+- **Definition**: Packages that exist in current but not in previous
 - **Output Format**: List of packages with:
     - Package name
-    - Version in fileB
+    - Version in current
     - Source (if applicable)
 
 #### 3.2 Removed Packages
-- **Definition**: Packages that exist in fileA but not in fileB
+- **Definition**: Packages that exist in previous but not in current
 - **Output Format**: List of packages with:
     - Package name
-    - Version in fileA
+    - Version in previous
     - Source (if applicable)
 
 #### 3.3 Updated Packages
 - **Definition**: Packages that exist in both files but have different versions
 - **Output Format**: List of packages with:
     - Package name
-    - Version in fileA (old)
-    - Version in fileB (new)
+    - Version in previous (old)
+    - Version in current (new)
     - Link, if available. Use the first available property listed below:
       - `support.wiki`
       - `support.docs`
@@ -161,7 +161,7 @@ The module must be importable and easy to use:
 package composerdiff
 
 // Diff compares two composer.lock file contents and returns the differences.
-func Diff(composerLockA, composerLockB, composerJsonA, composerJsonB []byte) (*Output, error)
+func Diff(lockPrevious, lockCurrent, reqPrevious, reqCurrent []byte) (*Output, error)
 ```
 
 **Module import:** `import "github.com/user/composer-diff"` 
@@ -176,20 +176,20 @@ func Diff(composerLockA, composerLockB, composerJsonA, composerJsonB []byte) (*O
 ### 2. Composer.json Parsing (Optional)
 
 **IMPORTANT: Mutual Dependency Rule**
-- If `composerJsonA` is provided, `composerJsonB` MUST also be provided (and vice versa)
+- If `reqPrevious` is provided, `reqCurrent` MUST also be provided (and vice versa)
 - Either provide both, or provide neither (both can be nil)
 - Implementation must validate this and return an error if the rule is violated
 
 **Parsing logic:**
-- If `composerJsonA` is provided:
+- If `reqPrevious` is provided:
   - Parse JSON
   - Extract `require` object (if present) → keys are package names marked as IsRootRequirement
   - Extract `require-dev` object (if present) → keys are package names marked as IsRootDevRequirement
   - Invalid JSON in composer.json: Return error with context
-- If `composerJsonA` is nil:
+- If `reqPrevious` is nil:
   - All flags default to false (IsRootRequirement=false, IsRootDevRequirement=false)
   - Do NOT use "packages" vs "packages-dev" sections as fallback
-- Same logic applies for B files with `composerJsonB`
+- Same logic applies for current files with `reqCurrent`
 
 ### 3. Error Handling
 - **Invalid JSON**: Return error with details from encoding/json parsing
@@ -231,19 +231,19 @@ type PkgVersion struct {
 }
 
 type PkgVersionTag struct {
-    Full string,  // Full version string from composer.lock (`version` field)
-    Type string,  // 'TAG' (always)
-    Major string, // Semver Major version (as string, e.g., "1")
-    Minor string, // Semver Minor version (as string, e.g., "2")
-    Patch string, // Semver Patch version (as string, e.g., "3")
-    Extra *string, // Optional pre-release/build metadata (e.g., "-beta.1", "+build123").
+	Full string,  // Full version string from composer.lock (`version` field)
+	Type string,  // 'TAG' (always)
+	Major string, // Semver Major version (as string, e.g., "1")
+	Minor string, // Semver Minor version (as string, e.g., "2")
+	Patch string, // Semver Patch version (as string, e.g., "3")
+	Extra *string, // Optional pre-release/build metadata (e.g., "-beta.1", "+build123").
                    // Full capture from regex group 5, not parsed further.
 }
 
 type PkgVersionCommit struct {
-    Full string,   // Full version string from composer.lock (commit hash)
-    Type string,   // 'COMMIT' (always)
-    Commit string, // Commit hash from `dist.reference` (preferred) or `source.reference`
+	Full string,   // Full version string from composer.lock (commit hash)
+	Type string,   // 'COMMIT' (always)
+	Commit string, // Commit hash from `dist.reference` (preferred) or `source.reference`
 }
 ```
 

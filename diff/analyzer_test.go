@@ -7,29 +7,29 @@ import (
 func TestDiff_BasicComparison(t *testing.T) {
 	tests := []struct {
 		name             string
-		lockA            []byte
-		lockB            []byte
-		jsonA            []byte
-		jsonB            []byte
+		lockPrevious     []byte
+		lockCurrent      []byte
+		reqPrevious      []byte
+		reqCurrent       []byte
 		wantError        bool
 		wantPackageCount int
 		checkResultsFn   func(*Output) bool
 	}{
 		{
 			name: "identical locks",
-			lockA: []byte(`{
+			lockPrevious: []byte(`{
 				"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]
 			}`),
-			lockB: []byte(`{
+			lockCurrent: []byte(`{
 				"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]
 			}`),
 			wantError:        false,
 			wantPackageCount: 0,
 		},
 		{
-			name:  "added package",
-			lockA: []byte(`{"packages": []}`),
-			lockB: []byte(`{
+			name:         "added package",
+			lockPrevious: []byte(`{"packages": []}`),
+			lockCurrent: []byte(`{
 				"packages": [{"name": "vendor/new", "version": "1.0.0", "source": {"reference": "abc"}}]
 			}`),
 			wantError:        false,
@@ -44,10 +44,10 @@ func TestDiff_BasicComparison(t *testing.T) {
 		},
 		{
 			name: "removed package",
-			lockA: []byte(`{
+			lockPrevious: []byte(`{
 				"packages": [{"name": "vendor/old", "version": "1.0.0", "source": {"reference": "abc"}}]
 			}`),
-			lockB:            []byte(`{"packages": []}`),
+			lockCurrent:      []byte(`{"packages": []}`),
 			wantError:        false,
 			wantPackageCount: 1,
 			checkResultsFn: func(out *Output) bool {
@@ -60,10 +60,10 @@ func TestDiff_BasicComparison(t *testing.T) {
 		},
 		{
 			name: "updated package",
-			lockA: []byte(`{
+			lockPrevious: []byte(`{
 				"packages": [{"name": "vendor/pkg", "version": "1.0.0", "source": {"reference": "abc"}}]
 			}`),
-			lockB: []byte(`{
+			lockCurrent: []byte(`{
 				"packages": [{"name": "vendor/pkg", "version": "2.0.0", "source": {"reference": "def"}}]
 			}`),
 			wantError:        false,
@@ -83,7 +83,7 @@ func TestDiff_BasicComparison(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			out, err := Diff(tt.lockA, tt.lockB, tt.jsonA, tt.jsonB)
+			out, err := Diff(tt.lockPrevious, tt.lockCurrent, tt.reqPrevious, tt.reqCurrent)
 			if (err != nil) != tt.wantError {
 				t.Errorf("Diff() error = %v, wantError %v", err, tt.wantError)
 				return
@@ -104,40 +104,40 @@ func TestDiff_MutualDependency(t *testing.T) {
 	lock := []byte(`{"packages": []}`)
 
 	tests := []struct {
-		name      string
-		jsonA     []byte
-		jsonB     []byte
-		wantError bool
+		name        string
+		reqPrevious []byte
+		reqCurrent  []byte
+		wantError   bool
 	}{
 		{
-			name:      "both json provided",
-			jsonA:     []byte(`{}`),
-			jsonB:     []byte(`{}`),
-			wantError: false,
+			name:        "both json provided",
+			reqPrevious: []byte(`{}`),
+			reqCurrent:  []byte(`{}`),
+			wantError:   false,
 		},
 		{
-			name:      "both json nil",
-			jsonA:     nil,
-			jsonB:     nil,
-			wantError: false,
+			name:        "both json nil",
+			reqPrevious: nil,
+			reqCurrent:  nil,
+			wantError:   false,
 		},
 		{
-			name:      "only jsonA provided",
-			jsonA:     []byte(`{}`),
-			jsonB:     nil,
-			wantError: true,
+			name:        "only reqPrevious provided",
+			reqPrevious: []byte(`{}`),
+			reqCurrent:  nil,
+			wantError:   true,
 		},
 		{
-			name:      "only jsonB provided",
-			jsonA:     nil,
-			jsonB:     []byte(`{}`),
-			wantError: true,
+			name:        "only reqCurrent provided",
+			reqPrevious: nil,
+			reqCurrent:  []byte(`{}`),
+			wantError:   true,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := Diff(lock, lock, tt.jsonA, tt.jsonB)
+			_, err := Diff(lock, lock, tt.reqPrevious, tt.reqCurrent)
 			if (err != nil) != tt.wantError {
 				t.Errorf("Diff() error = %v, wantError %v", err, tt.wantError)
 			}
@@ -147,21 +147,21 @@ func TestDiff_MutualDependency(t *testing.T) {
 
 func TestDiff_IsRootRequirement(t *testing.T) {
 	tests := []struct {
-		name    string
-		lockA   []byte
-		lockB   []byte
-		jsonA   []byte
-		jsonB   []byte
-		checkFn func(*Output) bool
+		name         string
+		lockPrevious []byte
+		lockCurrent  []byte
+		reqPrevious  []byte
+		reqCurrent   []byte
+		checkFn      func(*Output) bool
 	}{
 		{
-			name:  "with composer.json require",
-			lockA: []byte(`{"packages": []}`),
-			lockB: []byte(`{
+			name:         "with composer.json require",
+			lockPrevious: []byte(`{"packages": []}`),
+			lockCurrent: []byte(`{
 				"packages": [{"name": "vendor/pkg", "version": "1.0.0", "source": {"reference": "abc"}}]
 			}`),
-			jsonA: []byte(`{}`),
-			jsonB: []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			reqPrevious: []byte(`{}`),
+			reqCurrent:  []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
 			checkFn: func(out *Output) bool {
 				if len(out.Packages) == 0 {
 					return false
@@ -170,13 +170,13 @@ func TestDiff_IsRootRequirement(t *testing.T) {
 			},
 		},
 		{
-			name:  "without composer.json",
-			lockA: []byte(`{"packages": []}`),
-			lockB: []byte(`{
+			name:         "without composer.json",
+			lockPrevious: []byte(`{"packages": []}`),
+			lockCurrent: []byte(`{
 				"packages": [{"name": "vendor/pkg", "version": "1.0.0", "source": {"reference": "abc"}}]
 			}`),
-			jsonA: nil,
-			jsonB: nil,
+			reqPrevious: nil,
+			reqCurrent:  nil,
 			checkFn: func(out *Output) bool {
 				if len(out.Packages) == 0 {
 					return false
@@ -185,13 +185,13 @@ func TestDiff_IsRootRequirement(t *testing.T) {
 			},
 		},
 		{
-			name:  "with composer.json require-dev",
-			lockA: []byte(`{"packages": []}`),
-			lockB: []byte(`{
+			name:         "with composer.json require-dev",
+			lockPrevious: []byte(`{"packages": []}`),
+			lockCurrent: []byte(`{
 				"packages-dev": [{"name": "vendor/test", "version": "1.0.0", "source": {"reference": "abc"}}]
 			}`),
-			jsonA: []byte(`{}`),
-			jsonB: []byte(`{"require-dev": {"vendor/test": "^1.0"}}`),
+			reqPrevious: []byte(`{}`),
+			reqCurrent:  []byte(`{"require-dev": {"vendor/test": "^1.0"}}`),
 			checkFn: func(out *Output) bool {
 				if len(out.Packages) == 0 {
 					return false
@@ -203,7 +203,7 @@ func TestDiff_IsRootRequirement(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			out, err := Diff(tt.lockA, tt.lockB, tt.jsonA, tt.jsonB)
+			out, err := Diff(tt.lockPrevious, tt.lockCurrent, tt.reqPrevious, tt.reqCurrent)
 			if err != nil {
 				t.Errorf("Diff() error = %v", err)
 				return
@@ -282,66 +282,66 @@ func TestParseSemver(t *testing.T) {
 
 func TestDetectUpdate(t *testing.T) {
 	tests := []struct {
-		name          string
-		versionA      string
-		versionB      string
-		wantSubType   string
-		wantDirection string
+		name            string
+		versionPrevious string
+		versionCurrent  string
+		wantSubType     string
+		wantDirection   string
 	}{
 		{
-			name:          "major version up",
-			versionA:      "1.0.0",
-			versionB:      "2.0.0",
-			wantSubType:   "MAJOR",
-			wantDirection: "UP",
+			name:            "major version up",
+			versionPrevious: "1.0.0",
+			versionCurrent:  "2.0.0",
+			wantSubType:     "MAJOR",
+			wantDirection:   "UP",
 		},
 		{
-			name:          "major version down",
-			versionA:      "2.0.0",
-			versionB:      "1.0.0",
-			wantSubType:   "MAJOR",
-			wantDirection: "DOWN",
+			name:            "major version down",
+			versionPrevious: "2.0.0",
+			versionCurrent:  "1.0.0",
+			wantSubType:     "MAJOR",
+			wantDirection:   "DOWN",
 		},
 		{
-			name:          "minor version up",
-			versionA:      "1.0.0",
-			versionB:      "1.1.0",
-			wantSubType:   "MINOR",
-			wantDirection: "UP",
+			name:            "minor version up",
+			versionPrevious: "1.0.0",
+			versionCurrent:  "1.1.0",
+			wantSubType:     "MINOR",
+			wantDirection:   "UP",
 		},
 		{
-			name:          "patch version up",
-			versionA:      "1.0.0",
-			versionB:      "1.0.1",
-			wantSubType:   "PATCH",
-			wantDirection: "UP",
+			name:            "patch version up",
+			versionPrevious: "1.0.0",
+			versionCurrent:  "1.0.1",
+			wantSubType:     "PATCH",
+			wantDirection:   "UP",
 		},
 		{
-			name:          "same version",
-			versionA:      "1.0.0",
-			versionB:      "1.0.0",
-			wantSubType:   "NONE",
-			wantDirection: "NONE",
+			name:            "same version",
+			versionPrevious: "1.0.0",
+			versionCurrent:  "1.0.0",
+			wantSubType:     "NONE",
+			wantDirection:   "NONE",
 		},
 		{
-			name:          "unparseable version",
-			versionA:      "abc123",
-			versionB:      "def456",
-			wantSubType:   "NONE",
-			wantDirection: "UNKNOWN",
+			name:            "unparseable version",
+			versionPrevious: "abc123",
+			versionCurrent:  "def456",
+			wantSubType:     "NONE",
+			wantDirection:   "UNKNOWN",
 		},
 		{
-			name:          "one unparseable",
-			versionA:      "1.0.0",
-			versionB:      "dev-master",
-			wantSubType:   "NONE",
-			wantDirection: "UNKNOWN",
+			name:            "one unparseable",
+			versionPrevious: "1.0.0",
+			versionCurrent:  "dev-master",
+			wantSubType:     "NONE",
+			wantDirection:   "UNKNOWN",
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result := detectUpdate(tt.versionA, tt.versionB)
+			result := detectUpdate(tt.versionPrevious, tt.versionCurrent)
 			if result.SubType != tt.wantSubType {
 				t.Errorf("detectUpdate() SubType = %s, want %s", result.SubType, tt.wantSubType)
 			}
@@ -353,16 +353,16 @@ func TestDetectUpdate(t *testing.T) {
 }
 
 func TestDiff_DevPackages(t *testing.T) {
-	lockA := []byte(`{
+	lockPrevious := []byte(`{
 		"packages": [{"name": "vendor/lib", "version": "1.0.0", "source": {"reference": "abc"}}],
 		"packages-dev": [{"name": "vendor/test", "version": "1.0.0", "source": {"reference": "def"}}]
 	}`)
-	lockB := []byte(`{
+	lockCurrent := []byte(`{
 		"packages": [{"name": "vendor/lib", "version": "1.0.0", "source": {"reference": "abc"}}],
 		"packages-dev": [{"name": "vendor/test", "version": "2.0.0", "source": {"reference": "def"}}]
 	}`)
 
-	out, err := Diff(lockA, lockB, nil, nil)
+	out, err := Diff(lockPrevious, lockCurrent, nil, nil)
 	if err != nil {
 		t.Errorf("Diff() error = %v", err)
 		return

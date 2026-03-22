@@ -30,8 +30,8 @@ type Support struct {
 	Source string `json:"source,omitempty"`
 }
 
-// ComposerJson represents the structure of a composer.json file
-type ComposerJson struct {
+// ComposerReq represents the structure of a composer.json file (composer requirement)
+type ComposerReq struct {
 	Require    map[string]string `json:"require,omitempty"`
 	RequireDev map[string]string `json:"require-dev,omitempty"`
 }

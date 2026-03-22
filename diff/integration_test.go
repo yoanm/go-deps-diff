@@ -7,18 +7,18 @@ import (
 
 func TestIntegration_SimpleFixtures(t *testing.T) {
 	// Load fixture files
-	simpleLockA, err := os.ReadFile("../testdata/composer-simple.lock")
+	simpleLockPrevious, err := os.ReadFile("../testdata/composer-simple.lock")
 	if err != nil {
 		t.Skipf("fixture file not found: %v", err)
 	}
 
-	simpleJsonA, err := os.ReadFile("../testdata/composer-simple.json")
+	simpleReqPrevious, err := os.ReadFile("../testdata/composer-simple.json")
 	if err != nil {
 		t.Skipf("fixture file not found: %v", err)
 	}
 
 	// Test 1: Diff simple.lock with itself (no changes)
-	out, err := Diff(simpleLockA, simpleLockA, simpleJsonA, simpleJsonA)
+	out, err := Diff(simpleLockPrevious, simpleLockPrevious, simpleReqPrevious, simpleReqPrevious)
 	if err != nil {
 		t.Errorf("Diff() error = %v", err)
 		return
@@ -30,14 +30,14 @@ func TestIntegration_SimpleFixtures(t *testing.T) {
 }
 
 func TestIntegration_InvalidJSON(t *testing.T) {
-	invalidJson, err := os.ReadFile("../testdata/composer-invalid.json")
+	invalidReq, err := os.ReadFile("../testdata/composer-invalid.json")
 	if err != nil {
 		t.Skipf("fixture file not found: %v", err)
 	}
 
 	lock := []byte(`{"packages": []}`)
 
-	_, err = Diff(lock, lock, invalidJson, invalidJson)
+	_, err = Diff(lock, lock, invalidReq, invalidReq)
 	if err == nil {
 		t.Errorf("Diff() expected error for invalid JSON, got nil")
 	}
@@ -50,11 +50,11 @@ func TestIntegration_InvalidFormat(t *testing.T) {
 	}
 
 	lock := []byte(`{"packages": []}`)
-	validJson := []byte(`{}`)
+	validReq := []byte(`{}`)
 
 	// composer-invalid-format.json is valid JSON but not a valid lock file
-	// It should fail when used as a lock file, not as a json file
-	_, err = Diff(invalidFormat, lock, validJson, validJson)
+	// It should fail when used as a lock file, not as a req file
+	_, err = Diff(invalidFormat, lock, validReq, validReq)
 	if err == nil {
 		t.Errorf("Diff() expected error for invalid format lock file, got nil")
 	}

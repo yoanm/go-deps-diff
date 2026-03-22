@@ -46,13 +46,13 @@ func ParseLock(data []byte) (*ComposerLock, error) {
 	return &lock, nil
 }
 
-// ParseJson parses a composer.json file from JSON bytes
-func ParseJson(data []byte) (*ComposerJson, error) {
+// ParseReq parses a composer.json (composer requirement) file from JSON bytes
+func ParseReq(data []byte) (*ComposerReq, error) {
 	if len(data) == 0 {
 		return nil, &ErrInvalidFormat{message: "empty input"}
 	}
 
-	var result ComposerJson
+	var result ComposerReq
 	err := json.Unmarshal(data, &result)
 	if err != nil {
 		return nil, &ErrInvalidJSON{err: err}

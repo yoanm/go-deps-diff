@@ -68,12 +68,12 @@ func TestParseLock(t *testing.T) {
 	}
 }
 
-func TestParseJson(t *testing.T) {
+func TestParseReq(t *testing.T) {
 	tests := []struct {
 		name      string
 		data      []byte
 		wantError bool
-		checkFn   func(*ComposerJson) bool
+		checkFn   func(*ComposerReq) bool
 	}{
 		{
 			name: "valid composer.json",
@@ -82,9 +82,9 @@ func TestParseJson(t *testing.T) {
 				"require-dev": {"vendor/test": "^1.0"}
 			}`),
 			wantError: false,
-			checkFn: func(json *ComposerJson) bool {
-				return json != nil && json.Require["vendor/pkg"] == "^1.0" &&
-					json.RequireDev["vendor/test"] == "^1.0"
+			checkFn: func(req *ComposerReq) bool {
+				return req != nil && req.Require["vendor/pkg"] == "^1.0" &&
+					req.RequireDev["vendor/test"] == "^1.0"
 			},
 		},
 		{
@@ -101,12 +101,12 @@ func TestParseJson(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			json, err := ParseJson(tt.data)
+			req, err := ParseReq(tt.data)
 			if (err != nil) != tt.wantError {
-				t.Errorf("ParseJson() error = %v, wantError %v", err, tt.wantError)
+				t.Errorf("ParseReq() error = %v, wantError %v", err, tt.wantError)
 			}
-			if !tt.wantError && tt.checkFn != nil && !tt.checkFn(json) {
-				t.Errorf("ParseJson() result check failed")
+			if !tt.wantError && tt.checkFn != nil && !tt.checkFn(req) {
+				t.Errorf("ParseReq() result check failed")
 			}
 		})
 	}

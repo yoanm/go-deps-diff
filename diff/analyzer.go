@@ -9,43 +9,43 @@ import (
 )
 
 // Diff compares two composer.lock files and returns the differences
-func Diff(composerLockA, composerLockB, composerJsonA, composerJsonB []byte) (*Output, error) {
-	// Validate mutual dependency: both json or both nil
-	hasA := composerJsonA != nil && len(composerJsonA) > 0
-	hasB := composerJsonB != nil && len(composerJsonB) > 0
+func Diff(lockPrevious, lockCurrent, reqPrevious, reqCurrent []byte) (*Output, error) {
+	// Validate mutual dependency: both requirements or both nil
+	hasPrev := reqPrevious != nil && len(reqPrevious) > 0
+	hasCurr := reqCurrent != nil && len(reqCurrent) > 0
 
-	if hasA != hasB {
-		return nil, fmt.Errorf("composer.json files must be provided together: both or neither")
+	if hasPrev != hasCurr {
+		return nil, fmt.Errorf("composer requirement files must be provided together: both or neither")
 	}
 
 	// Parse lock files
-	lockA, err := composer.ParseLock(composerLockA)
+	lockPrevData, err := composer.ParseLock(lockPrevious)
 	if err != nil {
-		return nil, fmt.Errorf("parsing composerLockA: %w", err)
+		return nil, fmt.Errorf("parsing lockPrevious: %w", err)
 	}
 
-	lockB, err := composer.ParseLock(composerLockB)
+	lockCurrData, err := composer.ParseLock(lockCurrent)
 	if err != nil {
-		return nil, fmt.Errorf("parsing composerLockB: %w", err)
+		return nil, fmt.Errorf("parsing lockCurrent: %w", err)
 	}
 
-	// Parse json files if provided
-	var jsonA, jsonB *composer.ComposerJson
-	if hasA {
-		jsonA, err = composer.ParseJson(composerJsonA)
+	// Parse requirement files if provided
+	var reqPrevData, reqCurrData *composer.ComposerReq
+	if hasPrev {
+		reqPrevData, err = composer.ParseReq(reqPrevious)
 		if err != nil {
-			return nil, fmt.Errorf("parsing composerJsonA: %w", err)
+			return nil, fmt.Errorf("parsing reqPrevious: %w", err)
 		}
 
-		jsonB, err = composer.ParseJson(composerJsonB)
+		reqCurrData, err = composer.ParseReq(reqCurrent)
 		if err != nil {
-			return nil, fmt.Errorf("parsing composerJsonB: %w", err)
+			return nil, fmt.Errorf("parsing reqCurrent: %w", err)
 		}
 	}
 
 	// Build maps for O(1) lookup
-	packagesA := buildPackageMap(lockA, jsonA, true)  // A uses jsonA
-	packagesB := buildPackageMap(lockB, jsonB, false) // B uses jsonB
+	pkgsPrevious := buildPackageMap(lockPrevData, reqPrevData, true)     // Previous uses reqPrevious
+	packagesCurrent := buildPackageMap(lockCurrData, reqCurrData, false) // Current uses reqCurrent
 
 	// Find differences
 	output := &Output{
@@ -53,28 +53,28 @@ func Diff(composerLockA, composerLockB, composerJsonA, composerJsonB []byte) (*O
 	}
 
 	// Find removed and updated packages
-	for name, pkgA := range packagesA.packages {
-		if pkgB, exists := packagesB.packages[name]; exists {
+	for name, pkgPrev := range pkgsPrevious.packages {
+		if pkgCurr, exists := packagesCurrent.packages[name]; exists {
 			// Package exists in both - check if updated
-			if pkgA.version != pkgB.version {
+			if pkgPrev.version != pkgCurr.version {
 				info := createPackageInfo(
 					name,
-					pkgA,
-					pkgB,
-					packagesB.rootRequire[name],    // For updated, check B's require
-					packagesB.rootRequireDev[name], // For updated, check B's require-dev
+					pkgPrev,
+					pkgCurr,
+					packagesCurrent.rootRequire[name],    // For updated, check current's require
+					packagesCurrent.rootRequireDev[name], // For updated, check current's require-dev
 				)
-				info.Update = detectUpdate(pkgA.version, pkgB.version)
+				info.Update = detectUpdate(pkgPrev.version, pkgCurr.version)
 				output.Packages = append(output.Packages, info)
 			}
 		} else {
-			// Package removed (only in A)
+			// Package removed (only in previous)
 			info := createPackageInfo(
 				name,
-				pkgA,
+				pkgPrev,
 				nil,
-				packagesA.rootRequire[name],    // For removed, check A's require
-				packagesA.rootRequireDev[name], // For removed, check A's require-dev
+				pkgsPrevious.rootRequire[name],    // For removed, check previous's require
+				pkgsPrevious.rootRequireDev[name], // For removed, check previous's require-dev
 			)
 			info.Update = UpdateType{Type: "REMOVED", SubType: "NONE", Direction: "NONE"}
 			output.Packages = append(output.Packages, info)
@@ -82,15 +82,15 @@ func Diff(composerLockA, composerLockB, composerJsonA, composerJsonB []byte) (*O
 	}
 
 	// Find added packages
-	for name, pkgB := range packagesB.packages {
-		if _, exists := packagesA.packages[name]; !exists {
-			// Package added (only in B)
+	for name, pkgCurr := range packagesCurrent.packages {
+		if _, exists := pkgsPrevious.packages[name]; !exists {
+			// Package added (only in current)
 			info := createPackageInfo(
 				name,
 				nil,
-				pkgB,
-				packagesB.rootRequire[name],    // For added, check B's require
-				packagesB.rootRequireDev[name], // For added, check B's require-dev
+				pkgCurr,
+				packagesCurrent.rootRequire[name],    // For added, check current's require
+				packagesCurrent.rootRequireDev[name], // For added, check current's require-dev
 			)
 			info.Update = UpdateType{Type: "ADDED", SubType: "NONE", Direction: "NONE"}
 			output.Packages = append(output.Packages, info)
@@ -114,19 +114,19 @@ type packageData struct {
 }
 
 // buildPackageMap creates an efficient lookup map for packages
-func buildPackageMap(lock *composer.ComposerLock, json *composer.ComposerJson, isA bool) *packageMap {
+func buildPackageMap(lock *composer.ComposerLock, req *composer.ComposerReq, isPrevious bool) *packageMap {
 	pm := &packageMap{
 		packages:       make(map[string]*packageData),
 		rootRequire:    make(map[string]bool),
 		rootRequireDev: make(map[string]bool),
 	}
 
-	// If json provided, populate root requirement maps
-	if json != nil {
-		for pkg := range json.Require {
+	// If requirement provided, populate root requirement maps
+	if req != nil {
+		for pkg := range req.Require {
 			pm.rootRequire[pkg] = true
 		}
-		for pkg := range json.RequireDev {
+		for pkg := range req.RequireDev {
 			pm.rootRequireDev[pkg] = true
 		}
 	}
@@ -163,7 +163,7 @@ func buildPackageMap(lock *composer.ComposerLock, json *composer.ComposerJson, i
 }
 
 // createPackageInfo creates a PackageInfo entry for a package
-func createPackageInfo(name string, pkgA, pkgB *packageData, isRoot, isRootDev bool) PackageInfo {
+func createPackageInfo(name string, pkgPrev, pkgCurr *packageData, isRoot, isRootDev bool) PackageInfo {
 	info := PackageInfo{
 		Name:                 name,
 		IsRootRequirement:    isRoot,
@@ -171,17 +171,17 @@ func createPackageInfo(name string, pkgA, pkgB *packageData, isRoot, isRootDev b
 	}
 
 	// Determine if abandoned (use current version if available, else previous)
-	if pkgB != nil {
-		info.IsAbandoned = composer.IsAbandoned(pkgB.pkg)
-		info.Link = composer.GetLink(pkgB.pkg)
-		info.Current = parseVersion(pkgB.version, pkgB.pkg)
-	} else if pkgA != nil {
-		info.IsAbandoned = composer.IsAbandoned(pkgA.pkg)
-		info.Link = composer.GetLink(pkgA.pkg)
+	if pkgCurr != nil {
+		info.IsAbandoned = composer.IsAbandoned(pkgCurr.pkg)
+		info.Link = composer.GetLink(pkgCurr.pkg)
+		info.Current = parseVersion(pkgCurr.version, pkgCurr.pkg)
+	} else if pkgPrev != nil {
+		info.IsAbandoned = composer.IsAbandoned(pkgPrev.pkg)
+		info.Link = composer.GetLink(pkgPrev.pkg)
 	}
 
-	if pkgA != nil {
-		info.Previous = parseVersion(pkgA.version, pkgA.pkg)
+	if pkgPrev != nil {
+		info.Previous = parseVersion(pkgPrev.version, pkgPrev.pkg)
 	}
 
 	return info
@@ -235,29 +235,29 @@ func parseSemver(version string) *PkgVersionTag {
 }
 
 // detectUpdate detects the type and direction of a version update
-func detectUpdate(versionA, versionB string) UpdateType {
+func detectUpdate(versionPrevious, versionCurrent string) UpdateType {
 	result := UpdateType{
 		Type:      "UPDATED",
 		SubType:   "NONE",
 		Direction: "NONE",
 	}
 
-	tagA := parseSemver(versionA)
-	tagB := parseSemver(versionB)
+	tagPrevious := parseSemver(versionPrevious)
+	tagCurrent := parseSemver(versionCurrent)
 
 	// If either version is not semver, direction is UNKNOWN
-	if tagA == nil || tagB == nil {
+	if tagPrevious == nil || tagCurrent == nil {
 		result.Direction = "UNKNOWN"
 		return result
 	}
 
 	// Compare MAJOR
-	majorA, _ := strconv.Atoi(tagA.Major)
-	majorB, _ := strconv.Atoi(tagB.Major)
+	majorPrevious, _ := strconv.Atoi(tagPrevious.Major)
+	majorCurrent, _ := strconv.Atoi(tagCurrent.Major)
 
-	if majorA != majorB {
+	if majorPrevious != majorCurrent {
 		result.SubType = "MAJOR"
-		if majorB > majorA {
+		if majorCurrent > majorPrevious {
 			result.Direction = "UP"
 		} else {
 			result.Direction = "DOWN"
@@ -266,12 +266,12 @@ func detectUpdate(versionA, versionB string) UpdateType {
 	}
 
 	// Compare MINOR
-	minorA, _ := strconv.Atoi(tagA.Minor)
-	minorB, _ := strconv.Atoi(tagB.Minor)
+	minorPrevious, _ := strconv.Atoi(tagPrevious.Minor)
+	minorCurrent, _ := strconv.Atoi(tagCurrent.Minor)
 
-	if minorA != minorB {
+	if minorPrevious != minorCurrent {
 		result.SubType = "MINOR"
-		if minorB > minorA {
+		if minorCurrent > minorPrevious {
 			result.Direction = "UP"
 		} else {
 			result.Direction = "DOWN"
@@ -280,12 +280,12 @@ func detectUpdate(versionA, versionB string) UpdateType {
 	}
 
 	// Compare PATCH
-	patchA, _ := strconv.Atoi(tagA.Patch)
-	patchB, _ := strconv.Atoi(tagB.Patch)
+	patchPrevious, _ := strconv.Atoi(tagPrevious.Patch)
+	patchCurrent, _ := strconv.Atoi(tagCurrent.Patch)
 
-	if patchA != patchB {
+	if patchPrevious != patchCurrent {
 		result.SubType = "PATCH"
-		if patchB > patchA {
+		if patchCurrent > patchPrevious {
 			result.Direction = "UP"
 		} else {
 			result.Direction = "DOWN"

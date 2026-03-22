@@ -26,15 +26,15 @@ import (
 
 func main() {
     // Read lock files
-    lockA, _ := os.ReadFile("composer-old.lock")
-    lockB, _ := os.ReadFile("composer-new.lock")
+    lockPrevious, _ := os.ReadFile("composer-old.lock")
+    lockCurrent, _ := os.ReadFile("composer-new.lock")
     
     // Optionally read composer.json files
-    jsonA, _ := os.ReadFile("composer-old.json")
-    jsonB, _ := os.ReadFile("composer-new.json")
+    reqPrevious, _ := os.ReadFile("composer-old.json")
+    reqCurrent, _ := os.ReadFile("composer-new.json")
     
     // Compare
-    output, err := diff.Diff(lockA, lockB, jsonA, jsonB)
+    output, err := diff.Diff(lockPrevious, lockCurrent, reqPrevious, reqCurrent)
     if err != nil {
         fmt.Printf("Error: %v\n", err)
         return
@@ -72,13 +72,13 @@ All tests pass with 90%+ coverage.
 
 ## API Reference
 
-### `Diff(composerLockA, composerLockB, composerJsonA, composerJsonB []byte) (*Output, error)`
+### `Diff(lockPrevious, lockCurrent, reqPrevious, reqCurrent []byte) (*Output, error)`
 
 Compares two composer.lock files and returns the differences.
 
 **Parameters:**
-- `composerLockA`, `composerLockB`: Required byte slices of composer.lock files
-- `composerJsonA`, `composerJsonB`: Optional byte slices of corresponding composer.json files (both or neither)
+- `lockPrevious`, `lockCurrent`: Required byte slices of composer.lock files
+- `reqPrevious`, `reqCurrent`: Optional byte slices of corresponding composer.json files (both or neither)
 
 **Returns:**
 - `*Output`: Slice of PackageInfo entries with identified differences
