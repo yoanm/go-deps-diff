@@ -1,0 +1,9 @@
+{
+  "require": {
+    "vendor/package": "^1.0"
+  },
+  "require-dev": {
+    "vendor/test": "^1.0"
+  }
+  "extra-field": "should-fail"
+}

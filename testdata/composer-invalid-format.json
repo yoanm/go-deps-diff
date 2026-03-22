@@ -1,0 +1,8 @@
+{
+  "name": "vendor/package",
+  "version": "1.0.0",
+  "missing-packages": [],
+  "require": {
+    "vendor/other": "^1.0"
+  }
+}

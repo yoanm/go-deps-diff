@@ -1,0 +1,11 @@
+{
+  "require": {
+    "vendor/lib-1": "^1.0",
+    "vendor/lib-2": "^2.0",
+    "vendor/lib-3": "^3.0"
+  },
+  "require-dev": {
+    "vendor/test-1": "^1.0",
+    "vendor/test-2": "^2.0"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "packages": [
+    {"name": "vendor/lib-1", "version": "1.0.0", "source": {"reference": "abc001"}, "dist": {"reference": "abc001"}, "abandoned": false},
+    {"name": "vendor/lib-2", "version": "2.1.3", "source": {"reference": "abc002"}, "dist": {"reference": "abc002"}, "support": {"wiki": "https://example.com"}, "abandoned": false},
+    {"name": "vendor/lib-3", "version": "v3.0.0-beta.1", "source": {"reference": "abc003"}, "dist": {"reference": "abc003"}, "abandoned": false},
+    {"name": "vendor/lib-4", "version": "4.5.6", "source": {"reference": "abc004"}, "dist": {"reference": "abc004"}, "abandoned": false},
+    {"name": "vendor/lib-5", "version": "5.2.1", "source": {"reference": "abc005"}, "dist": {"reference": "abc005"}, "abandoned": true},
+    {"name": "vendor/lib-6", "version": "6.0.0", "source": {"reference": "abc006"}, "dist": {"reference": "abc006"}, "abandoned": false},
+    {"name": "vendor/lib-7", "version": "7.1.0", "source": {"reference": "abc007"}, "dist": {"reference": "abc007"}, "abandoned": false},
+    {"name": "vendor/lib-8", "version": "8.0.5", "source": {"reference": "abc008"}, "dist": {"reference": "abc008"}, "abandoned": false},
+    {"name": "vendor/lib-9", "version": "9.3.2", "source": {"reference": "abc009"}, "dist": {"reference": "abc009"}, "abandoned": false},
+    {"name": "vendor/lib-10", "version": "10.0.0", "source": {"reference": "abc010"}, "dist": {"reference": "abc010"}, "abandoned": false}
+  ],
+  "packages-dev": [
+    {"name": "vendor/test-1", "version": "1.0.0", "source": {"reference": "def001"}, "dist": {"reference": "def001"}, "abandoned": false},
+    {"name": "vendor/test-2", "version": "2.0.0", "source": {"reference": "def002"}, "dist": {"reference": "def002"}, "abandoned": false},
+    {"name": "vendor/test-3", "version": "3.0.0", "source": {"reference": "def003"}, "dist": {"reference": "def003"}, "abandoned": false},
+    {"name": "vendor/test-4", "version": "4.0.0", "source": {"reference": "def004"}, "dist": {"reference": "def004"}, "abandoned": false},
+    {"name": "vendor/test-5", "version": "5.0.0", "source": {"reference": "def005"}, "dist": {"reference": "def005"}, "abandoned": false}
+  ]
+}
