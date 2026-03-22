@@ -1,0 +1,19 @@
+{
+  "name": "yoanm/github-action-test-repo",
+  "license": "proprietary",
+  "require": {
+    "phpunit/phpunit": "9.3.0",
+    "yoanm/jsonrpc-server-sdk": "dev-master",
+    "phpstan/phpstan": "^0.12.96",
+    "symfony/deprecation-contracts": "2.2.0",
+    "symfony/cache-contracts": "v1.1.1",
+    "symfony/asset": "^4.0",
+    "behat/gherkin": "^4.8.0",
+    "sebastian/code-unit": "^1.0",
+    "sebastian/diff": "^4.0",
+    "yoanm/init-php-repository": "dev-master"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "2.9.x-dev#2acf168"
+  }
+}

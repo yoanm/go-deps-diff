@@ -36,11 +36,12 @@ func ParseLock(data []byte) (*ComposerLock, error) {
 		return nil, &ErrInvalidJSON{err: err}
 	}
 
-	// Validate required structure
-	if lock.Packages == nil && lock.PackagesDev == nil {
-		return nil, &ErrInvalidFormat{
-			message: "must contain 'packages' and/or 'packages-dev' arrays",
-		}
+	// Validate that lock file has at least one of packages or packages-dev fields
+	// (even if empty, the JSON key must exist)
+	hasPackages := lock.Packages != nil
+	hasPackagesDev := lock.PackagesDev != nil
+	if !hasPackages && !hasPackagesDev {
+		return nil, &ErrInvalidFormat{message: "lock file must contain 'packages' and/or 'packages-dev' field"}
 	}
 
 	return &lock, nil

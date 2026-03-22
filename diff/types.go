@@ -2,7 +2,7 @@ package diff
 
 // Output is the result of comparing two composer.lock files
 type Output struct {
-	Packages []PackageInfo
+	Packages []PackageInfo // @TODO: MAJOR REFACTOR - Change to map[string]PackageInfo (key=package name). Requires updating: analyzer.go (3 append ops), all tests (20+ assertions), README examples
 }
 
 // PackageInfo contains detailed information about a package difference
@@ -64,9 +64,9 @@ func (v *PkgVersionCommit) GetType() string {
 }
 
 // NewPkgVersionTag creates a new PkgVersionTag
-func NewPkgVersionTag(full, major, minor, patch, extra string) *PkgVersionTag {
+func NewPkgVersionTag(version, major, minor, patch, extra string) *PkgVersionTag {
 	return &PkgVersionTag{
-		Full:  full,
+		Full:  version,
 		Type:  "TAG",
 		Major: major,
 		Minor: minor,
@@ -76,7 +76,12 @@ func NewPkgVersionTag(full, major, minor, patch, extra string) *PkgVersionTag {
 }
 
 // NewPkgVersionCommit creates a new PkgVersionCommit
-func NewPkgVersionCommit(full, commit string) *PkgVersionCommit {
+func NewPkgVersionCommit(version, commit string) *PkgVersionCommit {
+	full := version
+	// If version differs from commit, append short commit hash (first 7 chars)
+	if version != commit && len(commit) >= 7 {
+		full = version + "#" + commit[:7]
+	}
 	return &PkgVersionCommit{
 		Full:   full,
 		Type:   "COMMIT",

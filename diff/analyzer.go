@@ -9,10 +9,15 @@ import (
 )
 
 // Diff compares two composer.lock files and returns the differences
+// Note: Currently handles both lock file comparison AND requirement file integration.
+// @TODO (DEFERRED): Major refactor - Split into two functions:
+//   1. Diff() - Compare lock files only, remove IsRootRequirement/IsRootDevRequirement from output
+//   2. Enhance(out *Output, reqPrevious, reqCurrent []byte) error - Add root requirement info
+//   Reason: Better separation of concerns. Deferred due to large API change (affects all 48+ tests)
 func Diff(lockPrevious, lockCurrent, reqPrevious, reqCurrent []byte) (*Output, error) {
 	// Validate mutual dependency: both requirements or both nil
-	hasPrev := reqPrevious != nil && len(reqPrevious) > 0
-	hasCurr := reqCurrent != nil && len(reqCurrent) > 0
+	hasPrev := len(reqPrevious) > 0
+	hasCurr := len(reqCurrent) > 0
 
 	if hasPrev != hasCurr {
 		return nil, fmt.Errorf("composer requirement files must be provided together: both or neither")
@@ -44,8 +49,8 @@ func Diff(lockPrevious, lockCurrent, reqPrevious, reqCurrent []byte) (*Output, e
 	}
 
 	// Build maps for O(1) lookup
-	pkgsPrevious := buildPackageMap(lockPrevData, reqPrevData, true)     // Previous uses reqPrevious
-	packagesCurrent := buildPackageMap(lockCurrData, reqCurrData, false) // Current uses reqCurrent
+	pkgsPrevious := buildPackageMap(lockPrevData, reqPrevData)    // Previous uses reqPrevious
+	packagesCurrent := buildPackageMap(lockCurrData, reqCurrData) // Current uses reqCurrent
 
 	// Find differences
 	output := &Output{
@@ -108,13 +113,13 @@ type packageMap struct {
 }
 
 type packageData struct {
-	version   string
-	pkg       *composer.Package
-	isFromDev bool // true if from packages-dev section
+	version string
+	pkg     *composer.Package
+	devOnly bool // true if only in packages-dev section (dev-only dependency)
 }
 
 // buildPackageMap creates an efficient lookup map for packages
-func buildPackageMap(lock *composer.ComposerLock, req *composer.ComposerReq, isPrevious bool) *packageMap {
+func buildPackageMap(lock *composer.ComposerLock, req *composer.ComposerReq) *packageMap {
 	pm := &packageMap{
 		packages:       make(map[string]*packageData),
 		rootRequire:    make(map[string]bool),
@@ -137,9 +142,9 @@ func buildPackageMap(lock *composer.ComposerLock, req *composer.ComposerReq, isP
 			pkg := &lock.Packages[i]
 			if _, exists := pm.packages[pkg.Name]; !exists { // Skip duplicates
 				pm.packages[pkg.Name] = &packageData{
-					version:   pkg.Version,
-					pkg:       pkg,
-					isFromDev: false,
+					version: pkg.Version,
+					pkg:     pkg,
+					devOnly: false,
 				}
 			}
 		}
@@ -151,9 +156,9 @@ func buildPackageMap(lock *composer.ComposerLock, req *composer.ComposerReq, isP
 			pkg := &lock.PackagesDev[i]
 			if _, exists := pm.packages[pkg.Name]; !exists { // Skip duplicates
 				pm.packages[pkg.Name] = &packageData{
-					version:   pkg.Version,
-					pkg:       pkg,
-					isFromDev: true,
+					version: pkg.Version,
+					pkg:     pkg,
+					devOnly: true,
 				}
 			}
 		}
@@ -294,6 +299,11 @@ func detectUpdate(versionPrevious, versionCurrent string) UpdateType {
 	}
 
 	// All numeric components equal
+	// Compare extra components (pre-release or build metadata)
+	if tagPrevious.Extra != tagCurrent.Extra {
+		result.Direction = "UNKNOWN"
+		return result
+	}
 	result.Direction = "NONE"
 	return result
 }

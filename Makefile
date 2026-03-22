@@ -77,3 +77,12 @@ test-lint: ## 🏃 Launch golangci-lint
 $(eval lint_o ?=--fix)
 test-lint:
 	golangci-lint run $(lint_o) ./...
+
+##—— 📋 Code Quality —————————————————————————————————————————————
+.PHONY: fmt
+fmt: ## 🔧 Format code with go fmt
+	go fmt ./...
+
+.PHONY: vet
+vet: ## 🔍 Run go vet (suspicious code patterns)
+	go vet ./...

@@ -43,6 +43,7 @@ func TestIntegration_InvalidJSON(t *testing.T) {
 	}
 }
 
+// @TODO: COPILOT - Refactor this test, having no `packages` nor `packages-dev` property is not an issue for a lock file. Same having no `require` nor `require-dev` property is not an issue for a requirement file
 func TestIntegration_InvalidFormat(t *testing.T) {
 	invalidFormat, err := os.ReadFile("../testdata/composer-invalid-format.json")
 	if err != nil {

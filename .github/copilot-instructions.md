@@ -5,18 +5,46 @@ applyTo: '**/*.go,**/go.mod,**/go.sum'
 
 # Copilot Instructions for composer-diff
 
-This file provides context for AI assistants working in this Go CLI project. It combines project-specific guidance with idiomatic Go practices based on [Effective Go](https://go.dev/doc/effective_go), [Go Code Review Comments](https://go.dev/wiki/CodeReviewComments), and [Google's Go Style Guide](https://google.github.io/styleguide/go/).
+This file provides context for AI assistants working in this Go library project. It combines project-specific guidance with idiomatic Go practices based on [Effective Go](https://go.dev/doc/effective_go), [Go Code Review Comments](https://go.dev/wiki/CodeReviewComments), and [Google's Go Style Guide](https://google.github.io/styleguide/go/).
 
 ## Project Overview
 
-**composer-diff** is a Go CLI tool (module: `composer-diff`). The project is in early development—see README.md (when created) for the full feature scope.
+**composer-diff** is a Go library module (module: `composer-diff`) for comparing PHP Composer lock files. See README.md and SPECIFICATION.md for full details.
 
 ## Build, Test, and Lint
 
-### Standard Go Commands
+### Using Makefile (Recommended)
 
 ```bash
-# Build the binary
+# Display help and available targets
+make help
+
+# Build the library
+make build
+
+# Run all tests and linting
+make test
+
+# Run only Go tests
+make test-go
+
+# Run code formatting
+make fmt
+
+# Run code linting (golangci-lint)
+make test-lint
+
+# Run go vet for suspicious patterns
+make vet
+
+# Verify dependencies
+make verify-deps
+```
+
+### Standard Go Commands (Alternative)
+
+```bash
+# Build the library
 go build ./...
 
 # Run tests (entire test suite)
@@ -269,17 +297,28 @@ The project is organized following standard Go conventions:
 
 ## Tools and Development Workflow
 
-### Essential Tools
-- `go fmt`: Format code (required)
-- `go vet`: Find suspicious constructs
-- `golangci-lint`: Additional linting
-- `go test`: Run tests
-- `go mod`: Manage dependencies
-- `go generate`: Code generation
+### Essential Makefile Targets
+- `make build`: Build the library
+- `make test`: Run all tests and linting (recommended)
+- `make test-go`: Run Go tests only
+- `make test-lint`: Run golangci-lint
+- `make fmt`: Format code with go fmt (required before commits)
+- `make vet`: Find suspicious constructs with go vet
+- `make verify-deps`: Verify dependencies with go mod verify
+
+### Direct Go Commands (if not using Makefile)
+- `go fmt ./...`: Format code (required)
+- `go vet ./...`: Find suspicious constructs
+- `golangci-lint run ./...`: Additional linting
+- `go test ./...`: Run tests
+- `go mod verify`: Verify dependencies
+- `go mod tidy`: Download and tidy dependencies
 
 ### Development Practices
-- Run tests before committing
-- Use pre-commit hooks for formatting and linting
+- Use `make test` before committing (runs both tests and linting)
+- Use `make fmt` to auto-format code
+- Use `make vet` to check for suspicious patterns
+- See `make help` for all available targets and options
 - Keep commits focused and atomic
 - Write meaningful commit messages
 - Review diffs before committing

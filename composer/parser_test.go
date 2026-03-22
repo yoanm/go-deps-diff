@@ -51,7 +51,11 @@ func TestParseLock(t *testing.T) {
 		{
 			name:      "missing packages arrays",
 			data:      []byte(`{"other": "field"}`),
-			wantError: true,
+			wantError: false,
+			checkFn: func(lock *ComposerLock) bool {
+				return lock != nil && len(lock.Packages) == 0 &&
+					len(lock.PackagesDev) == 0
+			},
 		},
 	}
 

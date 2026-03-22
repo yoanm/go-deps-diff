@@ -327,14 +327,14 @@ func TestDetectUpdate(t *testing.T) {
 			name:            "unparseable version",
 			versionPrevious: "abc123",
 			versionCurrent:  "def456",
-			wantSubType:     "NONE",
+			wantSubType:     "NONE", // @TODO: COPILOT - This must be UNKNOWN ! Update code accordingly
 			wantDirection:   "UNKNOWN",
 		},
 		{
 			name:            "one unparseable",
 			versionPrevious: "1.0.0",
 			versionCurrent:  "dev-master",
-			wantSubType:     "NONE",
+			wantSubType:     "NONE", // @TODO: COPILOT - This must be UNKNOWN ! Update code accordingly
 			wantDirection:   "UNKNOWN",
 		},
 	}
@@ -368,7 +368,7 @@ func TestDiff_DevPackages(t *testing.T) {
 		return
 	}
 
-	if len(out.Packages) != 1 {
+	if len(out.Packages) != 1 { // @TODO: COPILOT - This should be 2 (there must be 'vendor/lib' and 'vendor/test' packages) ! Update code accordingly
 		t.Errorf("Diff() got %d packages, want 1", len(out.Packages))
 		return
 	}
