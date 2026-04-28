@@ -66,7 +66,7 @@ Output is the result of comparing two composer.lock files.
 
 `func ComposerDiff(input *Input) (*Output, error)`
 
-#### func [Diff](/analyzer_tmp.go#L9)
+#### func [Diff](/analyzer.go#L9)
 
 `func Diff(previous, current shared.PackageMap) (*Output, error)`
 
