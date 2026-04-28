@@ -31,7 +31,7 @@
 PackageMap holds package information for efficient lookup
 Key is the package name (e.g., "vendor/package"), value is a wrapper providing package details and helper methods.
 
-### type [PkgVersion](./wrapper_types.go#L26)
+### type [PkgVersion](./wrapper_types.go#L28)
 
 `type PkgVersion struct { ... }`
 
