@@ -7,7 +7,7 @@ import (
 	"github.com/yoanm/go-deps-diff/shared"
 )
 
-func TestParseSemver(t *testing.T) {
+func TestParseSemverVersion(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
@@ -84,7 +84,7 @@ func validateSemverVersion(
 	return nil
 }
 
-func TestParseSemver_Error(t *testing.T) {
+func TestParseSemverVersion_Error(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
@@ -127,5 +127,79 @@ func TestParseSemver_Error(t *testing.T) {
 				t.Error(err2)
 			}
 		})
+	}
+}
+
+func TestIsSemverValid(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name    string
+		version string
+	}{
+		{
+			name:    "simple semver",
+			version: "1.2.3",
+		},
+		{
+			name:    "with v prefix",
+			version: "v2.1.3",
+		},
+		{
+			name:    "with prerelease",
+			version: "1.2.3-beta.1",
+		},
+		{
+			name:    "with build metadata",
+			version: "2.5.1+build.1",
+		},
+	}
+
+	for _, testCase := range tests {
+		t.Run(testCase.name, func(t *testing.T) {
+			t.Parallel()
+
+			if !shared.IsSemverValid(testCase.version) {
+				t.Errorf("value is expected to be valid")
+			}
+		})
+	}
+}
+
+func TestIsSemverValid_Error(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name    string
+		version string
+	}{
+		{
+			name:    "invalid semver - commit hash",
+			version: "abc123def456",
+		},
+		{
+			name:    "invalid semver - dev-master",
+			version: "dev-master",
+		},
+	}
+
+	for _, testCase := range tests {
+		t.Run(testCase.name, func(t *testing.T) {
+			t.Parallel()
+
+			if shared.IsSemverValid(testCase.version) {
+				t.Errorf("value is expected to be invalid")
+			}
+		})
+	}
+}
+
+func TestInvalidSemverComponentError(t *testing.T) {
+	t.Parallel()
+
+	err := shared.InvalidSemverComponentError{Version: "dev-master"}
+
+	if err.Error() != "invalid semver component: dev-master" {
+		t.Error(fmt.Errorf("unexpected error: %w", err))
 	}
 }
