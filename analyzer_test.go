@@ -46,7 +46,7 @@ func TestDiff_BasicComparison(t *testing.T) {
 					return false
 				}
 
-				return out.Changes["vendor/new"].Operation.Name == depsdiff.AddedPackage
+				return out.Changes["vendor/new"].Operation.Name == depsdiff.AdditionOperation
 			},
 		},
 		{
@@ -62,7 +62,7 @@ func TestDiff_BasicComparison(t *testing.T) {
 					return false
 				}
 
-				return out.Changes["vendor/old"].Operation.Name == depsdiff.RemovedPackaged
+				return out.Changes["vendor/old"].Operation.Name == depsdiff.RemovalOperation
 			},
 		},
 		{
@@ -82,9 +82,8 @@ func TestDiff_BasicComparison(t *testing.T) {
 
 				change := out.Changes["vendor/pkg"]
 
-				return change.Operation.Name == depsdiff.UpdatedPackage &&
-					change.Operation.SemverType == "MAJOR" &&
-					change.Operation.Direction == "UP"
+				return change.Operation.Name == depsdiff.UpgradeOperation &&
+					change.Operation.SemverType == "MAJOR"
 			},
 		},
 	}

@@ -125,13 +125,6 @@ func ValidateWrapperOperation(actualOperation, expectedOperation depsdiff.Operat
 		)
 	}
 
-	if actualOperation.Direction != expectedOperation.Direction {
-		return fmt.Errorf("unexpected Direction value. Expected: %s Actual: %s",
-			expectedOperation.Direction,
-			actualOperation.Direction,
-		)
-	}
-
 	if !reflect.DeepEqual(actualOperation, expectedOperation) {
 		return fmt.Errorf("unexpected differences. Expected: %+v, Actual: %+v", expectedOperation, actualOperation)
 	}

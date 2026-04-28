@@ -4,8 +4,7 @@ import (
 	"github.com/yoanm/go-deps-diff/shared"
 )
 
-// Diff compares two composer.lock files and returns the differences
-// Note: Currently handles both lock file comparison AND requirement file integration.
+// Diff compares two packages maps and returns the differences.
 func Diff(previous, current shared.PackageMap) (*Output, error) {
 	// Find differences
 	output := &Output{
@@ -14,23 +13,22 @@ func Diff(previous, current shared.PackageMap) (*Output, error) {
 
 	// Find added and updated packages
 	for name, currentPkg := range current {
-		info := PackageChange{Package: currentPkg} //nolint:exhaustruct // Additional properties will be added below
-
 		if previousPkg, previousExists := previous[name]; previousExists {
 			previousVersion := previousPkg.GetVersion().Raw
 			currentVersion := currentPkg.GetVersion().Raw
 
 			if previousVersion != currentVersion {
-				info.PreviousVersion = previousPkg.GetVersion()
-
-				info.Operation = guessUpdateOperation(previousVersion, currentVersion)
-
-				output.Changes[name] = info
+				output.Changes[name] = PackageChange{
+					Package:         currentPkg,
+					Operation:       guessUpdateOperation(previousVersion, currentVersion),
+					PreviousVersion: previousPkg.GetVersion(),
+				}
 			}
 		} else {
-			info.Operation = Operation{Name: AddedPackage, SemverType: DiffSemverNone, Direction: DiffDirectionNone}
-
-			output.Changes[name] = info
+			output.Changes[name] = PackageChange{ //nolint:exhaustruct // PreviousVersion is unused for added packages !
+				Package:   currentPkg,
+				Operation: Operation{Name: AdditionOperation, SemverType: DiffSemverNone},
+			}
 		}
 	}
 
@@ -39,7 +37,7 @@ func Diff(previous, current shared.PackageMap) (*Output, error) {
 		if _, exists := current[name]; !exists {
 			info := PackageChange{ //nolint:exhaustruct // PreviousVersion is unused for removed packages !
 				Package:   previousPkg,
-				Operation: Operation{Name: RemovedPackaged, SemverType: DiffSemverNone, Direction: DiffDirectionNone},
+				Operation: Operation{Name: RemovalOperation, SemverType: DiffSemverNone},
 			}
 
 			output.Changes[name] = info
@@ -52,63 +50,43 @@ func Diff(previous, current shared.PackageMap) (*Output, error) {
 // guessUpdateOperation detects the type and direction of a version update.
 func guessUpdateOperation(previousVersion, currentVersion string) Operation {
 	result := Operation{
-		Name:       UpdatedPackage,
+		Name:       UnknownUpdateOperation,
 		SemverType: DiffSemverUnknown,
-		Direction:  DiffDirectionUnknown,
 	}
 
-	// If either version is not semver, direction is UNKNOWN
 	prevTag, invalidPrevErr := shared.ParseSemverVersion(previousVersion)
 	currTag, invalidCurrentErr := shared.ParseSemverVersion(currentVersion)
 
+	// If either version is not semver, direction is UNKNOWN
 	if invalidPrevErr != nil || invalidCurrentErr != nil {
 		return result
 	}
 
-	// Compare MAJOR
-	if prevTag.Major != currTag.Major {
+	switch {
+	case prevTag.Major != currTag.Major:
 		result.SemverType = DiffSemverMajor
-		if currTag.Major > prevTag.Major {
-			result.Direction = DiffDirectionUp
-		} else {
-			result.Direction = DiffDirectionDown
-		}
-
-		return result
-	}
-
-	// Compare MINOR
-	if prevTag.Minor != currTag.Minor {
+		result.Name = getDirectionFromSemverComponent(prevTag.Major, currTag.Major)
+	case prevTag.Minor != currTag.Minor:
 		result.SemverType = DiffSemverMinor
-		if currTag.Minor > prevTag.Minor {
-			result.Direction = DiffDirectionUp
-		} else {
-			result.Direction = DiffDirectionDown
-		}
-
-		return result
-	}
-
-	// Compare PATCH
-	if prevTag.Patch != currTag.Patch {
+		result.Name = getDirectionFromSemverComponent(prevTag.Minor, currTag.Minor)
+	case prevTag.Patch != currTag.Patch:
 		result.SemverType = DiffSemverPatch
-		if currTag.Patch > prevTag.Patch {
-			result.Direction = DiffDirectionUp
-		} else {
-			result.Direction = DiffDirectionDown
-		}
-
-		return result
-	}
-
-	// All numeric components equal
-	// Compare extra components (pre-release or build metadata)
-	if prevTag.Extra != currTag.Extra {
+		result.Name = getDirectionFromSemverComponent(prevTag.Patch, currTag.Patch)
+	// All numeric components equal -> Compare extra components (pre-release or build metadata)
+	case prevTag.Extra != currTag.Extra:
 		result.SemverType = DiffSemverExtra
-		result.Direction = DiffDirectionUnknown
-
-		return result
+		result.Name = UnknownUpdateOperation
 	}
 
 	return result
+}
+
+func getDirectionFromSemverComponent(prev, curr int) OperationName {
+	if prev > curr {
+		return DowngradeOperation
+	} else if prev < curr {
+		return UpgradeOperation
+	}
+
+	return UnknownUpdateOperation
 }
