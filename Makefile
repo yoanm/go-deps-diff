@@ -61,7 +61,7 @@ build: ## 🗜️  Build package
 #### Use build_o="..." to specify build options
 $(eval build_o ?=)
 build:
-	go build -v -o deps-diff $(build_o)
+	go build -C composer -v $(build_o)
 
 .PHONY: verify-deps
 verify-deps: ## 🗜️  Verify dependencies
