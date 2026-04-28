@@ -64,7 +64,7 @@ func createWrapper(pkg *Package, reqData *ComposerReq, isDevOnly bool) *Composer
 // isAbandonedPkg safely extracts the abandoned status from the composer package
 // Returns true if the field is explicitly set to true (boolean or string "true").
 func isAbandonedPkg(pkg *Package) bool {
-	if pkg == nil || pkg.Abandoned == nil {
+	if pkg.Abandoned == nil {
 		return false
 	}
 
@@ -79,13 +79,20 @@ func isAbandonedPkg(pkg *Package) bool {
 	}
 }
 
+const shortRefLength = 7
+
 // parsePkgVersion parses a version string into a PkgVersionOld.
 func parsePkgVersion(pkg *Package) shared.PkgVersion {
 	if !shared.IsSemverValid(pkg.Version) { // Not semver - check if there is a commit reference
 		if ref := getPkgRef(pkg); ref != "" {
+			shortRef := ref
+			if len(shortRef) > shortRefLength {
+				shortRef = shortRef[:shortRefLength]
+			}
+
 			return shared.PkgVersion{
 				Raw:   ref,
-				Label: pkg.Version + "#" + ref[:7],
+				Label: pkg.Version + "#" + shortRef,
 			}
 		}
 	}
@@ -99,10 +106,6 @@ func parsePkgVersion(pkg *Package) shared.PkgVersion {
 // getPkgRef extracts the commit hash from a package
 // Prefers dist.reference over source.reference.
 func getPkgRef(pkg *Package) string {
-	if pkg == nil {
-		return ""
-	}
-
 	if pkg.Dist != nil && pkg.Dist.Reference != "" {
 		return pkg.Dist.Reference
 	}
@@ -117,10 +120,6 @@ func getPkgRef(pkg *Package) string {
 // getPkgLink extracts the best available link from a package
 // Priority: wiki -> docs -> source -> homepage.
 func getPkgLink(pkg *Package) string {
-	if pkg == nil {
-		return ""
-	}
-
 	if pkg.Support != nil {
 		if pkg.Support.Wiki != "" {
 			return pkg.Support.Wiki
