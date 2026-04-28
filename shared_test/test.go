@@ -2,7 +2,6 @@ package shared_test
 
 import (
 	"fmt"
-	"github.com/yoanm/go-deps-diff"
 	"github.com/yoanm/go-deps-diff/shared"
 	"reflect"
 )
@@ -67,24 +66,6 @@ func ValidatePackageVersion(actualVersion, expectedVersion shared.PkgVersion) er
 
 	if !reflect.DeepEqual(actualVersion, expectedVersion) {
 		return fmt.Errorf("unexpected differences. Expected: %+v, Actual: %+v", expectedVersion, expectedVersion)
-	}
-
-	return nil
-}
-
-func ValidateWrapperOperation(actualOperation, expectedOperation depsdiff.Operation) error {
-	if actualOperation.Name != expectedOperation.Name {
-		return fmt.Errorf("unexpected Name value. Expected: %s Actual: %s", expectedOperation.Name, actualOperation.Name)
-	}
-	if actualOperation.SemverType != expectedOperation.SemverType {
-		return fmt.Errorf("unexpected SemverType value. Expected: %s Actual: %s", expectedOperation.SemverType, actualOperation.SemverType)
-	}
-	if actualOperation.Direction != expectedOperation.Direction {
-		return fmt.Errorf("unexpected Direction value. Expected: %s Actual: %s", expectedOperation.Direction, actualOperation.Direction)
-	}
-
-	if !reflect.DeepEqual(actualOperation, expectedOperation) {
-		return fmt.Errorf("unexpected differences. Expected: %+v, Actual: %+v", expectedOperation, actualOperation)
 	}
 
 	return nil
