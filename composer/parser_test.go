@@ -186,7 +186,7 @@ func TestParseReq_Error(t *testing.T) {
 			name: "missing require arrays",
 			data: []byte(`{"other": "field"}`),
 			checkFn: func(err error) error {
-				if err.Error() != "invalid format: missing 'packages' or 'packages-dev' fields" {
+				if err.Error() != "invalid format: missing 'require' or 'require-dev' fields" {
 					return fmt.Errorf("unexpected error: %w", err)
 				}
 
@@ -199,7 +199,7 @@ func TestParseReq_Error(t *testing.T) {
 		t.Run(testCase.name, func(t *testing.T) {
 			t.Parallel()
 
-			_, err := composer.ParseLock(testCase.data)
+			_, err := composer.ParseReq(testCase.data)
 			if err == nil {
 				t.Errorf("an error is expected")
 			} else if err2 := testCase.checkFn(err); err2 != nil {
