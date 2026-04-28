@@ -9,14 +9,16 @@ type PkgWrapper interface {
 	// GetVersion returns the package Version (e.g., "1.2.3" or "dev-master").
 	// For removed packages, this returns the last known Version.
 	GetVersion() PkgVersion
-	IsAbandoned() bool // true if the package is marked as abandoned (no longer maintained)
+	// IsAbandoned is true if the package is marked as abandoned (no longer maintained)
+	IsAbandoned() bool
 	// IsDevOnly is true if package is only for dev environment (dev-only dependency).
 	// A package may exist only as root dev requirement (from user point of view), but actually used
 	// by a non-dev requirement !
 	IsDevOnly() bool
-	IsRootRequirement() bool // true if package is explicitly required (requirement file usually)
+	// IsRootRequirement is true if package is explicitly required (requirement file usually)
+	IsRootRequirement() bool
 	// IsRootDevRequirement is true if package is explicitly required (requirement file usually),
-	// but only for dev environment
+	// but only for dev environment (e.g. "require-dev" section for composer)
 	IsRootDevRequirement() bool
 	// GetLink Returns the best available link for the package (wiki, docs, source, homepage, etc.)
 	// or empty string if none available

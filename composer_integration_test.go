@@ -71,7 +71,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.DowngradeOperation,
-				SemverType: depsdiff.DiffSemverMajor,
+				SemverType: depsdiff.SemverMajorUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "4.0.4", Label: "4.0.4"},
 		},
@@ -87,7 +87,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.UpgradeOperation,
-				SemverType: depsdiff.DiffSemverMajor,
+				SemverType: depsdiff.SemverMajorUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "v4.4.27", Label: "v4.4.27"},
 		},
@@ -103,7 +103,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.UnknownUpdateOperation,
-				SemverType: depsdiff.DiffSemverUnknown,
+				SemverType: depsdiff.SemverUnknownUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "dcd886d0ae9246129ec8fbf5e082eff1fc3c49ea", Label: "dev-master#dcd886d"},
 		},
@@ -119,7 +119,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{}, //nolint:exhaustruct // Useless for the test case
 		},
@@ -135,7 +135,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.DowngradeOperation,
-				SemverType: depsdiff.DiffSemverMinor,
+				SemverType: depsdiff.SemverMinorUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "v4.8.0", Label: "v4.8.0"},
 		},
@@ -151,7 +151,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.UpgradeOperation,
-				SemverType: depsdiff.DiffSemverMinor,
+				SemverType: depsdiff.SemverMinorUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "v2.2.0", Label: "v2.2.0"},
 		},
@@ -167,7 +167,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.UpgradeOperation,
-				SemverType: depsdiff.DiffSemverMinor,
+				SemverType: depsdiff.SemverMinorUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "v1.23.0", Label: "v1.23.0"},
 		},
@@ -183,7 +183,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.UpgradeOperation,
-				SemverType: depsdiff.DiffSemverMinor,
+				SemverType: depsdiff.SemverMinorUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "v1.23.1", Label: "v1.23.1"},
 		},
@@ -199,7 +199,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.UpgradeOperation,
-				SemverType: depsdiff.DiffSemverPatch,
+				SemverType: depsdiff.SemverPatchUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "0.12.96", Label: "0.12.96"},
 		},
@@ -215,7 +215,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.DowngradeOperation,
-				SemverType: depsdiff.DiffSemverPatch,
+				SemverType: depsdiff.SemverPatchUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "1.0.8", Label: "1.0.8"},
 		},
@@ -231,7 +231,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.UpgradeOperation,
-				SemverType: depsdiff.DiffSemverPatch,
+				SemverType: depsdiff.SemverPatchUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "v1.1.1", Label: "v1.1.1"},
 		},
@@ -247,7 +247,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -263,7 +263,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -279,7 +279,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -295,7 +295,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -311,7 +311,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -327,7 +327,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -343,7 +343,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -359,7 +359,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -375,7 +375,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -391,7 +391,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -407,7 +407,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -423,7 +423,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -439,7 +439,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -455,7 +455,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -471,7 +471,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -487,7 +487,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -503,7 +503,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -519,7 +519,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -535,7 +535,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -551,7 +551,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -567,7 +567,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -583,7 +583,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -599,7 +599,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -615,7 +615,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -631,7 +631,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -647,7 +647,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -663,7 +663,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -679,7 +679,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -695,7 +695,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -711,7 +711,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -727,7 +727,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -743,7 +743,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -759,7 +759,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -775,7 +775,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -791,7 +791,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -807,7 +807,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -823,7 +823,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -839,7 +839,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -855,7 +855,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -871,7 +871,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -887,7 +887,7 @@ func TestIntegration_Composer_Basic(t *testing.T) {
 			},
 			Operation: depsdiff.Operation{
 				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.DiffSemverNone,
+				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},

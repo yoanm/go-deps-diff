@@ -18,18 +18,18 @@ const (
 type OperationSemverType string
 
 const (
-	// DiffSemverMajor is for updated packages where the major component differs.
-	DiffSemverMajor OperationSemverType = "MAJOR"
-	// DiffSemverMinor is for updated packages where the minor component differs.
-	DiffSemverMinor OperationSemverType = "MINOR"
-	// DiffSemverPatch is for updated packages where the patch component differs.
-	DiffSemverPatch OperationSemverType = "PATCH"
-	// DiffSemverExtra is for updated packages where the extra component differs.
-	DiffSemverExtra OperationSemverType = "EXTRA"
-	// DiffSemverUnknown is for updated packages where we can't determine the difference (e.g., non-semver versions).
-	DiffSemverUnknown OperationSemverType = "UNKNOWN"
-	// DiffSemverNone is for added and removed packages (=no difference as only one version available).
-	DiffSemverNone OperationSemverType = "NONE"
+	// SemverMajorUpdate is for updated packages where the major component differs.
+	SemverMajorUpdate OperationSemverType = "MAJOR"
+	// SemverMinorUpdate is for updated packages where the minor component differs.
+	SemverMinorUpdate OperationSemverType = "MINOR"
+	// SemverPatchUpdate is for updated packages where the patch component differs.
+	SemverPatchUpdate OperationSemverType = "PATCH"
+	// SemverExtraUpdate is for updated packages where the extra component differs.
+	SemverExtraUpdate OperationSemverType = "EXTRA"
+	// SemverUnknownUpdate is for updated packages where we can't determine the difference (e.g., non-semver versions).
+	SemverUnknownUpdate OperationSemverType = "UNKNOWN"
+	// SemverNoUpdate is for added and removed packages (=no difference as only one version available).
+	SemverNoUpdate OperationSemverType = "NONE"
 )
 
 type Operation struct {

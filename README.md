@@ -34,7 +34,7 @@ func main() {
     lockCurrent, _ := os.ReadFile("composer.lock")
     reqCurrent, _ := os.ReadFile("composer.json")
 
-    // Compare
+    // Compare (use appropriate function for your package manager)
     output, err := depsdiff.ComposerDiff(
         &depsdiff.Input{
             Current: depsdiff.PkgManagerInput{Lock: currentLock, Requirement: currentReq},
