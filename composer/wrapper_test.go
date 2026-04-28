@@ -317,7 +317,7 @@ func TestDevOnlyProperty(t *testing.T) {
 	}
 }
 
-func TestIsAbandonedPkg(t *testing.T) {
+func TestIsAbandonedProperty(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
@@ -372,7 +372,7 @@ func TestIsAbandonedPkg(t *testing.T) {
 	}
 }
 
-func TestGetPkgLink(t *testing.T) {
+func TestLinkProperty(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
@@ -441,40 +441,61 @@ func TestGetPkgLink(t *testing.T) {
 	}
 }
 
-func TestGetPkgRef(t *testing.T) {
+func TestVersionProperty(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
-		name     string
-		lock     []byte
-		expected string
+		name          string
+		lock          []byte
+		expectedRaw   string
+		expectedLabel string
 	}{
 		{
-			name: "dist reference",
+			name: "Semver version",
+			lock: []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.2.3",
+				"dist": {"reference": "abc123"}
+			}]}`),
+			expectedRaw:   "1.2.3",
+			expectedLabel: "1.2.3",
+		},
+		{
+			name: "Semver version with extra",
+			lock: []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.2.3+beta",
+				"dist": {"reference": "abc123"}
+			}]}`),
+			expectedRaw:   "1.2.3+beta",
+			expectedLabel: "1.2.3+beta",
+		},
+		{
+			name: "not semver - dist reference",
 			lock: []byte(`{"packages": [{"name": "vendor/pkg", "version": "dev-master",
 				"dist": {"reference": "abc123"}
 			}]}`),
-			expected: "dev-master#abc123",
+			expectedRaw:   "abc123",
+			expectedLabel: "dev-master#abc123",
 		},
 		{
-			name: "source reference (no dist)",
+			name: "not semver - source reference (no dist)",
 			lock: []byte(`{"packages": [{"name": "vendor/pkg", "version": "dev-master",
 				"source": {"reference": "def456"}
 			}]}`),
-			expected: "dev-master#def456",
+			expectedRaw:   "def456",
+			expectedLabel: "dev-master#def456",
 		},
 		{
-			name: "dist preferred over source",
+			name: "not semver - dist preferred over source",
 			lock: []byte(`{"packages": [{"name": "vendor/pkg", "version": "dev-master",
 				"source": {"reference": "nop"},
 				"dist": {"reference": "abc123"}
 			}]}`),
-			expected: "dev-master#abc123",
+			expectedRaw:   "abc123",
+			expectedLabel: "dev-master#abc123",
 		},
 		{
-			name:     "no reference",
-			lock:     []byte(`{"packages": [{"name": "vendor/pkg", "version": "dev-master"}]}`),
-			expected: "dev-master",
+			name:          "no reference",
+			lock:          []byte(`{"packages": [{"name": "vendor/pkg", "version": "dev-master"}]}`),
+			expectedRaw:   "dev-master",
+			expectedLabel: "dev-master",
 		},
 	}
 
@@ -492,10 +513,13 @@ func TestGetPkgRef(t *testing.T) {
 			}
 
 			pkg, pkgExists := pkgMap["vendor/pkg"]
-			if !pkgExists {
-				t.Fatal(errors.New("package 'vendor/pkg' is expected in the package map"))
-			} else if pkg.GetVersion().Label != testCase.expected {
-				t.Fatalf("GetVersion().Label = %v, want %v", pkg.GetVersion().Label, testCase.expected)
+			switch {
+			case !pkgExists:
+				t.Fatal("package 'vendor/pkg' is expected in the package map")
+			case pkg.GetVersion().Raw != testCase.expectedRaw:
+				t.Fatalf("GetVersion().Raw = %v, want %v", pkg.GetVersion().Raw, testCase.expectedRaw)
+			case pkg.GetVersion().Label != testCase.expectedLabel:
+				t.Fatalf("GetVersion().Label = %v, want %v", pkg.GetVersion().Label, testCase.expectedLabel)
 			}
 		})
 	}
