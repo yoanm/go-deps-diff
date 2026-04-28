@@ -46,7 +46,7 @@ build-doc:
 	# Add markdown style for code blocks
 	sed ${SED_INPLACE_OPTION} -E -e ':a' -e 'N' -e '$$!ba' -e 's/```(\n)/```go\1/g' DOC.md
 	# Generate doc for sub-packages
-	find * -prune -type d \( -name "composer" -o -name "shared" \) | while IFS= read -r d; do \
+	find * -prune -type d \( -name "composer" -o -name "shared" -o -name "shared_test" \) | while IFS= read -r d; do \
 		echo "Generate doc for **$$d** sub-package ..."; \
 		cd $$d > /dev/null; \
 		goreadme -constants -variabless -types -methods -functions -factories -recursive > README.md; \
