@@ -1,4 +1,7 @@
 engines:
+  metric:
+    exclude_paths:
+      - "**_test.go"
   duplication:
     exclude_paths:
       - "**_test.go"
