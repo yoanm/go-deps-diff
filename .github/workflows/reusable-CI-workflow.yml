@@ -105,11 +105,11 @@ jobs:
       - name: Run benchmarks on current code
         run: go test -run='^$' -bench=. -benchmem -count=7 ./... | tee current.txt
 
-      - name: Checkout base branch
+      - name: PR - Checkout base branch
         if: github.event_name == 'pull_request'
         run: git checkout ${{ github.base_ref }}
 
-      - name: Checkout previous commit
+      - name: Push - Checkout previous commit
         if: github.event_name == 'push'
         run: git checkout HEAD~1
 
@@ -140,4 +140,4 @@ jobs:
 
       - name: Detect regressions
         if: github.event_name == 'pull_request'
-        run: cat benchmarch_diff.txt | go run ./.tools/benchmark_regression_checker.go 10.0
+        run: cat benchmarch_diff.txt | go run .tools/benchmark_regression_checker.go 10.0
