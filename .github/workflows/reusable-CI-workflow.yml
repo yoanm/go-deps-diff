@@ -91,7 +91,15 @@ jobs:
           cache: true
           cache-dependency-path: ./go.sum
 
+      - name: Setup cache for go tools
+        uses: actions/cache@v6
+        with:
+          path: $GOPATH/bin/benchstat
+          # Clear the cache in case go.mod has been updated (go version changes mostly)
+          key: gotools-${{ hashFiles('go.mod') }}
+
       - name: Install benchstat tool
+        if: steps.cache.outputs.cache-hit != 'true'
         run: go install golang.org/x/perf/cmd/benchstat@latest
 
       - name: Run benchmarks on current code

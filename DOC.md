@@ -81,7 +81,7 @@ PackageChange contains detailed information about a package difference.
 
 ## Sub Packages
 
-* [_tools](./_tools)
+* [.tools](./.tools)
 
 * [composer](./composer)
 
