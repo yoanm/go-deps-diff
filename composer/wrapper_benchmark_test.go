@@ -24,8 +24,8 @@ func BenchmarkWrapper_Simple(b *testing.B) {
 
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() { // pb.Next() returns false when the benchmark should stop
-			if _, err := composer.BuildMapFromBytes(reqData, lockData); err != nil {
-				b.Fatalf("BuildMapFromBytes failed: %v", err)
+			if _, err2 := composer.BuildMapFromBytes(reqData, lockData); err2 != nil {
+				b.Fatalf("BuildMapFromBytes failed: %v", err2)
 			}
 		}
 	})
@@ -47,8 +47,8 @@ func BenchmarkWrapper_Complex(b *testing.B) {
 
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() { // pb.Next() returns false when the benchmark should stop
-			if _, err := composer.BuildMapFromBytes(reqData, lockData); err != nil {
-				b.Fatalf("BuildMapFromBytes failed: %v", err)
+			if _, err2 := composer.BuildMapFromBytes(reqData, lockData); err2 != nil {
+				b.Fatalf("BuildMapFromBytes failed: %v", err2)
 			}
 		}
 	})
