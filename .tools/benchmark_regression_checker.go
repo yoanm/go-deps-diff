@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"path"
 	"regexp"
 	"strconv"
 	"strings"
@@ -13,8 +14,8 @@ func main() {
 	var threshold float64 // Acceptable regression (10% for instance)
 	var err error
 
-	if len(os.Args) != 1 {
-		fmt.Println("Missing threshold argument. Usage: benchmark_regression_checker [threshold_percentage]")
+	if len(os.Args) != 2 {
+		fmt.Printf("Missing threshold argument. Usage: %s [threshold_percentage]\n", path.Base(os.Args[0]))
 		os.Exit(1)
 	} else {
 		if threshold, err = strconv.ParseFloat(os.Args[1], 64); err != nil {
@@ -25,6 +26,15 @@ func main() {
 			fmt.Printf("Threshold must be between 1%% and 99%%\n")
 			os.Exit(1)
 		}
+	}
+
+	stat, stdinStatErr := os.Stdin.Stat()
+	if stdinStatErr != nil {
+		fmt.Println(fmt.Errorf("Error accessing stdin: %w", stdinStatErr))
+		os.Exit(1)
+	} else if stat.Size() == 0 {
+		fmt.Println("No input detected. Please pipe benchstat output into this tool.")
+		os.Exit(1)
 	}
 
 	scanner := bufio.NewScanner(os.Stdin)

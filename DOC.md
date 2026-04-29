@@ -24,7 +24,7 @@ const (
     DowngradeOperation     OperationName = "DOWNGRADE"
     UnknownUpdateOperation OperationName = "UNKNOWN_UPDATE"
 )
-```go
+```
 
 ### type [OperationSemverType](/operation_types.go#L18)
 
@@ -51,7 +51,7 @@ const (
     // SemverNoUpdate is for added and removed packages (=no difference as only one version available).
     SemverNoUpdate OperationSemverType = "NONE"
 )
-```go
+```
 
 ### type [Output](/types.go#L20)
 
@@ -80,6 +80,8 @@ PackageChange contains detailed information about a package difference.
 `type PkgManagerInput struct { ... }`
 
 ## Sub Packages
+
+* [_tools](./_tools)
 
 * [composer](./composer)
 
