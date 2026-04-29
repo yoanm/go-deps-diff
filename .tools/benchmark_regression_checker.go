@@ -67,7 +67,7 @@ func main() {
 	if len(regList) > 0 {
 		fmt.Printf("Performance regression detected (threshold: %.1f%%):\n", threshold)
 		for _, reg := range regList {
-			fmt.Fprintln(os.Stderr, reg)
+			fmt.Println(reg)
 		}
 		os.Exit(1)
 	}

@@ -106,7 +106,6 @@ jobs:
         run: git checkout HEAD~1
 
       - name: Run benchmarks on original code
-        if: github.event_name == 'pull_request'
         run: go test -run='^$' -bench=. -benchmem -count=7 ./... | tee previous.txt
 
       - name: Compare benchmarks
