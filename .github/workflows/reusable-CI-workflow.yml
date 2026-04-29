@@ -137,10 +137,8 @@ jobs:
           cat benchmarch_diff.txt >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
 
-      - name: DEBUG
-        run: |
-          ls -ail
-          ls -ail .tools
-
       - name: Detect regressions
-        run: cat benchmarch_diff.txt | go run .tools/benchmark_regression_checker.go 10.0
+        run: |
+          # Return to the original branch/commit !
+          git checkout - && \
+          cat benchmarch_diff.txt | go run .tools/benchmark_regression_checker.go 10.0
