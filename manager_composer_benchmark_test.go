@@ -8,34 +8,7 @@ import (
 	depsdiff "github.com/yoanm/go-deps-diff"
 )
 
-func BenchmarkDiff_Composer_100Packages(b *testing.B) {
-	lockPrevious := generateComposerLockFile(100)
-	lockCurrent := generateComposerLockFile(100)
-	reqPrevious := generateComposerReqFile(100)
-	reqCurrent := generateComposerReqFile(100)
-
-	b.ResetTimer()
-
-	b.RunParallel(func(pb *testing.PB) {
-		for pb.Next() { // pb.Next() returns false when the benchmark should stop
-			_, err := depsdiff.ComposerDiff(&depsdiff.Input{
-				Current: depsdiff.PkgManagerInput{
-					Lock:        lockCurrent,
-					Requirement: reqCurrent,
-				},
-				Previous: depsdiff.PkgManagerInput{
-					Lock:        lockPrevious,
-					Requirement: reqPrevious,
-				},
-			})
-			if err != nil {
-				b.Fatalf("Diff failed: %v", err)
-			}
-		}
-	})
-}
-
-func BenchmarkDiff_Composer_1000Packages(b *testing.B) {
+func BenchmarkDiff_ComposerDiff(b *testing.B) {
 	lockPrevious := generateComposerLockFile(1000)
 	lockCurrent := generateComposerLockFile(1000)
 	reqPrevious := generateComposerReqFile(1000)

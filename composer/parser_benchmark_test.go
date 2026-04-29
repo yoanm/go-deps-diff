@@ -8,21 +8,7 @@ import (
 	"github.com/yoanm/go-deps-diff/composer"
 )
 
-func BenchmarkLock_100Packages(b *testing.B) {
-	data := generateLockFile(100)
-
-	b.ResetTimer()
-
-	b.RunParallel(func(pb *testing.PB) {
-		for pb.Next() { // pb.Next() returns false when the benchmark should stop
-			if _, err := composer.ParseLock(data); err != nil {
-				b.Fatalf("ParseLock failed: %v", err)
-			}
-		}
-	})
-}
-
-func BenchmarkLock_1000Packages(b *testing.B) {
+func BenchmarkParseLock(b *testing.B) {
 	data := generateLockFile(1000)
 
 	b.ResetTimer()
@@ -37,7 +23,7 @@ func BenchmarkLock_1000Packages(b *testing.B) {
 }
 
 func generateLockFile(count int) []byte {
-	type pkg struct {
+	type pkgStruct struct {
 		Name      string            `json:"name"`
 		Version   string            `json:"version"`
 		Source    map[string]string `json:"source,omitempty"`
@@ -45,19 +31,26 @@ func generateLockFile(count int) []byte {
 	}
 
 	type lock struct {
-		Packages []*pkg `json:"packages"`
+		Packages    []*pkgStruct `json:"packages"`
+		PackagesDev []*pkgStruct `json:"packages-dev"`
 	}
 
 	lockObject := lock{
-		Packages: make([]*pkg, count),
+		Packages:    []*pkgStruct{},
+		PackagesDev: []*pkgStruct{},
 	}
 
-	for i := range count {
-		lockObject.Packages[i] = &pkg{
-			Name:      fmt.Sprintf("vendor/package-%d", i),
-			Version:   fmt.Sprintf("%d.%d.0", i%10, i%5),
-			Source:    map[string]string{"reference": fmt.Sprintf("abc%d", i)},
+	for cnt := range count {
+		pkg := pkgStruct{
+			Name:      fmt.Sprintf("vendor/package-%d", cnt),
+			Version:   fmt.Sprintf("%d.%d.0", cnt%10, cnt%5),
+			Source:    map[string]string{"reference": fmt.Sprintf("abc%d", cnt)},
 			Abandoned: false,
+		}
+		if cnt%2 == 0 {
+			lockObject.Packages = append(lockObject.Packages, &pkg)
+		} else {
+			lockObject.PackagesDev = append(lockObject.PackagesDev, &pkg)
 		}
 	}
 
@@ -66,21 +59,7 @@ func generateLockFile(count int) []byte {
 	return data
 }
 
-func BenchmarkReq_100Packages(b *testing.B) {
-	data := generateReqFile(100)
-
-	b.ResetTimer()
-
-	b.RunParallel(func(pb *testing.PB) {
-		for pb.Next() { // pb.Next() returns false when the benchmark should stop
-			if _, err := composer.ParseReq(data); err != nil {
-				b.Fatalf("ParseReq failed: %v", err)
-			}
-		}
-	})
-}
-
-func BenchmarkReq_1000Packages(b *testing.B) {
+func BenchmarkParseReq(b *testing.B) {
 	data := generateReqFile(1000)
 
 	b.ResetTimer()
@@ -105,11 +84,12 @@ func generateReqFile(count int) []byte {
 		RequireDev: map[string]string{},
 	}
 
-	for i := range count {
-		if i%2 == 0 {
-			reqObject.Require[fmt.Sprintf("vendor/package-%d", i)] = fmt.Sprintf("^%d.%d", i%10, i%5)
+	for cnt := range count {
+		key, value := fmt.Sprintf("vendor/package-%d", cnt), fmt.Sprintf("^%d.%d", cnt%10, cnt%5)
+		if cnt%2 == 0 {
+			reqObject.Require[key] = value
 		} else {
-			reqObject.RequireDev[fmt.Sprintf("vendor/package-%d", i)] = fmt.Sprintf("^%d.%d", i%10, i%5)
+			reqObject.RequireDev[key] = value
 		}
 	}
 
