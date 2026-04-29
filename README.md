@@ -57,15 +57,14 @@ func main() {
 
 - ✅ Detects added, removed, and updated packages
 - ✅ Semantic version parsing (MAJOR/MINOR/PATCH/EXTRA)
-- ✅ Version direction detection (UP/DOWN/NONE/UNKNOWN)
-- ✅ Optional requirement file integration for root requirement detection
+- ✅ Update direction detection (DOWNGRADE/UPGRADE) for semver compatible versions (UNKNOWN_UPDATE otherwise)
 - ✅ Support for both regular and dev dependencies
 - ✅ Handles commit-based versions
 - ✅ Efficient O(1) lookup-based comparison
 
 ## Sub-packages
 
-- **composer/**: Parser for composer.lock and composer.json files
+- **composer**: Parser and wrapper for composer
 
 ## Testing
 

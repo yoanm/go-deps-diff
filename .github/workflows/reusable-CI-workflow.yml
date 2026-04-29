@@ -121,7 +121,6 @@ jobs:
             benchstat.txt
 
       - name: Build summary
-        if: github.event_name == 'pull_request'
         run: |
           echo "## Benchmark Comparison" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
