@@ -90,13 +90,6 @@ jobs:
           cache: true
           cache-dependency-path: ./go.sum
 
-      - name: Setup cache for go tools
-        uses: actions/cache@v5
-        with:
-          path: $GOPATH/bin/benchstat
-          # Clear the cache in case go.mod has been updated (go version changes mostly)
-          key: gotools-${{ hashFiles('go.mod') }}
-
       - name: Install benchstat tool
         if: steps.cache.outputs.cache-hit != 'true'
         run: go install golang.org/x/perf/cmd/benchstat@latest
@@ -141,5 +134,5 @@ jobs:
           # Return to the original branch/commit !
           git checkout - >/dev/null && \
             cat benchmarch_diff.txt | go run .tools/benchmark_regression_checker.go 10.0 | tee regression_check.txt && \
-            echo "\n\nRegression check result:\n" >> $GITHUB_STEP_SUMMARY && \
+            echo "<br/><br/>Regression check result:<br/>" >> $GITHUB_STEP_SUMMARY && \
             cat regression_check.txt >> $GITHUB_STEP_SUMMARY
