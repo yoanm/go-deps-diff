@@ -9,7 +9,7 @@ import (
 	"github.com/yoanm/go-deps-diff/composer"
 )
 
-func BenchmarkDiff_100Packages(b *testing.B) {
+func BenchmarkDiff_Composer_100Packages(b *testing.B) {
 	lockPrevious := generateLockFile(100)
 	lockCurrent := generateLockFile(100)
 
@@ -32,7 +32,7 @@ func BenchmarkDiff_100Packages(b *testing.B) {
 	}
 }
 
-func BenchmarkDiff_1000Packages(b *testing.B) {
+func BenchmarkDiff_Composer_1000Packages(b *testing.B) {
 	lockPrevious := generateLockFile(1000)
 	lockCurrent := generateLockFile(1000)
 

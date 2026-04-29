@@ -72,3 +72,57 @@ jobs:
           fi
           echo "Documentation is up to date 👌"
           exit 0
+
+
+  benchmark:
+    requires: [coverage, static] # This job will only run if both 'coverage' and 'static' jobs succeed !
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: ./go.mod
+          check-latest: true
+          cache: true
+          cache-dependency-path: ./go.sum
+
+      - name: Install benchstat tool
+        run: go install golang.org/x/perf/cmd/benchstat@latest
+
+      - name: Run benchmarks on current code
+        run: go test -bench=. -benchmem -count=5 ./... > current.txt
+
+      - name: Checkout base branch
+        if: github.event_name == 'pull_request'
+        run: git checkout ${{ github.base_ref }}
+
+      - name: Run benchmarks on original code
+        if: github.event_name == 'pull_request'
+        run: go test -bench=. -benchmem -count=5 ./... > previous.txt
+
+      - name: Compare benchmarks
+        if: github.event_name == 'pull_request'
+        run: benchstat previous.txt current.txt > benchmarch_diff.txt
+
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results
+          path: |
+            current.txt
+            previous.txt
+            benchmarch_diff.txt
+
+      - name: Build summary
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "## Benchmark Comparison" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat benchmarch_diff.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Detect regressions
+        if: github.event_name == 'pull_request'
+        run: cat benchmarch_diff.txt | go run ./_tools/benchmark_regression_checker.go 10.0
