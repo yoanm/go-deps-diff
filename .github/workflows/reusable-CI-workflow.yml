@@ -132,5 +132,5 @@ jobs:
       - name: Detect regressions
         run: |
           # Return to the original branch/commit !
-          git checkout - >/dev/null && \
+          git -c advice.detachedHead=false checkout - >/dev/null && \
             cat benchstat.txt | go run .tools/benchmark_regression_checker.go 10.0
