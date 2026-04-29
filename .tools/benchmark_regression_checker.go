@@ -28,12 +28,13 @@ func main() {
 		}
 	}
 
-	stat, stdinStatErr := os.Stdin.Stat()
-	if stdinStatErr != nil {
-		fmt.Fprintf(os.Stderr, "Error accessing stdin: %s", stdinStatErr)
-		os.Exit(1)
-	} else if stat.Size() == 0 {
-		fmt.Fprintln(os.Stderr, "No input detected. Please pipe benchstat output into this tool.")
+	stat, _ := os.Stdin.Stat()
+	if (stat.Mode() & os.ModeCharDevice) != 0 { // Data must come from pipe !
+		fmt.Fprintf(
+			os.Stderr,
+			"No input detected. Please pipe benchstat output into this tool: cat benchstat.out | %s [threshold_percentage]\n",
+			path.Base(os.Args[0]),
+		)
 		os.Exit(1)
 	}
 
