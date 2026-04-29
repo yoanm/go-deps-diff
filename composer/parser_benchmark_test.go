@@ -54,14 +54,14 @@ func generateLockFile(count int) []byte {
 		PackagesDev: []*pkgStruct{},
 	}
 
-	for i := range count {
+	for cnt := range count {
 		pkg := pkgStruct{
-			Name:      fmt.Sprintf("vendor/package-%d", i),
-			Version:   fmt.Sprintf("%d.%d.0", i%10, i%5),
-			Source:    map[string]string{"reference": fmt.Sprintf("abc%d", i)},
+			Name:      fmt.Sprintf("vendor/package-%d", cnt),
+			Version:   fmt.Sprintf("%d.%d.0", cnt%10, cnt%5),
+			Source:    map[string]string{"reference": fmt.Sprintf("abc%d", cnt)},
 			Abandoned: false,
 		}
-		if i%2 == 0 {
+		if cnt%2 == 0 {
 			lockObject.Packages = append(lockObject.Packages, &pkg)
 		} else {
 			lockObject.PackagesDev = append(lockObject.PackagesDev, &pkg)
@@ -112,9 +112,9 @@ func generateReqFile(count int) []byte {
 		RequireDev: map[string]string{},
 	}
 
-	for i := range count {
-		key, value := fmt.Sprintf("vendor/package-%d", i), fmt.Sprintf("^%d.%d", i%10, i%5)
-		if i%2 == 0 {
+	for cnt := range count {
+		key, value := fmt.Sprintf("vendor/package-%d", cnt), fmt.Sprintf("^%d.%d", cnt%10, cnt%5)
+		if cnt%2 == 0 {
 			reqObject.Require[key] = value
 		} else {
 			reqObject.RequireDev[key] = value
