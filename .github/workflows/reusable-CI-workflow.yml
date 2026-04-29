@@ -76,7 +76,7 @@ jobs:
   benchmark:
     name: Benchmark regression check
     if: github.event_name == 'push' || ( github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'with-benchmark') )
-    needs: [test]
+    needs: [coverage]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
