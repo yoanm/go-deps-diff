@@ -74,10 +74,14 @@ jobs:
           exit 0
 
   benchmark:
-    needs: [coverage, static] # This job will only run if both 'coverage' and 'static' jobs succeed !
+    name: Benchmark regression check
+    if: github.event_name == 'push' || ( github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'with-benchmark') )
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Set up Go
         uses: actions/setup-go@v6
@@ -91,15 +95,19 @@ jobs:
         run: go install golang.org/x/perf/cmd/benchstat@latest
 
       - name: Run benchmarks on current code
-        run: go test -bench=. -benchmem -count=5 ./... > current.txt
+        run: go test -run='^$' -bench=. -benchmem -count=5 ./... > current.txt
 
       - name: Checkout base branch
         if: github.event_name == 'pull_request'
         run: git checkout ${{ github.base_ref }}
 
+      - name: Checkout previous commit
+        if: github.event_name == 'push'
+        run: git checkout HEAD~1
+
       - name: Run benchmarks on original code
         if: github.event_name == 'pull_request'
-        run: go test -bench=. -benchmem -count=5 ./... > previous.txt
+        run: go test -run='^$' -bench=. -benchmem -count=5 ./... > previous.txt
 
       - name: Compare benchmarks
         if: github.event_name == 'pull_request'
