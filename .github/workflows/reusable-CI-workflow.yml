@@ -132,4 +132,4 @@ jobs:
 
       - name: Detect regressions
         if: github.event_name == 'pull_request'
-        run: cat benchmarch_diff.txt | go run ./_tools/benchmark_regression_checker.go 10.0
+        run: cat benchmarch_diff.txt | go run ./_tools/.benchmark_regression_checker 10.0

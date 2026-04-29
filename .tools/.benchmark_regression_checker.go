@@ -10,8 +10,7 @@ import (
 )
 
 func main() {
-	// Acceptable regression (10% for instance)
-	var threshold float64
+	var threshold float64 // Acceptable regression (10% for instance)
 	var err error
 
 	if len(os.Args) != 1 {
