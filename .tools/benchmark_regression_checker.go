@@ -15,25 +15,25 @@ func main() {
 	var err error
 
 	if len(os.Args) != 2 {
-		fmt.Printf("Missing threshold argument. Usage: %s [threshold_percentage]\n", path.Base(os.Args[0]))
+		fmt.Fprintf(os.Stderr, "Missing threshold argument. Usage: %s [threshold_percentage]\n", path.Base(os.Args[0]))
 		os.Exit(1)
 	} else {
 		if threshold, err = strconv.ParseFloat(os.Args[1], 64); err != nil {
-			fmt.Printf("Threshold must be a valid float\n")
+			fmt.Fprintln(os.Stderr, "Threshold must be a valid float")
 			os.Exit(1)
 		}
 		if threshold > 100 || threshold <= 0 {
-			fmt.Printf("Threshold must be between 1%% and 99%%\n")
+			fmt.Fprintln(os.Stderr, "Threshold must be between 1%% and 99%%")
 			os.Exit(1)
 		}
 	}
 
 	stat, stdinStatErr := os.Stdin.Stat()
 	if stdinStatErr != nil {
-		fmt.Println(fmt.Errorf("Error accessing stdin: %w", stdinStatErr))
+		fmt.Fprintf(os.Stderr, "Error accessing stdin: %s", stdinStatErr)
 		os.Exit(1)
 	} else if stat.Size() == 0 {
-		fmt.Println("No input detected. Please pipe benchstat output into this tool.")
+		fmt.Fprintln(os.Stderr, "No input detected. Please pipe benchstat output into this tool.")
 		os.Exit(1)
 	}
 
@@ -49,7 +49,7 @@ func main() {
 		if len(matches) > 1 {
 			delta, err2 := strconv.ParseFloat(matches[1], 64)
 			if err2 != nil {
-				fmt.Printf("Error parsing delta from line: %s\n", line)
+				fmt.Fprintf(os.Stderr, "Error parsing delta from line: %s\n", line)
 				continue
 			}
 
@@ -66,7 +66,7 @@ func main() {
 	if len(regList) > 0 {
 		fmt.Printf("Performance regression detected (threshold: %.1f%%):\n", threshold)
 		for _, reg := range regList {
-			fmt.Println(reg)
+			fmt.Fprintln(os.Stderr, reg)
 		}
 		os.Exit(1)
 	}
