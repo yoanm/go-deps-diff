@@ -8,30 +8,7 @@ import (
 	"github.com/yoanm/go-deps-diff/composer"
 )
 
-func BenchmarkWrapper_Simple(b *testing.B) {
-	// Load fixture files
-	reqData, err := os.ReadFile("./testdata/composer-simple.json")
-	if err != nil {
-		b.Fatal(fmt.Errorf("error while reading requirement file = %w", err))
-	}
-
-	lockData, err := os.ReadFile("./testdata/composer-simple.lock")
-	if err != nil {
-		b.Fatal(fmt.Errorf("error while reading lock file = %w", err))
-	}
-
-	b.ResetTimer()
-
-	b.RunParallel(func(pb *testing.PB) {
-		for pb.Next() { // pb.Next() returns false when the benchmark should stop
-			if _, err2 := composer.BuildMapFromBytes(reqData, lockData); err2 != nil {
-				b.Fatalf("BuildMapFromBytes failed: %v", err2)
-			}
-		}
-	})
-}
-
-func BenchmarkWrapper_Complex(b *testing.B) {
+func BenchmarkBuildMapFromBytes(b *testing.B) {
 	// Load fixture files
 	reqData, err := os.ReadFile("./testdata/composer-complex.json")
 	if err != nil {

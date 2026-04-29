@@ -8,21 +8,7 @@ import (
 	"github.com/yoanm/go-deps-diff/composer"
 )
 
-func BenchmarkLock_100Packages(b *testing.B) {
-	data := generateLockFile(100)
-
-	b.ResetTimer()
-
-	b.RunParallel(func(pb *testing.PB) {
-		for pb.Next() { // pb.Next() returns false when the benchmark should stop
-			if _, err := composer.ParseLock(data); err != nil {
-				b.Fatalf("ParseLock failed: %v", err)
-			}
-		}
-	})
-}
-
-func BenchmarkLock_1000Packages(b *testing.B) {
+func BenchmarkParseLock(b *testing.B) {
 	data := generateLockFile(1000)
 
 	b.ResetTimer()
@@ -73,21 +59,7 @@ func generateLockFile(count int) []byte {
 	return data
 }
 
-func BenchmarkReq_100Packages(b *testing.B) {
-	data := generateReqFile(100)
-
-	b.ResetTimer()
-
-	b.RunParallel(func(pb *testing.PB) {
-		for pb.Next() { // pb.Next() returns false when the benchmark should stop
-			if _, err := composer.ParseReq(data); err != nil {
-				b.Fatalf("ParseReq failed: %v", err)
-			}
-		}
-	})
-}
-
-func BenchmarkReq_1000Packages(b *testing.B) {
+func BenchmarkParseReq(b *testing.B) {
 	data := generateReqFile(1000)
 
 	b.ResetTimer()
