@@ -76,7 +76,6 @@ jobs:
   benchmark:
     name: Benchmark regression check
     if: github.event_name == 'push' || ( github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'with-benchmark') )
-    needs: [coverage]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -140,4 +139,7 @@ jobs:
       - name: Detect regressions
         run: |
           # Return to the original branch/commit !
-          git checkout - && (cat benchmarch_diff.txt | go run .tools/benchmark_regression_checker.go 10.0)
+          git checkout - >/dev/null && \
+            cat benchmarch_diff.txt | go run .tools/benchmark_regression_checker.go 10.0 | tee regression_check.txt && \
+            echo "\n\nRegression check result:\n" >> $GITHUB_STEP_SUMMARY && \
+            cat regression_check.txt >> $GITHUB_STEP_SUMMARY
