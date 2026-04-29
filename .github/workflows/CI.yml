@@ -18,7 +18,7 @@ on:
     branches: [master]
 
 concurrency:
-  group: "${{ github.workflow }}-${{ github.head_ref }}"
+  group: "CI-${{ github.head_ref || github.ref }}" # Avoid having pre-check-CI running at the same time for the same PR/branch
   cancel-in-progress: true
 
 jobs:

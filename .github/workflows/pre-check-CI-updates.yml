@@ -19,7 +19,7 @@ on:
       - '.github/workflows/auto-merge-dependabot.yml'
 
 concurrency:
-  group: "${{ github.workflow }}-${{ github.head_ref || github.ref }}"
+  group: "CI-${{ github.head_ref || github.ref }}" # Avoid having CI running at the same time for the same PR/branch
   cancel-in-progress: true
 
 jobs:
