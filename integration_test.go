@@ -42,14 +42,14 @@ func TestIntegration_Fixtures(t *testing.T) {
 			t.Parallel()
 
 			// Load fixture files
-			simpleReq, err := os.ReadFile(testCase.reqFilePath)
+			reqContent, err := os.ReadFile(testCase.reqFilePath)
 			if err != nil {
 				t.Errorf("Diff() error while reading requirement file = %v", err)
 
 				return
 			}
 
-			simpleLock, err := os.ReadFile(testCase.lockFilePath)
+			lockContent, err := os.ReadFile(testCase.lockFilePath)
 			if err != nil {
 				t.Errorf("Diff() error while reading lock file = %v", err)
 
@@ -58,12 +58,12 @@ func TestIntegration_Fixtures(t *testing.T) {
 
 			out, err := depsdiff.ComposerDiff(&depsdiff.Input{
 				Current: depsdiff.PkgManagerInput{
-					Lock:        simpleLock,
-					Requirement: simpleReq,
+					Lock:        lockContent,
+					Requirement: reqContent,
 				},
 				Previous: depsdiff.PkgManagerInput{
-					Lock:        simpleLock,
-					Requirement: simpleReq,
+					Lock:        lockContent,
+					Requirement: reqContent,
 				},
 			})
 			if err != nil {

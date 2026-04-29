@@ -82,10 +82,10 @@ func guessUpdateOperation(previousVersion, currentVersion string) Operation {
 }
 
 func guessDirectionFromSemverComponent(prev, curr int) OperationName {
-	if prev > curr {
-		return DowngradeOperation
-	} else if prev < curr {
+	if curr > prev {
 		return UpgradeOperation
+	} else if curr < prev {
+		return DowngradeOperation
 	}
 
 	return UnknownUpdateOperation

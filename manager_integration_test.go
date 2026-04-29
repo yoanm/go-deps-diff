@@ -1,6 +1,7 @@
 package depsdiff_test
 
 import (
+	"fmt"
 	"os"
 	"testing"
 
@@ -9,8 +10,150 @@ import (
 	"github.com/yoanm/go-deps-diff/shared_test"
 )
 
+func TestIntegration_Composer_Errors(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name             string
+		previousReqData  []byte
+		previousLockData []byte
+		currentReqData   []byte
+		currentLockData  []byte
+		expectedError    string
+	}{
+		{
+			name:             "invalid json - previous req file",
+			previousReqData:  []byte(`{invalid}`),
+			previousLockData: []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			currentReqData:   []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			currentLockData:  []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			//nolint:lll // Doesn't make any sense to refactor this just to avoid a long line in a test case
+			expectedError: "building previous package map: parsing requirement file content: invalid JSON: invalid character 'i' looking for beginning of object key string",
+		},
+		{
+			name:             "invalid json - current req file",
+			previousReqData:  []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			previousLockData: []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			currentReqData:   []byte(`{invalid}`),
+			currentLockData:  []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			//nolint:lll // Doesn't make any sense to refactor this just to avoid a long line in a test case
+			expectedError: "building current package map: parsing requirement file content: invalid JSON: invalid character 'i' looking for beginning of object key string",
+		},
+		{
+			name:             "invalid json - previous lock file",
+			previousReqData:  []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			previousLockData: []byte(`{invalid}`),
+			currentReqData:   []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			currentLockData:  []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			//nolint:lll // Doesn't make any sense to refactor this just to avoid a long line in a test case
+			expectedError: "building previous package map: parsing lock file content: invalid JSON: invalid character 'i' looking for beginning of object key string",
+		},
+		{
+			name:             "invalid json - current lock file",
+			previousReqData:  []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			previousLockData: []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			currentReqData:   []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			currentLockData:  []byte(`{invalid}`),
+			//nolint:lll // Doesn't make any sense to refactor this just to avoid a long line in a test case
+			expectedError: "building current package map: parsing lock file content: invalid JSON: invalid character 'i' looking for beginning of object key string",
+		},
+		{
+			name:             "empty input - previous req file",
+			previousReqData:  []byte{},
+			previousLockData: []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			currentReqData:   []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			currentLockData:  []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+
+			expectedError: "building previous package map: parsing requirement file content: invalid format: empty input",
+		},
+		{
+			name:             "empty input - current req file",
+			previousReqData:  []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			previousLockData: []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			currentReqData:   []byte{},
+			currentLockData:  []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+
+			expectedError: "building current package map: parsing requirement file content: invalid format: empty input",
+		},
+		{
+			name:             "empty input - previous lock file",
+			previousReqData:  []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			previousLockData: []byte{},
+			currentReqData:   []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			currentLockData:  []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			expectedError:    "building previous package map: parsing lock file content: invalid format: empty input",
+		},
+		{
+			name:             "empty input - current lock file",
+			previousReqData:  []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			previousLockData: []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			currentReqData:   []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			currentLockData:  []byte{},
+			expectedError:    "building current package map: parsing lock file content: invalid format: empty input",
+		},
+		{
+			name:             "missing require arrays - previous req file",
+			previousReqData:  []byte(`{"other": "field"}`),
+			previousLockData: []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			currentReqData:   []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			currentLockData:  []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			//nolint:lll // Doesn't make any sense to refactor this just to avoid a long line in a test case
+			expectedError: "building previous package map: parsing requirement file content: invalid format: missing 'require' or 'require-dev' fields",
+		},
+		{
+			name:             "missing require arrays - current req file",
+			previousReqData:  []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			previousLockData: []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			currentReqData:   []byte(`{"other": "field"}`),
+			currentLockData:  []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			//nolint:lll // Doesn't make any sense to refactor this just to avoid a long line in a test case
+			expectedError: "building current package map: parsing requirement file content: invalid format: missing 'require' or 'require-dev' fields",
+		},
+		{
+			name:             "missing require arrays - previous lock file",
+			previousReqData:  []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			previousLockData: []byte(`{"other": "field"}`),
+			currentReqData:   []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			currentLockData:  []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			//nolint:lll // Doesn't make any sense to refactor this just to avoid a long line in a test case
+			expectedError: "building previous package map: parsing lock file content: invalid format: missing 'packages' or 'packages-dev' fields",
+		},
+		{
+			name:             "missing require arrays - current lock file",
+			previousReqData:  []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			previousLockData: []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.0.0"}]}`),
+			currentReqData:   []byte(`{"require": {"vendor/pkg": "^1.0"}}`),
+			currentLockData:  []byte(`{"other": "field"}`),
+			//nolint:lll // Doesn't make any sense to refactor this just to avoid a long line in a test case
+			expectedError: "building current package map: parsing lock file content: invalid format: missing 'packages' or 'packages-dev' fields",
+		},
+	}
+
+	for _, testCase := range tests {
+		t.Run(testCase.name, func(t *testing.T) {
+			t.Parallel()
+
+			_, err := depsdiff.ComposerDiff(&depsdiff.Input{
+				Current: depsdiff.PkgManagerInput{
+					Lock:        testCase.currentLockData,
+					Requirement: testCase.currentReqData,
+				},
+				Previous: depsdiff.PkgManagerInput{
+					Lock:        testCase.previousLockData,
+					Requirement: testCase.previousReqData,
+				},
+			})
+			if err == nil {
+				t.Fatal("an error is expected")
+			} else if err.Error() != testCase.expectedError {
+				t.Fatal(fmt.Errorf("unexpected error: got %s, want %s", err.Error(), testCase.expectedError))
+			}
+		})
+	}
+}
+
 //nolint:maintidx // Low "Maintainability Index" du to deep fixtures
-func TestIntegration_Composer_Basic(t *testing.T) {
+func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 	t.Parallel()
 
 	// Load fixture files
