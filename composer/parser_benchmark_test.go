@@ -37,7 +37,7 @@ func BenchmarkLock_1000Packages(b *testing.B) {
 }
 
 func generateLockFile(count int) []byte {
-	type pkg struct {
+	type pkgStruct struct {
 		Name      string            `json:"name"`
 		Version   string            `json:"version"`
 		Source    map[string]string `json:"source,omitempty"`
@@ -45,19 +45,26 @@ func generateLockFile(count int) []byte {
 	}
 
 	type lock struct {
-		Packages []*pkg `json:"packages"`
+		Packages    []*pkgStruct `json:"packages"`
+		PackagesDev []*pkgStruct `json:"packages-dev"`
 	}
 
 	lockObject := lock{
-		Packages: make([]*pkg, count),
+		Packages:    []*pkgStruct{},
+		PackagesDev: []*pkgStruct{},
 	}
 
 	for i := range count {
-		lockObject.Packages[i] = &pkg{
+		pkg := pkgStruct{
 			Name:      fmt.Sprintf("vendor/package-%d", i),
 			Version:   fmt.Sprintf("%d.%d.0", i%10, i%5),
 			Source:    map[string]string{"reference": fmt.Sprintf("abc%d", i)},
 			Abandoned: false,
+		}
+		if i%2 == 0 {
+			lockObject.Packages = append(lockObject.Packages, &pkg)
+		} else {
+			lockObject.PackagesDev = append(lockObject.PackagesDev, &pkg)
 		}
 	}
 
@@ -106,10 +113,11 @@ func generateReqFile(count int) []byte {
 	}
 
 	for i := range count {
+		key, value := fmt.Sprintf("vendor/package-%d", i), fmt.Sprintf("^%d.%d", i%10, i%5)
 		if i%2 == 0 {
-			reqObject.Require[fmt.Sprintf("vendor/package-%d", i)] = fmt.Sprintf("^%d.%d", i%10, i%5)
+			reqObject.Require[key] = value
 		} else {
-			reqObject.RequireDev[fmt.Sprintf("vendor/package-%d", i)] = fmt.Sprintf("^%d.%d", i%10, i%5)
+			reqObject.RequireDev[key] = value
 		}
 	}
 
