@@ -55,21 +55,21 @@ const (
 
 ### type [Output](/types.go#L20)
 
-`type Output struct { ... }`
+`type Output map[string]PackageChange`
 
 Output is the result of comparing two packages maps.
 
 #### func [ComposerDiff](/manager.go#L9)
 
-`func ComposerDiff(input *Input) (*Output, error)`
+`func ComposerDiff(input *Input) (Output, error)`
 
 #### func [Diff](/analyzer.go#L8)
 
-`func Diff(previous, current shared.PackageMap) (*Output, error)`
+`func Diff(previous, current shared.PackageMap) (Output, error)`
 
 Diff compares two packages maps and returns the differences.
 
-### type [PackageChange](/types.go#L25)
+### type [PackageChange](/types.go#L23)
 
 `type PackageChange struct { ... }`
 

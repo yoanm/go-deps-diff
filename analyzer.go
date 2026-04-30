@@ -5,11 +5,9 @@ import (
 )
 
 // Diff compares two packages maps and returns the differences.
-func Diff(previous, current shared.PackageMap) (*Output, error) {
+func Diff(previous, current shared.PackageMap) (Output, error) {
 	// Find differences
-	output := &Output{
-		Changes: make(map[string]PackageChange),
-	}
+	output := Output{}
 
 	// Find added and updated packages
 	for name, currentPkg := range current {
@@ -18,14 +16,14 @@ func Diff(previous, current shared.PackageMap) (*Output, error) {
 			currentVersion := currentPkg.GetVersion().Raw
 
 			if previousVersion != currentVersion {
-				output.Changes[name] = PackageChange{
+				output[name] = PackageChange{
 					Package:         currentPkg,
 					Operation:       guessUpdateOperation(previousVersion, currentVersion),
 					PreviousVersion: previousPkg.GetVersion(),
 				}
 			}
 		} else {
-			output.Changes[name] = PackageChange{ //nolint:exhaustruct // PreviousVersion is unused for added packages !
+			output[name] = PackageChange{ //nolint:exhaustruct // PreviousVersion is unused for added packages !
 				Package:   currentPkg,
 				Operation: Operation{Name: AdditionOperation, SemverType: SemverNoUpdate},
 			}
@@ -40,7 +38,7 @@ func Diff(previous, current shared.PackageMap) (*Output, error) {
 				Operation: Operation{Name: RemovalOperation, SemverType: SemverNoUpdate},
 			}
 
-			output.Changes[name] = info
+			output[name] = info
 		}
 	}
 

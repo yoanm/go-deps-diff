@@ -31,7 +31,7 @@ func TestDiff_NoChange(t *testing.T) {
 		t.Fatal(fmt.Errorf("error during diff process: %w", err))
 	}
 
-	if len(out.Changes) != 0 {
+	if len(out) != 0 {
 		t.Fatal(errors.New("expected no changes, but got some"))
 	}
 }
@@ -133,7 +133,7 @@ func TestDiff_BasicComparison(t *testing.T) {
 				t.Fatal(fmt.Errorf("error during diff process: %w", err))
 			}
 
-			change, pkgExists := out.Changes["vendor/pkg"]
+			change, pkgExists := out["vendor/pkg"]
 			switch {
 			case !pkgExists:
 				t.Fatal("package 'vendor/pkg' is expected in the package map")

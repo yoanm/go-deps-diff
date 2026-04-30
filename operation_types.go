@@ -1,6 +1,6 @@
 package depsdiff
 
-// Operation describes what changed (operation, direction, semver type) about a package
+// Operation describes what changed (operation, semver type) about a package
 
 type OperationName string
 
@@ -34,5 +34,5 @@ const (
 
 type Operation struct {
 	Name       OperationName
-	SemverType OperationSemverType // DIFF_SEMVER_*
+	SemverType OperationSemverType // Semver[...]Update
 }

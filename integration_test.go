@@ -17,22 +17,22 @@ func TestIntegration_Fixtures(t *testing.T) {
 		name         string
 		reqFilePath  string
 		lockFilePath string
-		checkFn      func(out *depsdiff.Output) bool
+		checkFn      func(out depsdiff.Output) bool
 	}{
 		{
 			name:         "Simple",
 			reqFilePath:  "./composer/testdata/composer-simple.json",
 			lockFilePath: "./composer/testdata/composer-simple.lock",
-			checkFn: func(out *depsdiff.Output) bool {
-				return len(out.Changes) == 0
+			checkFn: func(out depsdiff.Output) bool {
+				return len(out) == 0
 			},
 		},
 		{
 			name:         "Complex",
 			reqFilePath:  "./composer/testdata/composer-complex.json",
 			lockFilePath: "./composer/testdata/composer-complex.lock",
-			checkFn: func(out *depsdiff.Output) bool {
-				return len(out.Changes) == 0
+			checkFn: func(out depsdiff.Output) bool {
+				return len(out) == 0
 			},
 		},
 	}
