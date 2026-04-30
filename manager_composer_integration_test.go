@@ -1036,7 +1036,7 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 		},
 	}
 
-	for _, err := range validateChanges(out.Changes, expectedChanges) {
+	for _, err := range validateChanges(out, expectedChanges) {
 		t.Error(err)
 	}
 }

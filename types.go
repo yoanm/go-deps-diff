@@ -17,9 +17,7 @@ type PkgManagerInput struct {
 }
 
 // Output is the result of comparing two packages maps.
-type Output struct {
-	Changes map[string]PackageChange
-}
+type Output map[string]PackageChange
 
 // PackageChange contains detailed information about a package difference.
 type PackageChange struct {
