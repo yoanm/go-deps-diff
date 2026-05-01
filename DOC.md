@@ -6,7 +6,7 @@
 
 `type Input struct { ... }`
 
-### type [Operation](/operation_types.go#L35)
+### type [Operation](/operation_types.go#L36)
 
 `type Operation struct { ... }`
 
@@ -23,10 +23,11 @@ const (
     UpgradeOperation       OperationName = "UPGRADE"
     DowngradeOperation     OperationName = "DOWNGRADE"
     UnknownUpdateOperation OperationName = "UNKNOWN_UPDATE"
+    NoneOperation          OperationName = "NONE"
 )
 ```
 
-### type [OperationSemverType](/operation_types.go#L18)
+### type [OperationSemverType](/operation_types.go#L19)
 
 `type OperationSemverType string`
 
