@@ -10,6 +10,7 @@ const (
 	UpgradeOperation       OperationName = "UPGRADE"
 	DowngradeOperation     OperationName = "DOWNGRADE"
 	UnknownUpdateOperation OperationName = "UNKNOWN_UPDATE"
+	NoneOperation          OperationName = "NONE"
 )
 
 // OperationSemverType describes the type of the change for updated packages (e.g., whether it's a major, minor, patch,

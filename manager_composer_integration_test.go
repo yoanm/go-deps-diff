@@ -250,7 +250,7 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "dcd886d0ae9246129ec8fbf5e082eff1fc3c49ea", Label: "dev-master#dcd886d"},
 		},
-		"yoanm/jsonrpc-server-doc-sdk": { // yoanm/jsonrpc-server-doc-sdk	➕️ 	dev-master#a0febcc❗
+		"yoanm/jsonrpc-server-doc-sdk": { //nolint:exhaustruct,lll // Useless for the test case // yoanm/jsonrpc-server-doc-sdk	➕️ 	dev-master#a0febcc❗
 			Package: &shared_test.TestPkgWrapper{
 				Name:               "yoanm/jsonrpc-server-doc-sdk",
 				Abandoned:          false,
@@ -264,7 +264,6 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				Name:       depsdiff.AdditionOperation,
 				SemverType: depsdiff.SemverNoUpdate,
 			},
-			PreviousVersion: shared.PkgVersion{}, //nolint:exhaustruct // Useless for the test case
 		},
 		"behat/gherkin": { // behat/gherkin	v4.8.0 	↘️‼️️ 	v4.7.0
 			Package: &shared_test.TestPkgWrapper{
@@ -1033,6 +1032,21 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				SemverType: depsdiff.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
+		},
+		"squizlabs/php_codesniffer": { //nolint:exhaustruct,lll // Useless for the test case // ➖ 	squizlabs/php_codesniffer 	3.6.2
+			Package: &shared_test.TestPkgWrapper{
+				Name:               "squizlabs/php_codesniffer",
+				Abandoned:          false,
+				Version:            shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168"},
+				Link:               "https://github.com/squizlabs/PHP_CodeSniffer/wiki",
+				DevOnly:            true,
+				RootRequirement:    false,
+				RootDevRequirement: true,
+			},
+			Operation: depsdiff.Operation{
+				Name:       depsdiff.NoneOperation,
+				SemverType: depsdiff.SemverNoUpdate,
+			},
 		},
 	}
 

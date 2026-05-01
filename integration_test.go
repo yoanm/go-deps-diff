@@ -17,23 +17,16 @@ func TestIntegration_Fixtures(t *testing.T) {
 		name         string
 		reqFilePath  string
 		lockFilePath string
-		checkFn      func(out depsdiff.Output) bool
 	}{
 		{
 			name:         "Simple",
 			reqFilePath:  "./composer/testdata/composer-simple.json",
 			lockFilePath: "./composer/testdata/composer-simple.lock",
-			checkFn: func(out depsdiff.Output) bool {
-				return len(out) == 0
-			},
 		},
 		{
 			name:         "Complex",
 			reqFilePath:  "./composer/testdata/composer-complex.json",
 			lockFilePath: "./composer/testdata/composer-complex.lock",
-			checkFn: func(out depsdiff.Output) bool {
-				return len(out) == 0
-			},
 		},
 	}
 
@@ -41,7 +34,6 @@ func TestIntegration_Fixtures(t *testing.T) {
 		t.Run(testCase.name, func(t *testing.T) {
 			t.Parallel()
 
-			// Load fixture files
 			reqContent, err := os.ReadFile(testCase.reqFilePath)
 			if err != nil {
 				t.Errorf("Diff() error while reading requirement file = %v", err)
@@ -72,8 +64,17 @@ func TestIntegration_Fixtures(t *testing.T) {
 				return
 			}
 
-			if testCase.checkFn != nil && !testCase.checkFn(out) {
-				t.Errorf("Diff() result check failed")
+			if len(out) == 0 {
+				t.Fatal("Diff() result check failed: no packages found in the output")
+			}
+
+			for _, change := range out {
+				if change.Operation.Name != depsdiff.NoneOperation {
+					t.Errorf(
+						"Diff() result check failed: expected all packages to be unchanged, but %s isn't",
+						change.Package.GetName(),
+					)
+				}
 			}
 		})
 	}
