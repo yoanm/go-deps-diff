@@ -11,23 +11,25 @@ func Diff(previous, current shared.PackageMap) (Output, error) {
 
 	// Find added and updated packages
 	for name, currentPkg := range current {
+		pkgChange := PackageChange{ //nolint:exhaustruct // Other properties will be filled based on the operation
+			Package: currentPkg,
+		}
+
 		if previousPkg, previousExists := previous[name]; previousExists {
 			previousVersion := previousPkg.GetVersion().Raw
 			currentVersion := currentPkg.GetVersion().Raw
 
 			if previousVersion != currentVersion {
-				output[name] = PackageChange{
-					Package:         currentPkg,
-					Operation:       guessUpdateOperation(previousVersion, currentVersion),
-					PreviousVersion: previousPkg.GetVersion(),
-				}
+				pkgChange.Operation = guessUpdateOperation(previousVersion, currentVersion)
+				pkgChange.PreviousVersion = previousPkg.GetVersion()
+			} else {
+				pkgChange.Operation = Operation{Name: NoneOperation, SemverType: SemverNoUpdate}
 			}
 		} else {
-			output[name] = PackageChange{ //nolint:exhaustruct // PreviousVersion is unused for added packages !
-				Package:   currentPkg,
-				Operation: Operation{Name: AdditionOperation, SemverType: SemverNoUpdate},
-			}
+			pkgChange.Operation = Operation{Name: AdditionOperation, SemverType: SemverNoUpdate}
 		}
+
+		output[name] = pkgChange
 	}
 
 	// Find removed packages

@@ -10,6 +10,7 @@ const (
 	UpgradeOperation       OperationName = "UPGRADE"
 	DowngradeOperation     OperationName = "DOWNGRADE"
 	UnknownUpdateOperation OperationName = "UNKNOWN_UPDATE"
+	NoneOperation          OperationName = "NONE"
 )
 
 // OperationSemverType describes the type of the change for updated packages (e.g., whether it's a major, minor, patch,
@@ -28,7 +29,8 @@ const (
 	SemverExtraUpdate OperationSemverType = "EXTRA"
 	// SemverUnknownUpdate is for updated packages where we can't determine the difference (e.g., non-semver versions).
 	SemverUnknownUpdate OperationSemverType = "UNKNOWN"
-	// SemverNoUpdate is for added and removed packages (=no difference as only one version available).
+	// SemverNoUpdate is for added and removed packages (=no difference as only one version available)
+	// and none operation.
 	SemverNoUpdate OperationSemverType = "NONE"
 )
 

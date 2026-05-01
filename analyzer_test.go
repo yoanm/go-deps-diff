@@ -1,7 +1,6 @@
 package depsdiff_test
 
 import (
-	"errors"
 	"fmt"
 	"testing"
 
@@ -31,8 +30,22 @@ func TestDiff_NoChange(t *testing.T) {
 		t.Fatal(fmt.Errorf("error during diff process: %w", err))
 	}
 
-	if len(out) != 0 {
-		t.Fatal(errors.New("expected no changes, but got some"))
+	change, pkgExists := out["vendor/pkg"]
+	switch {
+	case !pkgExists:
+		t.Fatal("package 'vendor/pkg' is expected in the package map")
+	case change.Operation.Name != depsdiff.NoneOperation:
+		t.Fatalf(
+			"unexpected Operation: got %s, want %s",
+			change.Operation.Name,
+			depsdiff.NoneOperation,
+		)
+	case change.Operation.SemverType != depsdiff.SemverNoUpdate:
+		t.Fatalf(
+			"unexpected SemverType: got %s, want %s",
+			change.Operation.SemverType,
+			depsdiff.SemverNoUpdate,
+		)
 	}
 }
 
@@ -56,6 +69,23 @@ func TestDiff_BasicComparison(t *testing.T) {
 				},
 			},
 			expectedOperationName: depsdiff.AdditionOperation,
+			expectedSemverType:    depsdiff.SemverNoUpdate,
+		},
+		{
+			name: "unchanged package",
+			previous: map[string]shared.PkgWrapper{
+				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
+					Name:    "vendor/pkg",
+					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+				},
+			},
+			current: map[string]shared.PkgWrapper{
+				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
+					Name:    "vendor/pkg",
+					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+				},
+			},
+			expectedOperationName: depsdiff.NoneOperation,
 			expectedSemverType:    depsdiff.SemverNoUpdate,
 		},
 		{
