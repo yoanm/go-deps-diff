@@ -47,7 +47,7 @@ func main() {
     }
     
     // Process results
-    for pkgName, info := range output.Changes {
+    for pkgName, info := range output {
         fmt.Printf("%s: %s\n", pkgName, info.Operation.Name)
     }
 }
@@ -55,7 +55,7 @@ func main() {
 
 ## Features
 
-- ✅ Detects added, removed, and updated packages
+- ✅ Detects added, removed and updated packages, with detailed information about the type of update
 - ✅ Semantic version parsing (MAJOR/MINOR/PATCH/EXTRA)
 - ✅ Update direction detection (DOWNGRADE/UPGRADE) for semver compatible versions (UNKNOWN_UPDATE otherwise)
 - ✅ Support for both regular and dev dependencies

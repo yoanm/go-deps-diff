@@ -29,7 +29,8 @@ const (
 	SemverExtraUpdate OperationSemverType = "EXTRA"
 	// SemverUnknownUpdate is for updated packages where we can't determine the difference (e.g., non-semver versions).
 	SemverUnknownUpdate OperationSemverType = "UNKNOWN"
-	// SemverNoUpdate is for added and removed packages (=no difference as only one version available).
+	// SemverNoUpdate is for added and removed packages (=no difference as only one version available)
+	// and none operation.
 	SemverNoUpdate OperationSemverType = "NONE"
 )
 
