@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/yoanm/go-deps-diff/composer"
+	"github.com/yoanm/go-deps-diff/managers/composer"
 )
 
 func TestParseLock(t *testing.T) {

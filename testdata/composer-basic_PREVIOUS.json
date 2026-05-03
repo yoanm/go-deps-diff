@@ -1,6 +1,4 @@
 {
-  "name": "yoanm/go-deps-diff",
-  "license": "proprietary",
   "require": {
     "yoanm/jsonrpc-server-sdk": "dev-master",
     "symfony/deprecation-contracts": "2.2.0",

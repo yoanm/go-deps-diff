@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/yoanm/go-deps-diff/composer"
+	"github.com/yoanm/go-deps-diff/managers/composer"
 	"github.com/yoanm/go-deps-diff/shared"
 	"github.com/yoanm/go-deps-diff/shared_test"
 )

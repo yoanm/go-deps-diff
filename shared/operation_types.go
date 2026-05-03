@@ -1,4 +1,4 @@
-package depsdiff
+package shared
 
 // Operation describes what changed (operation, semver type) about a package
 
@@ -10,7 +10,7 @@ const (
 	UpgradeOperation       OperationName = "UPGRADE"
 	DowngradeOperation     OperationName = "DOWNGRADE"
 	UnknownUpdateOperation OperationName = "UNKNOWN_UPDATE"
-	NoneOperation          OperationName = "NONE"
+	NoChangeOperation      OperationName = "NONE"
 )
 
 // OperationSemverType describes the type of the change for updated packages (e.g., whether it's a major, minor, patch,

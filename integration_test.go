@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	depsdiff "github.com/yoanm/go-deps-diff"
+	"github.com/yoanm/go-deps-diff/shared"
 	"github.com/yoanm/go-deps-diff/shared_test"
 )
 
@@ -20,13 +21,13 @@ func TestIntegration_Fixtures(t *testing.T) {
 	}{
 		{
 			name:         "Simple",
-			reqFilePath:  "./composer/testdata/composer-simple.json",
-			lockFilePath: "./composer/testdata/composer-simple.lock",
+			reqFilePath:  "./managers/composer/testdata/composer-simple.json",
+			lockFilePath: "./managers/composer/testdata/composer-simple.lock",
 		},
 		{
 			name:         "Complex",
-			reqFilePath:  "./composer/testdata/composer-complex.json",
-			lockFilePath: "./composer/testdata/composer-complex.lock",
+			reqFilePath:  "./managers/composer/testdata/composer-complex.json",
+			lockFilePath: "./managers/composer/testdata/composer-complex.lock",
 		},
 	}
 
@@ -48,16 +49,16 @@ func TestIntegration_Fixtures(t *testing.T) {
 				return
 			}
 
-			out, err := depsdiff.ComposerDiff(&depsdiff.Input{
-				Current: depsdiff.PkgManagerInput{
+			out, err := depsdiff.ComposerDiff(
+				&depsdiff.PkgManagerInput{
 					Lock:        lockContent,
 					Requirement: reqContent,
 				},
-				Previous: depsdiff.PkgManagerInput{
+				&depsdiff.PkgManagerInput{
 					Lock:        lockContent,
 					Requirement: reqContent,
 				},
-			})
+			)
 			if err != nil {
 				t.Errorf("Diff() error = %v", err)
 
@@ -69,7 +70,7 @@ func TestIntegration_Fixtures(t *testing.T) {
 			}
 
 			for _, change := range out {
-				if change.Operation.Name != depsdiff.NoneOperation {
+				if change.Operation.Name != shared.NoChangeOperation {
 					t.Errorf(
 						"Diff() result check failed: expected all packages to be unchanged, but %s isn't",
 						change.Package.GetName(),
@@ -80,7 +81,7 @@ func TestIntegration_Fixtures(t *testing.T) {
 	}
 }
 
-func validateChanges(actual, expectedChanges map[string]depsdiff.PackageChange) []error {
+func validateChanges(actual, expectedChanges shared.DiffMap) []error {
 	var errList []error
 
 	for _, expectedChange := range expectedChanges {
@@ -113,7 +114,7 @@ func validateChanges(actual, expectedChanges map[string]depsdiff.PackageChange) 
 	return errList
 }
 
-func ValidateWrapperOperation(actualOperation, expectedOperation depsdiff.Operation) error {
+func ValidateWrapperOperation(actualOperation, expectedOperation shared.Operation) error {
 	if actualOperation.Name != expectedOperation.Name {
 		return fmt.Errorf("unexpected Name value. Expected: %s Actual: %s", expectedOperation.Name, actualOperation.Name)
 	}
