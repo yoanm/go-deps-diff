@@ -2,6 +2,8 @@ package depsdiff
 
 import (
 	"testing"
+
+	"github.com/yoanm/go-deps-diff/shared"
 )
 
 func TestGuessUpdateOperation(t *testing.T) {
@@ -11,78 +13,78 @@ func TestGuessUpdateOperation(t *testing.T) {
 		name            string
 		versionPrevious string
 		versionCurrent  string
-		wantName        OperationName
-		wantSemverType  OperationSemverType
+		wantName        shared.OperationName
+		wantSemverType  shared.OperationSemverType
 	}{
 		{
 			name:            "major version up",
 			versionPrevious: "1.0.0",
 			versionCurrent:  "2.0.0",
-			wantName:        UpgradeOperation,
-			wantSemverType:  SemverMajorUpdate,
+			wantName:        shared.UpgradeOperation,
+			wantSemverType:  shared.SemverMajorUpdate,
 		},
 		{
 			name:            "major version down",
 			versionPrevious: "2.0.0",
 			versionCurrent:  "1.0.0",
-			wantName:        DowngradeOperation,
-			wantSemverType:  SemverMajorUpdate,
+			wantName:        shared.DowngradeOperation,
+			wantSemverType:  shared.SemverMajorUpdate,
 		},
 		{
 			name:            "minor version up",
 			versionPrevious: "1.0.0",
 			versionCurrent:  "1.1.0",
-			wantName:        UpgradeOperation,
-			wantSemverType:  SemverMinorUpdate,
+			wantName:        shared.UpgradeOperation,
+			wantSemverType:  shared.SemverMinorUpdate,
 		},
 		{
 			name:            "minor version down",
 			versionPrevious: "1.1.0",
 			versionCurrent:  "1.0.0",
-			wantName:        DowngradeOperation,
-			wantSemverType:  SemverMinorUpdate,
+			wantName:        shared.DowngradeOperation,
+			wantSemverType:  shared.SemverMinorUpdate,
 		},
 		{
 			name:            "patch version up",
 			versionPrevious: "1.0.0",
 			versionCurrent:  "1.0.1",
-			wantName:        UpgradeOperation,
-			wantSemverType:  SemverPatchUpdate,
+			wantName:        shared.UpgradeOperation,
+			wantSemverType:  shared.SemverPatchUpdate,
 		},
 		{
 			name:            "patch version down",
 			versionPrevious: "1.0.1",
 			versionCurrent:  "1.0.0",
-			wantName:        DowngradeOperation,
-			wantSemverType:  SemverPatchUpdate,
+			wantName:        shared.DowngradeOperation,
+			wantSemverType:  shared.SemverPatchUpdate,
 		},
 		{
 			name:            "extra updated",
 			versionPrevious: "1.0.0+build.123",
 			versionCurrent:  "1.0.0+build.456",
-			wantName:        UnknownUpdateOperation,
-			wantSemverType:  SemverExtraUpdate,
+			wantName:        shared.UnknownUpdateOperation,
+			wantSemverType:  shared.SemverExtraUpdate,
 		},
 		{
 			name:            "extra added",
 			versionPrevious: "1.0.0",
 			versionCurrent:  "1.0.0+build.123",
-			wantName:        UnknownUpdateOperation,
-			wantSemverType:  SemverExtraUpdate,
+			wantName:        shared.UnknownUpdateOperation,
+			wantSemverType:  shared.SemverExtraUpdate,
 		},
 		{
 			name:            "unparseable version",
 			versionPrevious: "abc123",
 			versionCurrent:  "def456",
-			wantName:        UnknownUpdateOperation,
-			wantSemverType:  SemverUnknownUpdate,
+			wantName:        shared.UnknownUpdateOperation,
+			wantSemverType:  shared.SemverUnknownUpdate,
 		},
 		{
 			name:            "one unparseable",
 			versionPrevious: "1.0.0",
 			versionCurrent:  "def456",
-			wantName:        UnknownUpdateOperation,
-			wantSemverType:  SemverUnknownUpdate,
+			wantName:        shared.UnknownUpdateOperation,
+			wantSemverType:  shared.SemverUnknownUpdate,
 		},
 	}
 

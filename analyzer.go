@@ -5,13 +5,13 @@ import (
 )
 
 // Diff compares two packages maps and returns the differences.
-func Diff(previous, current shared.PackageMap) (Output, error) {
+func Diff(previous, current shared.PackageMap) (shared.DiffMap, error) {
 	// Find differences
-	output := Output{}
+	output := shared.DiffMap{}
 
 	// Find added and updated packages
 	for name, currentPkg := range current {
-		pkgChange := PackageChange{ //nolint:exhaustruct // Other properties will be filled based on the operation
+		pkgChange := shared.PackageChange{ //nolint:exhaustruct // Other properties will be filled based on the operation
 			Package: currentPkg,
 		}
 
@@ -23,24 +23,22 @@ func Diff(previous, current shared.PackageMap) (Output, error) {
 				pkgChange.Operation = guessUpdateOperation(previousVersion, currentVersion)
 				pkgChange.PreviousVersion = previousPkg.GetVersion()
 			} else {
-				pkgChange.Operation = Operation{Name: NoneOperation, SemverType: SemverNoUpdate}
+				pkgChange.Operation = shared.Operation{Name: shared.NoChangeOperation, SemverType: shared.SemverNoUpdate}
 			}
 		} else {
-			pkgChange.Operation = Operation{Name: AdditionOperation, SemverType: SemverNoUpdate}
+			pkgChange.Operation = shared.Operation{Name: shared.AdditionOperation, SemverType: shared.SemverNoUpdate}
 		}
 
-		output[name] = pkgChange
+		output[name] = &pkgChange
 	}
 
 	// Find removed packages
 	for name, previousPkg := range previous {
 		if _, exists := current[name]; !exists {
-			info := PackageChange{ //nolint:exhaustruct // PreviousVersion is unused for removed packages !
+			output[name] = &shared.PackageChange{ //nolint:exhaustruct // PreviousVersion is unused for removed packages !
 				Package:   previousPkg,
-				Operation: Operation{Name: RemovalOperation, SemverType: SemverNoUpdate},
+				Operation: shared.Operation{Name: shared.RemovalOperation, SemverType: shared.SemverNoUpdate},
 			}
-
-			output[name] = info
 		}
 	}
 
@@ -48,10 +46,10 @@ func Diff(previous, current shared.PackageMap) (Output, error) {
 }
 
 // guessUpdateOperation detects the type and direction of a version update.
-func guessUpdateOperation(previousVersion, currentVersion string) Operation {
-	result := Operation{
-		Name:       UnknownUpdateOperation,
-		SemverType: SemverUnknownUpdate,
+func guessUpdateOperation(previousVersion, currentVersion string) shared.Operation {
+	result := shared.Operation{
+		Name:       shared.UnknownUpdateOperation,
+		SemverType: shared.SemverUnknownUpdate,
 	}
 
 	prevTag, invalidPrevErr := shared.ParseSemverVersion(previousVersion)
@@ -64,29 +62,29 @@ func guessUpdateOperation(previousVersion, currentVersion string) Operation {
 
 	switch {
 	case prevTag.Major != currTag.Major:
-		result.SemverType = SemverMajorUpdate
+		result.SemverType = shared.SemverMajorUpdate
 		result.Name = guessDirectionFromSemverComponent(prevTag.Major, currTag.Major)
 	case prevTag.Minor != currTag.Minor:
-		result.SemverType = SemverMinorUpdate
+		result.SemverType = shared.SemverMinorUpdate
 		result.Name = guessDirectionFromSemverComponent(prevTag.Minor, currTag.Minor)
 	case prevTag.Patch != currTag.Patch:
-		result.SemverType = SemverPatchUpdate
+		result.SemverType = shared.SemverPatchUpdate
 		result.Name = guessDirectionFromSemverComponent(prevTag.Patch, currTag.Patch)
 	// All numeric components equal -> Compare extra components (pre-release or build metadata)
 	case prevTag.Extra != currTag.Extra:
-		result.SemverType = SemverExtraUpdate
-		result.Name = UnknownUpdateOperation
+		result.SemverType = shared.SemverExtraUpdate
+		result.Name = shared.UnknownUpdateOperation
 	}
 
 	return result
 }
 
-func guessDirectionFromSemverComponent(prev, curr int) OperationName {
+func guessDirectionFromSemverComponent(prev, curr int) shared.OperationName {
 	if curr > prev {
-		return UpgradeOperation
+		return shared.UpgradeOperation
 	} else if curr < prev {
-		return DowngradeOperation
+		return shared.DowngradeOperation
 	}
 
-	return UnknownUpdateOperation
+	return shared.UnknownUpdateOperation
 }

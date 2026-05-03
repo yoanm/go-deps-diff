@@ -18,16 +18,16 @@ func BenchmarkDiff_ComposerDiff(b *testing.B) {
 
 	b.RunParallel(func(pb *testing.PB) {
 		for pb.Next() { // pb.Next() returns false when the benchmark should stop
-			_, err := depsdiff.ComposerDiff(&depsdiff.Input{
-				Current: depsdiff.PkgManagerInput{
-					Lock:        lockCurrent,
-					Requirement: reqCurrent,
-				},
-				Previous: depsdiff.PkgManagerInput{
+			_, err := depsdiff.ComposerDiff(
+				&depsdiff.PkgManagerInput{
 					Lock:        lockPrevious,
 					Requirement: reqPrevious,
 				},
-			})
+				&depsdiff.PkgManagerInput{
+					Lock:        lockCurrent,
+					Requirement: reqCurrent,
+				},
+			)
 			if err != nil {
 				b.Fatalf("Diff failed: %v", err)
 			}
