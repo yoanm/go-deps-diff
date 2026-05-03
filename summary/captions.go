@@ -1,6 +1,6 @@
 package summary
 
-import "github.com/yoanm/go-deps-diff/markdown"
+import "github.com/yoanm/go-deps-diff/summary/markdown"
 
 type simpleSymbolHelp struct {
 	symbol  string

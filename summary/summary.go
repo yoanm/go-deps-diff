@@ -2,8 +2,8 @@ package summary
 
 import (
 	"fmt"
-	"github.com/yoanm/go-deps-diff/markdown"
 	"github.com/yoanm/go-deps-diff/shared"
+	"github.com/yoanm/go-deps-diff/summary/markdown"
 	"os"
 	"strconv"
 )
