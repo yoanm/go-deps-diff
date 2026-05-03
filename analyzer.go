@@ -35,12 +35,10 @@ func Diff(previous, current shared.PackageMap) (shared.DiffMap, error) {
 	// Find removed packages
 	for name, previousPkg := range previous {
 		if _, exists := current[name]; !exists {
-			info := shared.PackageChange{ //nolint:exhaustruct // PreviousVersion is unused for removed packages !
+			output[name] = &shared.PackageChange{ //nolint:exhaustruct // PreviousVersion is unused for removed packages !
 				Package:   previousPkg,
 				Operation: shared.Operation{Name: shared.RemovalOperation, SemverType: shared.SemverNoUpdate},
 			}
-
-			output[name] = &info
 		}
 	}
 

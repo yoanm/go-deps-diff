@@ -32,7 +32,5 @@ Diff compares two packages maps and returns the differences.
 
 * [summary/markdown](./summary/markdown)
 
-* [tmp](./tmp)
-
 ---
 Readme created from Go doc with [goreadme](https://github.com/posener/goreadme)
