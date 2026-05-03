@@ -1,10 +1,4 @@
 {
-  "_readme": [
-    "This file locks the dependencies of your project to a known state",
-    "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-    "This file is @generated automatically"
-  ],
-  "content-hash": "32c1aa0de3bcc14cdd92815c4384e0e1",
   "packages": [
     {
       "name": "behat/gherkin",
@@ -1521,16 +1515,5 @@
       },
       "time": "2018-11-07T22:53:13+00:00"
     }
-  ],
-  "aliases": [],
-  "minimum-stability": "stable",
-  "stability-flags": {
-    "yoanm/jsonrpc-server-doc-sdk": 20,
-    "squizlabs/php_codesniffer": 20
-  },
-  "prefer-stable": false,
-  "prefer-lowest": false,
-  "platform": [],
-  "platform-dev": [],
-  "plugin-api-version": "2.3.0"
+  ]
 }

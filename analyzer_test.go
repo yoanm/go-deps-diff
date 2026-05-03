@@ -34,17 +34,17 @@ func TestDiff_NoChange(t *testing.T) {
 	switch {
 	case !pkgExists:
 		t.Fatal("package 'vendor/pkg' is expected in the package map")
-	case change.Operation.Name != depsdiff.NoneOperation:
+	case change.Operation.Name != shared.NoChangeOperation:
 		t.Fatalf(
 			"unexpected Operation: got %s, want %s",
 			change.Operation.Name,
-			depsdiff.NoneOperation,
+			shared.NoChangeOperation,
 		)
-	case change.Operation.SemverType != depsdiff.SemverNoUpdate:
+	case change.Operation.SemverType != shared.SemverNoUpdate:
 		t.Fatalf(
 			"unexpected SemverType: got %s, want %s",
 			change.Operation.SemverType,
-			depsdiff.SemverNoUpdate,
+			shared.SemverNoUpdate,
 		)
 	}
 }
@@ -56,8 +56,8 @@ func TestDiff_BasicComparison(t *testing.T) {
 		name                  string
 		previous              shared.PackageMap
 		current               shared.PackageMap
-		expectedOperationName depsdiff.OperationName
-		expectedSemverType    depsdiff.OperationSemverType
+		expectedOperationName shared.OperationName
+		expectedSemverType    shared.OperationSemverType
 	}{
 		{
 			name:     "added package",
@@ -68,8 +68,8 @@ func TestDiff_BasicComparison(t *testing.T) {
 					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
 				},
 			},
-			expectedOperationName: depsdiff.AdditionOperation,
-			expectedSemverType:    depsdiff.SemverNoUpdate,
+			expectedOperationName: shared.AdditionOperation,
+			expectedSemverType:    shared.SemverNoUpdate,
 		},
 		{
 			name: "unchanged package",
@@ -85,8 +85,8 @@ func TestDiff_BasicComparison(t *testing.T) {
 					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
 				},
 			},
-			expectedOperationName: depsdiff.NoneOperation,
-			expectedSemverType:    depsdiff.SemverNoUpdate,
+			expectedOperationName: shared.NoChangeOperation,
+			expectedSemverType:    shared.SemverNoUpdate,
 		},
 		{
 			name: "removed package",
@@ -97,8 +97,8 @@ func TestDiff_BasicComparison(t *testing.T) {
 				},
 			},
 			current:               map[string]shared.PkgWrapper{},
-			expectedOperationName: depsdiff.RemovalOperation,
-			expectedSemverType:    depsdiff.SemverNoUpdate,
+			expectedOperationName: shared.RemovalOperation,
+			expectedSemverType:    shared.SemverNoUpdate,
 		},
 		{
 			name: "upgraded package",
@@ -114,8 +114,8 @@ func TestDiff_BasicComparison(t *testing.T) {
 					Version: shared.PkgVersion{Raw: "2.0.0", Label: "2.0.0"},
 				},
 			},
-			expectedOperationName: depsdiff.UpgradeOperation,
-			expectedSemverType:    depsdiff.SemverMajorUpdate,
+			expectedOperationName: shared.UpgradeOperation,
+			expectedSemverType:    shared.SemverMajorUpdate,
 		},
 		{
 			name: "downgraded package",
@@ -131,8 +131,8 @@ func TestDiff_BasicComparison(t *testing.T) {
 					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
 				},
 			},
-			expectedOperationName: depsdiff.DowngradeOperation,
-			expectedSemverType:    depsdiff.SemverMinorUpdate,
+			expectedOperationName: shared.DowngradeOperation,
+			expectedSemverType:    shared.SemverMinorUpdate,
 		},
 		{
 			name: "unknown update",
@@ -149,8 +149,8 @@ func TestDiff_BasicComparison(t *testing.T) {
 				},
 			},
 
-			expectedOperationName: depsdiff.UnknownUpdateOperation,
-			expectedSemverType:    depsdiff.SemverUnknownUpdate,
+			expectedOperationName: shared.UnknownUpdateOperation,
+			expectedSemverType:    shared.SemverUnknownUpdate,
 		},
 	}
 

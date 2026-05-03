@@ -133,16 +133,16 @@ func TestIntegration_Composer_Errors(t *testing.T) {
 		t.Run(testCase.name, func(t *testing.T) {
 			t.Parallel()
 
-			_, err := depsdiff.ComposerDiff(&depsdiff.Input{
-				Current: depsdiff.PkgManagerInput{
-					Lock:        testCase.currentLockData,
-					Requirement: testCase.currentReqData,
-				},
-				Previous: depsdiff.PkgManagerInput{
+			_, err := depsdiff.ComposerDiff(
+				&depsdiff.PkgManagerInput{
 					Lock:        testCase.previousLockData,
 					Requirement: testCase.previousReqData,
 				},
-			})
+				&depsdiff.PkgManagerInput{
+					Lock:        testCase.currentLockData,
+					Requirement: testCase.currentReqData,
+				},
+			)
 			if err == nil {
 				t.Fatal("an error is expected")
 			} else if err.Error() != testCase.expectedError {
@@ -185,23 +185,23 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 		return
 	}
 
-	out, err := depsdiff.ComposerDiff(&depsdiff.Input{
-		Current: depsdiff.PkgManagerInput{
-			Lock:        currentLock,
-			Requirement: currentReq,
-		},
-		Previous: depsdiff.PkgManagerInput{
+	out, err := depsdiff.ComposerDiff(
+		&depsdiff.PkgManagerInput{
 			Lock:        previousLock,
 			Requirement: previousReq,
 		},
-	})
+		&depsdiff.PkgManagerInput{
+			Lock:        currentLock,
+			Requirement: currentReq,
+		},
+	)
 	if err != nil {
 		t.Errorf("Diff() error = %v", err)
 
 		return
 	}
 
-	expectedChanges := map[string]depsdiff.PackageChange{
+	expectedChanges := shared.DiffMap{
 		"sebastian/diff": { // sebastian/diff	4.0.4 	↘️‼️️ 	3.0.3
 			Package: &shared_test.TestPkgWrapper{
 				Name:               "sebastian/diff",
@@ -212,9 +212,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: true,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.DowngradeOperation,
-				SemverType: depsdiff.SemverMajorUpdate,
+			Operation: shared.Operation{
+				Name:       shared.DowngradeOperation,
+				SemverType: shared.SemverMajorUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "4.0.4", Label: "4.0.4"},
 		},
@@ -228,9 +228,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: true,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.UpgradeOperation,
-				SemverType: depsdiff.SemverMajorUpdate,
+			Operation: shared.Operation{
+				Name:       shared.UpgradeOperation,
+				SemverType: shared.SemverMajorUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "v4.4.27", Label: "v4.4.27"},
 		},
@@ -244,9 +244,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    true,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.UnknownUpdateOperation,
-				SemverType: depsdiff.SemverUnknownUpdate,
+			Operation: shared.Operation{
+				Name:       shared.UnknownUpdateOperation,
+				SemverType: shared.SemverUnknownUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "dcd886d0ae9246129ec8fbf5e082eff1fc3c49ea", Label: "dev-master#dcd886d"},
 		},
@@ -260,9 +260,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    true,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.AdditionOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 		},
 		"behat/gherkin": { // behat/gherkin	v4.8.0 	↘️‼️️ 	v4.7.0
@@ -275,9 +275,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: true,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.DowngradeOperation,
-				SemverType: depsdiff.SemverMinorUpdate,
+			Operation: shared.Operation{
+				Name:       shared.DowngradeOperation,
+				SemverType: shared.SemverMinorUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "v4.8.0", Label: "v4.8.0"},
 		},
@@ -291,9 +291,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    true,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.UpgradeOperation,
-				SemverType: depsdiff.SemverMinorUpdate,
+			Operation: shared.Operation{
+				Name:       shared.UpgradeOperation,
+				SemverType: shared.SemverMinorUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "v2.2.0", Label: "v2.2.0"},
 		},
@@ -307,9 +307,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.UpgradeOperation,
-				SemverType: depsdiff.SemverMinorUpdate,
+			Operation: shared.Operation{
+				Name:       shared.UpgradeOperation,
+				SemverType: shared.SemverMinorUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "v1.23.0", Label: "v1.23.0"},
 		},
@@ -323,9 +323,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.UpgradeOperation,
-				SemverType: depsdiff.SemverMinorUpdate,
+			Operation: shared.Operation{
+				Name:       shared.UpgradeOperation,
+				SemverType: shared.SemverMinorUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "v1.23.1", Label: "v1.23.1"},
 		},
@@ -339,9 +339,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: true,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.UpgradeOperation,
-				SemverType: depsdiff.SemverPatchUpdate,
+			Operation: shared.Operation{
+				Name:       shared.UpgradeOperation,
+				SemverType: shared.SemverPatchUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "0.12.96", Label: "0.12.96"},
 		},
@@ -355,9 +355,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: true,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.DowngradeOperation,
-				SemverType: depsdiff.SemverPatchUpdate,
+			Operation: shared.Operation{
+				Name:       shared.DowngradeOperation,
+				SemverType: shared.SemverPatchUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "1.0.8", Label: "1.0.8"},
 		},
@@ -371,9 +371,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    true,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.UpgradeOperation,
-				SemverType: depsdiff.SemverPatchUpdate,
+			Operation: shared.Operation{
+				Name:       shared.UpgradeOperation,
+				SemverType: shared.SemverPatchUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "v1.1.1", Label: "v1.1.1"},
 		},
@@ -387,9 +387,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.AdditionOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -403,9 +403,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    true,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.AdditionOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -419,9 +419,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    true,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.AdditionOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -435,9 +435,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.AdditionOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -451,9 +451,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.AdditionOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -467,9 +467,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.AdditionOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -483,9 +483,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.AdditionOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -499,9 +499,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.AdditionOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -515,9 +515,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.AdditionOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.AdditionOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -531,9 +531,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -547,9 +547,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -563,9 +563,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -579,9 +579,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -595,9 +595,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -611,9 +611,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -627,9 +627,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -643,9 +643,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -659,9 +659,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -675,9 +675,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -691,9 +691,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -707,9 +707,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -723,9 +723,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -739,9 +739,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -755,9 +755,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: true,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -771,9 +771,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -787,9 +787,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -803,9 +803,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -819,9 +819,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -835,9 +835,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -851,9 +851,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -867,9 +867,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -883,9 +883,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -899,9 +899,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -915,9 +915,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -931,9 +931,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -947,9 +947,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -963,9 +963,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -979,9 +979,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -995,9 +995,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -1011,9 +1011,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: false,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -1027,9 +1027,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: true,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.RemovalOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.RemovalOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 			PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 		},
@@ -1043,9 +1043,9 @@ func TestIntegration_Composer_OriginalDataset(t *testing.T) {
 				RootRequirement:    false,
 				RootDevRequirement: true,
 			},
-			Operation: depsdiff.Operation{
-				Name:       depsdiff.NoneOperation,
-				SemverType: depsdiff.SemverNoUpdate,
+			Operation: shared.Operation{
+				Name:       shared.NoChangeOperation,
+				SemverType: shared.SemverNoUpdate,
 			},
 		},
 	}
