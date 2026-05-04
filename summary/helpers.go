@@ -16,13 +16,12 @@ func splitItemList(subCategoriesMap SubCategoriesMap) (PkgList, PkgList) {
 
 	inOrderMapIteratorHelper[MarkdownSubCategory, ItemsMap](
 		subCategoriesMap,
-		subcategoryOrders,
+		getSubCategoriesOrder(),
 		func(subCategoryName MarkdownSubCategory, itemsMap ItemsMap) {
 			inOrderMapIteratorHelper[MarkdownItem, PkgList](
 				itemsMap,
-				itemOrders,
+				getItemsOrder(),
 				func(itemName MarkdownItem, pkgList PkgList) {
-
 					for _, item := range pkgList {
 						// Keep track of no change items to display them at the end of the section.
 						// - No change items are far less meaningful than the other items
@@ -72,7 +71,7 @@ func buildSectionSummaryMrk(subCategoriesMap SubCategoriesMap) string {
 
 	inOrderMapIteratorHelper[MarkdownItem, *multiCounter](
 		cntMap,
-		itemOrders,
+		getItemsOrder(),
 		func(key MarkdownItem, data *multiCounter) {
 			partList[partKey] = fmt.Sprintf("%s<sup>%d</sup>", data.title, data.count)
 			partKey++
@@ -88,18 +87,16 @@ func buildSectionCounters(subCategoriesMap SubCategoriesMap) sectionSummaryCntMa
 	for _, itemsMap := range subCategoriesMap {
 		for itemType, pkgList := range itemsMap {
 			if nil == cntMap[itemType] {
-				cntMap[itemType] = &multiCounter{}
+				cntMap[itemType] = &multiCounter{title: "", count: 0}
 			}
 
 			cntMap[itemType].count += len(pkgList)
 			// For UnknownUpdateItem, try to catch basic unknown update rather than a SEMVER_EXTRA update.
 			if itemType == UnknownUpdateItem {
-				for _, pkg := range pkgList {
-					if pkg.Operation.SemverType != shared.SemverExtraUpdate {
-						cntMap[itemType].title = getOperationSymbol(pkg.Operation)
+				if pkg := findSemverExtraUpdatePackage(pkgList); pkg != nil {
+					cntMap[itemType].title = getOperationSymbol(pkg.Operation)
 
-						break
-					}
+					continue
 				}
 			}
 			// Fallback on first available one if sample is not defined yet
@@ -110,4 +107,14 @@ func buildSectionCounters(subCategoriesMap SubCategoriesMap) sectionSummaryCntMa
 	}
 
 	return cntMap
+}
+
+func findSemverExtraUpdatePackage(pkgList PkgList) *shared.PackageChange {
+	for _, pkg := range pkgList {
+		if pkg.Operation.SemverType != shared.SemverExtraUpdate {
+			return pkg
+		}
+	}
+
+	return nil
 }

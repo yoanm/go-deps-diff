@@ -13,18 +13,18 @@ func getPackageSymbol(pkg shared.PkgWrapper) string {
 	}
 }
 
-func getOperationSymbol(op shared.Operation) string {
-	switch op.Name {
+func getOperationSymbol(operation shared.Operation) string {
+	switch operation.Name {
 	case shared.UnknownUpdateOperation:
-		if op.SemverType == shared.SemverExtraUpdate {
+		if operation.SemverType == shared.SemverExtraUpdate {
 			return "<sub><sup>🔹.🔹.🔹❓</sup></sub>"
 		}
 
 		return "❓"
 	case shared.UpgradeOperation:
-		return getUpdateOperationSymbol(op, false)
+		return getUpdateOperationSymbol(operation, false)
 	case shared.DowngradeOperation:
-		return getUpdateOperationSymbol(op, true)
+		return getUpdateOperationSymbol(operation, true)
 	case shared.RemovalOperation:
 		return "❌"
 	case shared.AdditionOperation:
@@ -36,13 +36,13 @@ func getOperationSymbol(op shared.Operation) string {
 	return "❔"
 }
 
-func getUpdateOperationSymbol(op shared.Operation, isDowngrade bool) string {
+func getUpdateOperationSymbol(operation shared.Operation, isDowngrade bool) string {
 	emojiUpdated := "🔺"
 	if isDowngrade {
 		emojiUpdated = "🔻"
 	}
 
-	switch op.SemverType {
+	switch operation.SemverType { //nolint:exhaustive // Only those cases can be managed, fallback to unknown otherwise
 	case shared.SemverMajorUpdate:
 		return "<sub><sup>" + emojiUpdated + ".🔹.🔹</sup></sub>"
 	case shared.SemverMinorUpdate:

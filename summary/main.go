@@ -28,7 +28,7 @@ func buildDefaultSectionsMap(changes shared.DiffMap) SectionsMap {
 		change := changes[key]
 		categoryType, subCategoryType := getMarkdownCategoryType(change)
 		itemType := getMarkdownItemType(change)
-		sectionType := getMarkdownSectionType(categoryType, subCategoryType, itemType, change.Package.IsAbandoned())
+		sectionType := getMarkdownSectionType(subCategoryType, itemType, change.Package.IsAbandoned())
 
 		switch {
 		case list[sectionType] == nil:
@@ -49,14 +49,16 @@ func buildDefaultSectionsMap(changes shared.DiffMap) SectionsMap {
 
 		_debugPackageList(sectionType, categoryType, subCategoryType, itemType, change)
 
-		list[sectionType][categoryType][subCategoryType][itemType] = append(list[sectionType][categoryType][subCategoryType][itemType], change)
+		list[sectionType][categoryType][subCategoryType][itemType] = append(
+			list[sectionType][categoryType][subCategoryType][itemType],
+			change,
+		)
 	}
 
 	return list
 }
 
-func getMarkdownSectionType(
-	categoryType MarkdownCategory,
+func getMarkdownSectionType( //nolint:gocognit,cyclop,lll // 23 vs 20 and 26 vs 10 allowed, but easier to maintain IMO (=clear link to expectations)
 	subCategoryType MarkdownSubCategory,
 	itemType MarkdownItem,
 	isAbandoned bool,
@@ -207,7 +209,7 @@ func getMarkdownCategoryType(change *shared.PackageChange) (MarkdownCategory, Ma
 	}
 }
 
-func getMarkdownItemType(change *shared.PackageChange) MarkdownItem {
+func getMarkdownItemType(change *shared.PackageChange) MarkdownItem { //nolint:cyclop,lll // 13 vs 10 allowed, but 13 actual cases
 	switch change.Operation.Name {
 	// - UNKNOWN_UPDATE
 	// - UNKNOWN_UPDATE
@@ -217,6 +219,7 @@ func getMarkdownItemType(change *shared.PackageChange) MarkdownItem {
 	// - SEMVER_MINOR_UPGRADE
 	// - SEMVER_PATCH_UPGRADE
 	case shared.UpgradeOperation:
+		//nolint:exhaustive // SemverExtra + SemverUnknown + SemverNoUpdate managed as UnknownUpdateItem !
 		switch change.Operation.SemverType {
 		case shared.SemverMajorUpdate:
 			return SemverMajorUpgradeItem
@@ -229,6 +232,7 @@ func getMarkdownItemType(change *shared.PackageChange) MarkdownItem {
 	// - SEMVER_MINOR_DOWNGRADE
 	// - SEMVER_PATCH_DOWNGRADE
 	case shared.DowngradeOperation:
+		//nolint:exhaustive // SemverExtra + SemverUnknown + SemverNoUpdate managed as UnknownUpdateItem !
 		switch change.Operation.SemverType {
 		case shared.SemverMajorUpdate:
 			return SemverMajorDowngradeItem

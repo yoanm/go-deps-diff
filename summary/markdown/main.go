@@ -42,7 +42,7 @@ func (c *Builder) Header(header string, level int, indentDepth int) {
 	c.WriteEol()
 }
 
-func (c *Builder) HtmlTable(rowIterator iter.Seq[[]string], indentDepth int) {
+func (c *Builder) HTMLTable(rowIterator iter.Seq[[]string], indentDepth int) {
 	c.WriteLine("<table>", indentDepth)
 
 	for cells := range rowIterator {

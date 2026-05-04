@@ -2,10 +2,16 @@ package summary
 
 import (
 	"fmt"
-	"github.com/yoanm/go-deps-diff/shared"
-	"github.com/yoanm/go-deps-diff/summary/markdown"
 	"os"
 	"strconv"
+
+	"github.com/yoanm/go-deps-diff/shared"
+	"github.com/yoanm/go-deps-diff/summary/markdown"
+)
+
+const (
+	sectionHeaderLevel  = 2
+	categoryHeaderLevel = 3
 )
 
 func Generate(mrkList SectionsMap) string {
@@ -17,7 +23,7 @@ func Generate(mrkList SectionsMap) string {
 
 	inOrderMapIteratorHelper[MarkdownSection, CategoriesMap](
 		mrkList,
-		sectionOrders,
+		getSectionsOrder(),
 		func(sectionName MarkdownSection, categoriesMap CategoriesMap) {
 			processSection(builder, categoriesMap, sectionName)
 		},
@@ -34,11 +40,15 @@ func processSection(builder *markdown.Builder, categoriesMap CategoriesMap, sect
 	}
 
 	fmt.Fprintln(os.Stderr, "Processing section:", sectionName)
-	builder.Header(sectionTitleMap[sectionName]+"<br/><sub><sup>"+sectionHeaderMap[sectionName]+"</sub></sup>", 2, 0)
+	builder.Header(
+		getSectionHeaderFor(sectionName)+"<br/><sub><sup>"+getSectionDescriptionFor(sectionName)+"</sub></sup>",
+		sectionHeaderLevel,
+		0,
+	)
 
 	inOrderMapIteratorHelper[MarkdownCategory, SubCategoriesMap](
 		categoriesMap,
-		categoryOrders,
+		getCategoriesOrder(),
 		func(categoryName MarkdownCategory, subCategoriesMap SubCategoriesMap) {
 			openedDetails := categoryName == ProdUsageCategory &&
 				(CautionSection == sectionName || WarningSection == sectionName || ImportantSection == sectionName)
@@ -64,7 +74,7 @@ func processCategory(
 
 	noChangePkgList, otherChangePkgList := splitItemList(subCategoriesMap)
 
-	builder.Header(categoryTitleMap[categoryName], 3, 0)
+	builder.Header(getCategoryHeaderFor(categoryName), categoryHeaderLevel, 0)
 	builder.Details(
 		buildSectionSummaryMrk(subCategoriesMap),
 		func(builder *markdown.Builder, indentDepth int) {
@@ -93,7 +103,7 @@ func processPkgList(builder *markdown.Builder, pkgList PkgList, tableMode pkgRow
 		return
 	}
 
-	builder.HtmlTable(
+	builder.HTMLTable(
 		func(yield func([]string) bool) {
 			for _, item := range pkgList {
 				if !yield(buildItemMrkRowCells(item, tableMode)) {
@@ -107,17 +117,17 @@ func processPkgList(builder *markdown.Builder, pkgList PkgList, tableMode pkgRow
 
 func buildItemMrkRowCells(item *shared.PackageChange, tableMode pkgRowMode) []string {
 	cellList := []string{
-		buildPackageNameHtmlCell(item.Package),
+		buildPackageNameHTMLCell(item.Package),
 	}
 
-	pkgVersionCell := buildPackageVersionHtmlCell(item.Package.GetVersion())
+	pkgVersionCell := buildPackageVersionHTMLCell(item.Package.GetVersion())
 
 	switch tableMode {
 	case versionOnlyPkgRowMode:
 		cellList = append(cellList, pkgVersionCell)
 
 	case withOperationPkgRowMode:
-		operationCell := buildOperationHtmlCell(item.Operation, 0)
+		operationCell := buildOperationHTMLCell(item.Operation, 0)
 		if item.Operation.Name != shared.AdditionOperation {
 			cellList = append(cellList, pkgVersionCell, operationCell)
 		} else {
@@ -146,32 +156,32 @@ func buildItemMrkFullPrkRowCells(item *shared.PackageChange, cellList []string, 
 		colspan = 2
 	}
 
-	cellList = append(cellList, buildOperationHtmlCell(item.Operation, colspan))
+	cellList = append(cellList, buildOperationHTMLCell(item.Operation, colspan))
 
-	switch item.Operation.Name {
+	switch item.Operation.Name { //nolint:exhaustive // Only those cases should be handled here !
 	case shared.AdditionOperation:
 		cellList = append(cellList, pkgVersionCell)
 	case shared.UnknownUpdateOperation, shared.UpgradeOperation, shared.DowngradeOperation:
-		cellList = append(cellList, buildPackageVersionHtmlCell(item.PreviousVersion))
+		cellList = append(cellList, buildPackageVersionHTMLCell(item.PreviousVersion))
 	}
 
 	return cellList
 }
 
-func buildOperationHtmlCell(op shared.Operation, colspan int) string {
+func buildOperationHTMLCell(operation shared.Operation, colspan int) string {
 	opColspanDirective := ""
 	if colspan > 1 {
 		opColspanDirective = fmt.Sprintf(" colspan=\"%d\"", colspan)
 	}
 
-	return "<td align=\"center\"" + opColspanDirective + ">" + getOperationSymbol(op) + "</td>"
+	return "<td align=\"center\"" + opColspanDirective + ">" + getOperationSymbol(operation) + "</td>"
 }
 
-func buildPackageVersionHtmlCell(version shared.PkgVersion) string {
+func buildPackageVersionHTMLCell(version shared.PkgVersion) string {
 	return "<td align=\"right\">" + version.Label + "</td>"
 }
 
-func buildPackageNameHtmlCell(pkg shared.PkgWrapper) string {
+func buildPackageNameHTMLCell(pkg shared.PkgWrapper) string {
 	pkgTitle := pkg.GetName()
 	if pkg.GetLink() != "" {
 		pkgTitle = "<a href=\"" + pkg.GetLink() + "\">" + pkgTitle + "</a>"
