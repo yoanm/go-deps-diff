@@ -79,7 +79,7 @@ func processCategory(
 		buildSectionSummaryMrk(subCategoriesMap),
 		func(builder *markdown.Builder, indentDepth int) {
 			if len(otherChangePkgList) > 0 {
-				processPkgList(builder, otherChangePkgList, guessBestTableMode(otherChangePkgList), indentDepth)
+				processPkgList(builder, otherChangePkgList, guessShortestPkgRowMode(otherChangePkgList), indentDepth)
 			}
 
 			if len(noChangePkgList) > 0 {
@@ -135,7 +135,7 @@ func buildItemMrkRowCells(item *shared.PackageChange, tableMode pkgRowMode) []st
 		}
 
 	case fullPkgRowMode:
-		cellList = buildItemMrkFullPrkRowCells(item, cellList, pkgVersionCell)
+		cellList = buildItemMrkFullPkgRowCells(item, cellList, pkgVersionCell)
 
 	default:
 		panic("Unmanaged table mode:" + strconv.Itoa(int(tableMode)))
@@ -144,7 +144,7 @@ func buildItemMrkRowCells(item *shared.PackageChange, tableMode pkgRowMode) []st
 	return cellList
 }
 
-func buildItemMrkFullPrkRowCells(item *shared.PackageChange, cellList []string, pkgVersionCell string) []string {
+func buildItemMrkFullPkgRowCells(item *shared.PackageChange, cellList []string, pkgVersionCell string) []string {
 	if item.Operation.Name != shared.AdditionOperation { // Version will be printed at the end for added package !
 		cellList = append(cellList, pkgVersionCell)
 	}

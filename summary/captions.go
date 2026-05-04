@@ -13,12 +13,8 @@ const captionHeaderLevel = 4
 func processSummaryCaption(builder *markdown.Builder) {
 	builder.WriteEol()
 	builder.WriteEol()
-	builder.Details(
-		"Captions",
-		createCaptionContent,
-		false, // Always closed by default (goal is to avoid polluting actual changes)
-		0,
-	)
+	// Always closed by default (goal is to avoid polluting actual changes) !
+	builder.Details("Captions", createCaptionContent, false, 0)
 }
 
 func createCaptionContent(builder *markdown.Builder, indentDepth int) {

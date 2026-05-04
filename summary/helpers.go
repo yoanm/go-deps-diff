@@ -41,14 +41,17 @@ func splitItemList(subCategoriesMap SubCategoriesMap) (PkgList, PkgList) {
 	return noChangePkgList, otherChangePkgList
 }
 
-func guessBestTableMode(abandonedPkgList PkgList) pkgRowMode {
-	needsFullTableWidth := slices.ContainsFunc(abandonedPkgList, func(item *shared.PackageChange) bool {
-		// The following operations only need two cells (version + operation), any other would need one more
-		// to display both the previous and current versions
-		return item.Operation.Name != shared.AdditionOperation &&
-			item.Operation.Name != shared.RemovalOperation &&
-			item.Operation.Name != shared.NoChangeOperation
-	})
+func guessShortestPkgRowMode(abandonedPkgList PkgList) pkgRowMode {
+	needsFullTableWidth := slices.ContainsFunc(
+		abandonedPkgList,
+		func(item *shared.PackageChange) bool {
+			// The following operations only need two cells (version + operation), any other would need one more
+			// to display both the previous and current versions
+			return item.Operation.Name != shared.AdditionOperation &&
+				item.Operation.Name != shared.RemovalOperation &&
+				item.Operation.Name != shared.NoChangeOperation
+		},
+	)
 
 	if needsFullTableWidth {
 		return fullPkgRowMode
@@ -93,7 +96,7 @@ func buildSectionCounters(subCategoriesMap SubCategoriesMap) sectionSummaryCntMa
 			cntMap[itemType].count += len(pkgList)
 			// For UnknownUpdateItem, try to catch basic unknown update rather than a SEMVER_EXTRA update.
 			if itemType == UnknownUpdateItem {
-				if pkg := findSemverExtraUpdatePackage(pkgList); pkg != nil {
+				if pkg := findSemverExtraUpdateChange(pkgList); pkg != nil {
 					cntMap[itemType].title = getOperationSymbol(pkg.Operation)
 
 					continue
@@ -109,7 +112,7 @@ func buildSectionCounters(subCategoriesMap SubCategoriesMap) sectionSummaryCntMa
 	return cntMap
 }
 
-func findSemverExtraUpdatePackage(pkgList PkgList) *shared.PackageChange {
+func findSemverExtraUpdateChange(pkgList PkgList) *shared.PackageChange {
 	for _, pkg := range pkgList {
 		if pkg.Operation.SemverType != shared.SemverExtraUpdate {
 			return pkg
