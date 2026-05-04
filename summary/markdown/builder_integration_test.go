@@ -11,9 +11,10 @@ func TestIntegration_WriteEol(t *testing.T) {
 
 	builder := markdown.NewBuilder()
 	builder.WriteEol()
-	current := builder.String()
 
+	current := builder.String()
 	expected := "\n"
+
 	if expected != current {
 		t.Fatalf("unexpected output: got %s, want %s", current, expected)
 	}

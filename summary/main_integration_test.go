@@ -1,13 +1,14 @@
 package summary_test
 
 import (
-	"github.com/andreyvit/diff"
-	"github.com/yoanm/go-deps-diff/summary"
 	"os"
 	"testing"
 
+	"github.com/andreyvit/diff"
+
 	"github.com/yoanm/go-deps-diff/shared"
 	"github.com/yoanm/go-deps-diff/shared_test"
+	"github.com/yoanm/go-deps-diff/summary"
 )
 
 func TestIntegration_GenerateForChanges(t *testing.T) {
