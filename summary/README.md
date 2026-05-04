@@ -2,7 +2,7 @@
 
 ## Functions
 
-### func [Generate](./summary.go#L11)
+### func [Generate](./summary.go#L17)
 
 `func Generate(mrkList SectionsMap) string`
 

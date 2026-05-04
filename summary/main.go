@@ -143,6 +143,7 @@ func isCandidateForWarningSection(subCategoryType MarkdownSubCategory, itemType 
 		(itemType == SemverMajorUpgradeItem || itemType == SemverMinorDowngradeItem) {
 		return true
 	}
+
 	return subCategoryType == TransitiveSubCategory &&
 		(itemType == UnknownUpdateItem ||
 			itemType == SemverMajorDowngradeItem ||
