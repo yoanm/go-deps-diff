@@ -58,120 +58,21 @@ func buildDefaultSectionsMap(changes shared.DiffMap) SectionsMap {
 	return list
 }
 
-func getMarkdownSectionType( //nolint:gocognit,cyclop,lll // 23 vs 20 and 26 vs 10 allowed, but easier to maintain IMO (=clear link to expectations)
+func getMarkdownSectionType(
 	subCategoryType MarkdownSubCategory,
 	itemType MarkdownItem,
 	isAbandoned bool,
 ) MarkdownSection {
-	//# Caution
-	//## Production usage
-	//### Requirements
-	//- UNKNOWN_UPDATE
-	//- SEMVER_MAJOR_DOWNGRADE
-	//- ADDITION__ABANDONED
-	//### Transitives
-	//## Dev-only usage
-	//### Requirements
-	//- UNKNOWN_UPDATE
-	//- SEMVER_MAJOR_DOWNGRADE
-	//- ADDITION__ABANDONED
-	//### Transitives
-	// -> process prod usage and dev-only usage the same way
-	if subCategoryType == RequirementSubCategory &&
-		(itemType == UnknownUpdateItem ||
-			itemType == SemverMajorDowngradeItem ||
-			(itemType == AdditionItem && isAbandoned)) {
+	switch {
+	case isCandidateForCautionSection(subCategoryType, itemType, isAbandoned):
 		return CautionSection
-	}
-
-	//# Warning
-	//## Production usage
-	//### Requirements
-	//- SEMVER_MAJOR_UPGRADE
-	//- SEMVER_MINOR_DOWNGRADE
-	//### Transitives
-	//- UNKNOWN_UPDATE
-	//- SEMVER_MAJOR_DOWNGRADE
-	//- ADDITION__ABANDONED
-	//## Dev-only usage
-	//### Requirements
-	//- SEMVER_MAJOR_UPGRADE
-	//- SEMVER_MINOR_DOWNGRADE
-	//### Transitives
-	//- UNKNOWN_UPDATE
-	//- SEMVER_MAJOR_DOWNGRADE
-	//- ADDITION__ABANDONED
-	// -> process prod usage and dev-only usage the same way
-	if subCategoryType == RequirementSubCategory &&
-		(itemType == SemverMajorUpgradeItem ||
-			itemType == SemverMinorDowngradeItem) {
+	case isCandidateForWarningSection(subCategoryType, itemType, isAbandoned):
 		return WarningSection
-	}
-
-	if subCategoryType == TransitiveSubCategory &&
-		(itemType == UnknownUpdateItem ||
-			itemType == SemverMajorDowngradeItem ||
-			(itemType == AdditionItem && isAbandoned)) {
-		return WarningSection
-	}
-
-	// # Important
-	//## Production usage
-	//### Requirements
-	//- SEMVER_PATCH_DOWNGRADE
-	//- REMOVAL
-	//### Transitives
-	//- SEMVER_MAJOR_UPGRADE
-	//- SEMVER_MINOR_DOWNGRADE
-	//## Dev-only usage
-	//### Requirements
-	//- SEMVER_PATCH_DOWNGRADE
-	//- REMOVAL
-	//### Transitives
-	//- SEMVER_MAJOR_UPGRADE
-	//- SEMVER_MINOR_DOWNGRADE
-	// -> process prod usage and dev-only usage the same way
-	if subCategoryType == RequirementSubCategory &&
-		(itemType == SemverPatchDowngradeItem ||
-			itemType == RemovalItem) {
+	case isCandidateForImportantSection(subCategoryType, itemType):
 		return ImportantSection
-	}
-
-	if subCategoryType == TransitiveSubCategory &&
-		(itemType == SemverMajorUpgradeItem ||
-			itemType == SemverMinorDowngradeItem) {
-		return ImportantSection
-	}
-
-	// # Tip
-	//## Production usage
-	//### Requirements
-	//- SEMVER_MINOR_UPGRADE
-	//- ADDITION
-	//### Transitives
-	//- SEMVER_PATCH_DOWNGRADE
-	//- REMOVAL
-	//## Dev-only usage
-	//### Requirements
-	//- SEMVER_MINOR_UPGRADE
-	//- ADDITION
-	//### Transitives
-	//- SEMVER_PATCH_DOWNGRADE
-	//- REMOVAL
-	// -> process prod usage and dev-only usage the same way
-	if subCategoryType == RequirementSubCategory &&
-		(itemType == SemverMinorUpgradeItem ||
-			itemType == AdditionItem) {
+	case isCandidateForTipSection(subCategoryType, itemType):
 		return TipSection
 	}
-
-	if subCategoryType == TransitiveSubCategory &&
-		(itemType == SemverPatchDowngradeItem ||
-			itemType == RemovalItem) {
-		return TipSection
-	}
-
-	return NoteSection
 
 	//# Note
 	//## Production usage
@@ -194,6 +95,107 @@ func getMarkdownSectionType( //nolint:gocognit,cyclop,lll // 23 vs 20 and 26 vs 
 	//- SEMVER_PATCH_UPGRADE
 	//- ADDITION
 	//- SAME
+
+	return NoteSection
+}
+
+func isCandidateForCautionSection(subCategoryType MarkdownSubCategory, itemType MarkdownItem, isAbandoned bool) bool {
+	//# Caution
+	//## Production usage
+	//### Requirements
+	//- UNKNOWN_UPDATE
+	//- SEMVER_MAJOR_DOWNGRADE
+	//- ADDITION__ABANDONED
+	//### Transitives
+	//## Dev-only usage
+	//### Requirements
+	//- UNKNOWN_UPDATE
+	//- SEMVER_MAJOR_DOWNGRADE
+	//- ADDITION__ABANDONED
+	//### Transitives
+	// -> process prod usage and dev-only usage the same way
+	return subCategoryType == RequirementSubCategory &&
+		(itemType == UnknownUpdateItem ||
+			itemType == SemverMajorDowngradeItem ||
+			(itemType == AdditionItem && isAbandoned))
+}
+
+func isCandidateForWarningSection(subCategoryType MarkdownSubCategory, itemType MarkdownItem, isAbandoned bool) bool {
+	//# Warning
+	//## Production usage
+	//### Requirements
+	//- SEMVER_MAJOR_UPGRADE
+	//- SEMVER_MINOR_DOWNGRADE
+	//### Transitives
+	//- UNKNOWN_UPDATE
+	//- SEMVER_MAJOR_DOWNGRADE
+	//- ADDITION__ABANDONED
+	//## Dev-only usage
+	//### Requirements
+	//- SEMVER_MAJOR_UPGRADE
+	//- SEMVER_MINOR_DOWNGRADE
+	//### Transitives
+	//- UNKNOWN_UPDATE
+	//- SEMVER_MAJOR_DOWNGRADE
+	//- ADDITION__ABANDONED
+	// -> process prod usage and dev-only usage the same way
+	if subCategoryType == RequirementSubCategory &&
+		(itemType == SemverMajorUpgradeItem || itemType == SemverMinorDowngradeItem) {
+		return true
+	}
+	return subCategoryType == TransitiveSubCategory &&
+		(itemType == UnknownUpdateItem ||
+			itemType == SemverMajorDowngradeItem ||
+			(itemType == AdditionItem && isAbandoned))
+}
+
+func isCandidateForImportantSection(subCategoryType MarkdownSubCategory, itemType MarkdownItem) bool {
+	// # Important
+	//## Production usage
+	//### Requirements
+	//- SEMVER_PATCH_DOWNGRADE
+	//- REMOVAL
+	//### Transitives
+	//- SEMVER_MAJOR_UPGRADE
+	//- SEMVER_MINOR_DOWNGRADE
+	//## Dev-only usage
+	//### Requirements
+	//- SEMVER_PATCH_DOWNGRADE
+	//- REMOVAL
+	//### Transitives
+	//- SEMVER_MAJOR_UPGRADE
+	//- SEMVER_MINOR_DOWNGRADE
+	// -> process prod usage and dev-only usage the same way
+	if subCategoryType == RequirementSubCategory && (itemType == SemverPatchDowngradeItem || itemType == RemovalItem) {
+		return true
+	}
+
+	return subCategoryType == TransitiveSubCategory &&
+		(itemType == SemverMajorUpgradeItem || itemType == SemverMinorDowngradeItem)
+}
+
+func isCandidateForTipSection(subCategoryType MarkdownSubCategory, itemType MarkdownItem) bool {
+	// # Tip
+	//## Production usage
+	//### Requirements
+	//- SEMVER_MINOR_UPGRADE
+	//- ADDITION
+	//### Transitives
+	//- SEMVER_PATCH_DOWNGRADE
+	//- REMOVAL
+	//## Dev-only usage
+	//### Requirements
+	//- SEMVER_MINOR_UPGRADE
+	//- ADDITION
+	//### Transitives
+	//- SEMVER_PATCH_DOWNGRADE
+	//- REMOVAL
+	// -> process prod usage and dev-only usage the same way
+	if subCategoryType == RequirementSubCategory && (itemType == SemverMinorUpgradeItem || itemType == AdditionItem) {
+		return true
+	}
+
+	return subCategoryType == TransitiveSubCategory && (itemType == SemverPatchDowngradeItem || itemType == RemovalItem)
 }
 
 func getMarkdownCategoryType(change *shared.PackageChange) (MarkdownCategory, MarkdownSubCategory) {
