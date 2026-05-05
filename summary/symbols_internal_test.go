@@ -4,106 +4,31 @@ import (
 	"testing"
 
 	"github.com/yoanm/go-deps-diff/shared"
+	"github.com/yoanm/go-deps-diff/shared_test"
 )
-
-const _testUnmanagedOperation shared.OperationName = "ARGH"
 
 func Test_getOperationSymbol(t *testing.T) {
 	t.Parallel()
-
-	additionOp := shared.Operation{Name: shared.AdditionOperation, SemverType: shared.SemverNoUpdate}
-	removalOp := shared.Operation{Name: shared.RemovalOperation, SemverType: shared.SemverNoUpdate}
-	sameOp := shared.Operation{Name: shared.NoChangeOperation, SemverType: shared.SemverNoUpdate}
-	upgradeMajorOp := shared.Operation{Name: shared.UpgradeOperation, SemverType: shared.SemverMajorUpdate}
-	upgradeMinorOp := shared.Operation{Name: shared.UpgradeOperation, SemverType: shared.SemverMinorUpdate}
-	upgradePatchOp := shared.Operation{Name: shared.UpgradeOperation, SemverType: shared.SemverPatchUpdate}
-	downgradeMajorOp := shared.Operation{Name: shared.DowngradeOperation, SemverType: shared.SemverMajorUpdate}
-	downgradeMinorOp := shared.Operation{Name: shared.DowngradeOperation, SemverType: shared.SemverMinorUpdate}
-	downgradePatchOp := shared.Operation{Name: shared.DowngradeOperation, SemverType: shared.SemverPatchUpdate}
-	unknownUpdateOp := shared.Operation{Name: shared.UnknownUpdateOperation, SemverType: shared.SemverUnknownUpdate}
-	semverExtraUpdateOp := shared.Operation{Name: shared.UnknownUpdateOperation, SemverType: shared.SemverExtraUpdate}
-
-	unmanagedOp := shared.Operation{Name: _testUnmanagedOperation, SemverType: shared.SemverNoUpdate}
-	// Following operation (downgrade + semver no update) is not expected to exist
-	unmanagedDowngradeOp := shared.Operation{Name: shared.DowngradeOperation, SemverType: shared.SemverNoUpdate}
-	// Following operation (upgrade + semver no update) is not expected to exist
-	unmanagedUpgradeOp := shared.Operation{Name: shared.UpgradeOperation, SemverType: shared.SemverNoUpdate}
 
 	tests := []struct {
 		name      string
 		operation shared.Operation
 		expected  string
 	}{
-		{
-			name:      "Addition",
-			operation: additionOp,
-			expected:  "➕️",
-		},
-		{
-			name:      "Removal",
-			operation: removalOp,
-			expected:  "❌",
-		},
-		{
-			name:      "Same",
-			operation: sameOp,
-			expected:  "🟰",
-		},
-		{
-			name:      "Major Upgrade",
-			operation: upgradeMajorOp,
-			expected:  "<sub><sup>🔺.🔹.🔹</sup></sub>",
-		},
-		{
-			name:      "Minor Upgrade",
-			operation: upgradeMinorOp,
-			expected:  "<sub><sup>🔹.🔺.🔹</sup></sub>",
-		},
-		{
-			name:      "Patch Upgrade",
-			operation: upgradePatchOp,
-			expected:  "<sub><sup>🔹.🔹.🔺</sup></sub>",
-		},
-		{
-			name:      "Major Downgrade",
-			operation: downgradeMajorOp,
-			expected:  "<sub><sup>🔻.🔹.🔹</sup></sub>",
-		},
-		{
-			name:      "Minor Downgrade",
-			operation: downgradeMinorOp,
-			expected:  "<sub><sup>🔹.🔻.🔹</sup></sub>",
-		},
-		{
-			name:      "Patch Downgrade",
-			operation: downgradePatchOp,
-			expected:  "<sub><sup>🔹.🔹.🔻</sup></sub>",
-		},
-		{
-			name:      "UnknownUpdate",
-			operation: unknownUpdateOp,
-			expected:  "❓",
-		},
-		{
-			name:      "SemverExtra Update",
-			operation: semverExtraUpdateOp,
-			expected:  "<sub><sup>🔹.🔹.🔹❓</sup></sub>",
-		},
-		{
-			name:      "Unknown operation",
-			operation: unmanagedOp,
-			expected:  "❔",
-		},
-		{
-			name:      "Unmanaged upgrade",
-			operation: unmanagedUpgradeOp,
-			expected:  "❔",
-		},
-		{
-			name:      "Unmanaged downgrade",
-			operation: unmanagedDowngradeOp,
-			expected:  "❔",
-		},
+		{name: "Addition", operation: shared_test.AdditionOp, expected: "➕️"},
+		{name: "Removal", operation: shared_test.RemovalOp, expected: "❌"},
+		{name: "Same", operation: shared_test.SameOp, expected: "🟰"},
+		{name: "Major Upgrade", operation: shared_test.UpgradeMajorOp, expected: "<sub><sup>🔺.🔹.🔹</sup></sub>"},
+		{name: "Minor Upgrade", operation: shared_test.UpgradeMinorOp, expected: "<sub><sup>🔹.🔺.🔹</sup></sub>"},
+		{name: "Patch Upgrade", operation: shared_test.UpgradePatchOp, expected: "<sub><sup>🔹.🔹.🔺</sup></sub>"},
+		{name: "Major Downgrade", operation: shared_test.DowngradeMajorOp, expected: "<sub><sup>🔻.🔹.🔹</sup></sub>"},
+		{name: "Minor Downgrade", operation: shared_test.DowngradeMinorOp, expected: "<sub><sup>🔹.🔻.🔹</sup></sub>"},
+		{name: "Patch Downgrade", operation: shared_test.DowngradePatchOp, expected: "<sub><sup>🔹.🔹.🔻</sup></sub>"},
+		{name: "UnknownUpdate", operation: shared_test.UnknownUpdateOp, expected: "❓"},
+		{name: "SemverExtra Update", operation: shared_test.SemverExtraUpdateOp, expected: "<sub><sup>🔹.🔹.🔹❓</sup></sub>"},
+		{name: "Unknown operation", operation: shared_test.InvalidOp, expected: "❔"},
+		{name: "Unmanaged upgrade", operation: shared_test.InvalidUpgradeOp, expected: "❔"},
+		{name: "Unmanaged downgrade", operation: shared_test.InvalidDowngradeOp, expected: "❔"},
 	}
 	for _, testCase := range tests {
 		t.Run(testCase.name, func(t *testing.T) {

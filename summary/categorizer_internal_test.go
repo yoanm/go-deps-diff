@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/yoanm/go-deps-diff/shared"
+	"github.com/yoanm/go-deps-diff/shared_test"
 )
 
 func Test_getMarkdownItemType(t *testing.T) {
@@ -117,7 +118,7 @@ func Test_getMarkdownItemType(t *testing.T) {
 			name: "Unknown for unmanaged case",
 			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
 				// Following operation (downgrade + semver no update)is not expected to exist
-				Operation: shared.Operation{Name: _testUnmanagedOperation, SemverType: shared.SemverNoUpdate},
+				Operation: shared.Operation{Name: shared_test.InvalidOperationName, SemverType: shared.SemverNoUpdate},
 			},
 			expected: unknownUpdateItem,
 		},

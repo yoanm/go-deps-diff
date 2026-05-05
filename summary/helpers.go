@@ -107,7 +107,7 @@ func buildSectionCounters(subCategoriesMap subCategoriesMap) sectionSummaryCntMa
 				}
 			}
 			// Fallback on first available one if sample is not defined yet
-			if len(cntMap[itemType].title) == 0 && len(pkgList) > 0 {
+			if len(pkgList) > 0 && len(cntMap[itemType].title) == 0 {
 				cntMap[itemType].title = getOperationSymbol(pkgList[0].Operation)
 			}
 		}
