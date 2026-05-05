@@ -41,7 +41,7 @@ func TestIntegration_WriteLine(t *testing.T) {
 
 			current := builder.String()
 			if testCase.expected != current {
-				t.Fatalf("unexpected output: got %s, want %s", current, testCase.expected)
+				t.Errorf("unexpected output: got %s, want %s", current, testCase.expected)
 			}
 		})
 	}

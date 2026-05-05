@@ -194,12 +194,14 @@ func getMarkdownCategoryType(change *shared.PackageChange) (markdownCategory, ma
 	}
 }
 
-func getMarkdownItemType(change *shared.PackageChange) markdownItem { //nolint:cyclop,lll // 13 vs 10 allowed, but 13 actual cases
+func getMarkdownItemType(change *shared.PackageChange) markdownItem {
+	mrkItem, exists := getOperationToItemBaseMap()[change.Operation.Name]
+	if exists {
+		return mrkItem
+	}
+
+	//nolint:exhaustive // Only those cases are managed (others are expected to come from the map above)
 	switch change.Operation.Name {
-	// - UNKNOWN_UPDATE
-	// - UNKNOWN_UPDATE
-	case shared.UnknownUpdateOperation:
-		return unknownUpdateItem
 	// - SEMVER_MAJOR_UPGRADE
 	// - SEMVER_MINOR_UPGRADE
 	// - SEMVER_PATCH_UPGRADE
@@ -226,15 +228,6 @@ func getMarkdownItemType(change *shared.PackageChange) markdownItem { //nolint:c
 		case shared.SemverPatchUpdate:
 			return semverPatchDowngradeItem
 		}
-	// - REMOVAL
-	case shared.RemovalOperation:
-		return removalItem
-	// - ADDITION
-	case shared.AdditionOperation:
-		return additionItem
-	// - SAME
-	case shared.NoChangeOperation:
-		return sameItem
 	}
 
 	return unknownUpdateItem // Fallback on unknown

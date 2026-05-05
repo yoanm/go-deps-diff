@@ -36,7 +36,7 @@ func TestIntegration_Header(t *testing.T) {
 
 			current := builder.String()
 			if testCase.expected != current {
-				t.Fatalf("unexpected output: got %s, want %s", current, testCase.expected)
+				t.Errorf("unexpected output: got %s, want %s", current, testCase.expected)
 			}
 		})
 	}
@@ -77,7 +77,7 @@ func TestIntegration_HTMLTable(t *testing.T) {
 
 			current := builder.String()
 			if testCase.expected != current {
-				t.Fatalf("unexpected output: got %s, want %s", current, testCase.expected)
+				t.Errorf("unexpected output: got %s, want %s", current, testCase.expected)
 			}
 		})
 	}
@@ -134,7 +134,7 @@ func TestIntegration_Details(t *testing.T) {
 
 			current := builder.String()
 			if testCase.expected != current {
-				t.Fatalf("unexpected output: got %s, want %s", current, testCase.expected)
+				t.Errorf("unexpected output: got %s, want %s", current, testCase.expected)
 			}
 		})
 	}

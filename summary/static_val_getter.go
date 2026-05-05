@@ -1,5 +1,7 @@
 package summary
 
+import "github.com/yoanm/go-deps-diff/shared"
+
 func getSectionHeaderFor(section markdownSection) string {
 	switch section {
 	case cautionSection:
@@ -81,5 +83,14 @@ func getItemsOrder() []markdownItem {
 		semverPatchUpgradeItem,
 		additionItem,
 		sameItem,
+	}
+}
+
+func getOperationToItemBaseMap() map[shared.OperationName]markdownItem {
+	return map[shared.OperationName]markdownItem{ //nolint:exhaustive // Only 1-1 mapping values here !
+		shared.UnknownUpdateOperation: unknownUpdateItem,
+		shared.RemovalOperation:       removalItem,
+		shared.AdditionOperation:      additionItem,
+		shared.NoChangeOperation:      sameItem,
 	}
 }
