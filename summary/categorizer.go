@@ -252,6 +252,7 @@ func getMarkdownItemType(change *shared.PackageChange) markdownItem { //nolint:c
 	return unknownUpdateItem // Fallback on unknown
 }
 
+//nolint:unused // Kept for test debug purpose
 func _debugPackageList(
 	sectionType markdownSection,
 	categoryType markdownCategory,
