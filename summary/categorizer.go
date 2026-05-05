@@ -1,10 +1,6 @@
 package summary
 
 import (
-	"fmt"
-	"os"
-	"strings"
-
 	"github.com/yoanm/go-deps-diff/shared"
 )
 
@@ -244,7 +240,7 @@ func getMarkdownItemType(change *shared.PackageChange) markdownItem { //nolint:c
 	return unknownUpdateItem // Fallback on unknown
 }
 
-//nolint:unused // Kept for test debug purpose
+/*
 func _debugPackageList(
 	sectionType markdownSection,
 	categoryType markdownCategory,
@@ -270,3 +266,4 @@ func _debugPackageList(
 		fmt.Fprintln(os.Stderr, "package mismatch: got", change.Package.GetName(), ", want", expectedTypeKey)
 	}
 }
+*/
