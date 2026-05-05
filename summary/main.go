@@ -14,11 +14,12 @@ const (
 	categoryHeaderLevel = 3
 )
 
-func generate(mrkList sectionsMap) string {
+func GenerateForChanges(changes shared.DiffMap) string {
+	mrkMap := buildSectionsMap(changes)
 	builder := markdown.NewBuilder()
 
 	inOrderMapIteratorHelper[markdownSection, categoriesMap](
-		mrkList,
+		mrkMap,
 		getSectionsOrder(),
 		func(sectionName markdownSection, categoriesMap categoriesMap) {
 			processSection(builder, categoriesMap, sectionName)

@@ -8,14 +8,6 @@ import (
 	"github.com/yoanm/go-deps-diff/shared"
 )
 
-func GenerateForChanges(changes shared.DiffMap) string {
-	if len(changes) == 0 {
-		return ""
-	}
-
-	return generate(buildSectionsMap(changes))
-}
-
 func buildSectionsMap(changes shared.DiffMap) sectionsMap {
 	list := sectionsMap{}
 

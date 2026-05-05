@@ -2,7 +2,7 @@
 
 ## Functions
 
-### func [GenerateForChanges](./categorizer.go#L11)
+### func [GenerateForChanges](./main.go#L17)
 
 `func GenerateForChanges(changes shared.DiffMap) string`
 

@@ -20,15 +20,20 @@ func TestIntegration_GenerateForChanges(t *testing.T) {
 		goldenFile string
 	}{
 		{
-			name:       "Base",
+			name:       "Full",
 			changes:    integrationBaseChanges,
-			goldenFile: "./testdata/golden-base_summary.md",
+			goldenFile: "./testdata/golden-full-summary.md",
+		},
+		/*{
+			name:       "Special case - shortest table size - Table with only three column needed",
+			changes:    integrationOnlyThreeColumnsNeeded,
+			goldenFile: "./testdata/golden-3columns-summary.md",
 		},
 		{
-			name:       "Special case - Table with only three column needed",
-			changes:    integrationOnlyThreeColumnsNeeded,
-			goldenFile: "./testdata/golden-3columns_summary.md",
-		},
+			name:       "Special case - Symbols counter - Use SEMVER_EXTRA_UPDATE if no other UNKNOWN_UPDATE available",
+			changes:    integrationOnlySemverExtraUpdateChanges,
+			goldenFile: "./testdata/golden-only_SEMVER_EXTRA_UPDATE-summary.md",
+		},*/
 	}
 	for _, testCase := range tests {
 		t.Run(testCase.name, func(t *testing.T) {
@@ -999,7 +1004,7 @@ var integrationBaseChanges = shared.DiffMap{
 	},
 }
 
-//nolint:gochecknoglobals // Just to keep it outside the function
+//nolint:gochecknoglobals,unused // Just to keep it outside the function
 var integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 	"caution-dev_only_usage-requirement/ADDITION+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1264,5 +1269,74 @@ var integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+	},
+}
+
+//nolint:gochecknoglobals,unused // Just to keep it outside the function
+var integrationOnlySemverExtraUpdateChanges = shared.DiffMap{
+	"caution-dev_only_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "caution-dev_only_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha"},
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            true,
+			RootRequirement:    false,
+			RootDevRequirement: true,
+		},
+		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "EXTRA"},
+		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta"},
+	},
+	"caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE+SEMVER_EXTRA": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE+SEMVER_EXTRA",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha"},
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            false,
+			RootRequirement:    false,
+			RootDevRequirement: true,
+		},
+		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "EXTRA"},
+		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta"},
+	},
+	"caution-prod_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "caution-prod_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha"},
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            false,
+			RootRequirement:    true,
+			RootDevRequirement: false,
+		},
+		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "EXTRA"},
+		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta"},
+	},
+	"warning-dev_only_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "warning-dev_only_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha"},
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            true,
+			RootRequirement:    false,
+			RootDevRequirement: false,
+		},
+		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "EXTRA"},
+		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta"},
+	},
+	"warning-prod_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "warning-prod_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha"},
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            false,
+			RootRequirement:    false,
+			RootDevRequirement: false,
+		},
+		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "EXTRA"},
+		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta"},
 	},
 }
