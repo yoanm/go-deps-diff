@@ -1,85 +1,85 @@
 package summary
 
-func getSectionHeaderFor(section MarkdownSection) string {
+func getSectionHeaderFor(section markdownSection) string {
 	switch section {
-	case CautionSection:
+	case cautionSection:
 		return "Hazardous changes"
-	case WarningSection:
+	case warningSection:
 		return "Error-prone changes"
-	case ImportantSection:
+	case importantSection:
 		return "Noteworthy changes"
-	case TipSection:
+	case tipSection:
 		return "Pretty safe changes"
-	case NoteSection:
+	case noteSection:
 		return "Note"
 	}
 
 	panic("Unknown section: " + section)
 }
 
-func getSectionDescriptionFor(section MarkdownSection) string {
+func getSectionDescriptionFor(section markdownSection) string {
 	switch section {
-	case CautionSection:
+	case cautionSection:
 		return "☣️ Changes that are likely unexpected and/or likely to cause trouble"
-	case WarningSection:
+	case warningSection:
 		return "⚠️ Changes that may not cause trouble in production but are likely unexpected and/or prone to cause trouble" //nolint:lll // Meaningless here
-	case ImportantSection:
+	case importantSection:
 		return "🕵️ Changes unlikely to cause production issues, but worth noting if problems arise"
-	case TipSection:
+	case tipSection:
 		return "👀 Changes that are unlikely to cause trouble in production"
-	case NoteSection:
+	case noteSection:
 		return "ℹ️ All remaining changes, mostly for your information"
 	}
 
 	panic("Unknown section: " + section)
 }
 
-func getCategoryHeaderFor(category MarkdownCategory) string {
+func getCategoryHeaderFor(category markdownCategory) string {
 	switch category {
-	case ProdUsageCategory:
+	case prodUsageCategory:
 		return "Production usage <sup>🏭</sup>"
-	case DevOnlyUsageCategory:
+	case devOnlyUsageCategory:
 		return "Dev-only usage <sup>🧪</sup>"
 	}
 
 	panic("Unknown category: " + category)
 }
 
-func getSectionsOrder() []MarkdownSection {
-	return []MarkdownSection{
-		CautionSection,
-		WarningSection,
-		ImportantSection,
-		TipSection,
-		NoteSection,
+func getSectionsOrder() []markdownSection {
+	return []markdownSection{
+		cautionSection,
+		warningSection,
+		importantSection,
+		tipSection,
+		noteSection,
 	}
 }
 
-func getCategoriesOrder() []MarkdownCategory {
-	return []MarkdownCategory{
-		ProdUsageCategory,
-		DevOnlyUsageCategory,
+func getCategoriesOrder() []markdownCategory {
+	return []markdownCategory{
+		prodUsageCategory,
+		devOnlyUsageCategory,
 	}
 }
 
-func getSubCategoriesOrder() []MarkdownSubCategory {
-	return []MarkdownSubCategory{
-		RequirementSubCategory,
-		TransitiveSubCategory,
+func getSubCategoriesOrder() []markdownSubCategory {
+	return []markdownSubCategory{
+		requirementSubCategory,
+		transitiveSubCategory,
 	}
 }
 
-func getItemsOrder() []MarkdownItem {
-	return []MarkdownItem{
-		UnknownUpdateItem,
-		SemverMajorDowngradeItem,
-		SemverMinorDowngradeItem,
-		SemverPatchDowngradeItem,
-		SemverMajorUpgradeItem,
-		RemovalItem,
-		SemverMinorUpgradeItem,
-		SemverPatchUpgradeItem,
-		AdditionItem,
-		SameItem,
+func getItemsOrder() []markdownItem {
+	return []markdownItem{
+		unknownUpdateItem,
+		semverMajorDowngradeItem,
+		semverMinorDowngradeItem,
+		semverPatchDowngradeItem,
+		semverMajorUpgradeItem,
+		removalItem,
+		semverMinorUpgradeItem,
+		semverPatchUpgradeItem,
+		additionItem,
+		sameItem,
 	}
 }

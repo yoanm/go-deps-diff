@@ -8,20 +8,24 @@ import (
 	"github.com/yoanm/go-deps-diff/shared"
 )
 
-func splitItemList(subCategoriesMap SubCategoriesMap) (PkgList, PkgList) {
+func splitItemList(subCategoriesMap subCategoriesMap) (pkgList, pkgList) {
 	var (
-		noChangePkgList    PkgList
-		otherChangePkgList PkgList
+		noChangePkgList    pkgList
+		otherChangePkgList pkgList
 	)
 
-	inOrderMapIteratorHelper[MarkdownSubCategory, ItemsMap](
+	inOrderMapIteratorHelper[markdownSubCategory, itemsMap](
 		subCategoriesMap,
 		getSubCategoriesOrder(),
-		func(subCategoryName MarkdownSubCategory, itemsMap ItemsMap) {
-			inOrderMapIteratorHelper[MarkdownItem, PkgList](
+		func(subCategoryName markdownSubCategory, itemsMap itemsMap) {
+			inOrderMapIteratorHelper[markdownItem, pkgList](
 				itemsMap,
 				getItemsOrder(),
-				func(itemName MarkdownItem, pkgList PkgList) {
+				func(itemName markdownItem, pkgList pkgList) {
+					slices.SortFunc(pkgList, func(changeA, changeB *shared.PackageChange) int {
+						return strings.Compare(changeA.Package.GetName(), changeB.Package.GetName())
+					})
+
 					for _, item := range pkgList {
 						// Keep track of no change items to display them at the end of the section.
 						// - No change items are far less meaningful than the other items
@@ -41,7 +45,7 @@ func splitItemList(subCategoriesMap SubCategoriesMap) (PkgList, PkgList) {
 	return noChangePkgList, otherChangePkgList
 }
 
-func guessShortestPkgRowMode(abandonedPkgList PkgList) pkgRowMode {
+func guessShortestPkgRowMode(abandonedPkgList pkgList) pkgRowMode {
 	needsFullTableWidth := slices.ContainsFunc(
 		abandonedPkgList,
 		func(item *shared.PackageChange) bool {
@@ -64,18 +68,18 @@ type multiCounter struct {
 	title string
 	count int
 }
-type sectionSummaryCntMap map[MarkdownItem]*multiCounter
+type sectionSummaryCntMap map[markdownItem]*multiCounter
 
-func buildSectionSummaryMrk(subCategoriesMap SubCategoriesMap) string {
+func buildSectionSummaryMrk(subCategoriesMap subCategoriesMap) string {
 	cntMap := buildSectionCounters(subCategoriesMap)
 
 	partList := make([]string, len(cntMap))
 	partKey := 0
 
-	inOrderMapIteratorHelper[MarkdownItem, *multiCounter](
+	inOrderMapIteratorHelper[markdownItem, *multiCounter](
 		cntMap,
 		getItemsOrder(),
-		func(key MarkdownItem, data *multiCounter) {
+		func(key markdownItem, data *multiCounter) {
 			partList[partKey] = fmt.Sprintf("%s<sup>%d</sup>", data.title, data.count)
 			partKey++
 		},
@@ -84,7 +88,7 @@ func buildSectionSummaryMrk(subCategoriesMap SubCategoriesMap) string {
 	return strings.Join(partList, "    ")
 }
 
-func buildSectionCounters(subCategoriesMap SubCategoriesMap) sectionSummaryCntMap {
+func buildSectionCounters(subCategoriesMap subCategoriesMap) sectionSummaryCntMap {
 	cntMap := make(sectionSummaryCntMap)
 
 	for _, itemsMap := range subCategoriesMap {
@@ -94,8 +98,8 @@ func buildSectionCounters(subCategoriesMap SubCategoriesMap) sectionSummaryCntMa
 			}
 
 			cntMap[itemType].count += len(pkgList)
-			// For UnknownUpdateItem, try to catch basic unknown update rather than a SEMVER_EXTRA update.
-			if itemType == UnknownUpdateItem {
+			// For unknownUpdateItem, try to catch basic unknown update rather than a SEMVER_EXTRA update.
+			if itemType == unknownUpdateItem {
 				if pkg := findSemverExtraUpdateChange(pkgList); pkg != nil {
 					cntMap[itemType].title = getOperationSymbol(pkg.Operation)
 
@@ -112,7 +116,7 @@ func buildSectionCounters(subCategoriesMap SubCategoriesMap) sectionSummaryCntMa
 	return cntMap
 }
 
-func findSemverExtraUpdateChange(pkgList PkgList) *shared.PackageChange {
+func findSemverExtraUpdateChange(pkgList pkgList) *shared.PackageChange {
 	for _, pkg := range pkgList {
 		if pkg.Operation.SemverType != shared.SemverExtraUpdate {
 			return pkg

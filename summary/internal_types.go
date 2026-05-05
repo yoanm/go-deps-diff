@@ -1,5 +1,54 @@
 package summary
 
+import "github.com/yoanm/go-deps-diff/shared"
+
+type markdownSection string
+
+const (
+	cautionSection   markdownSection = "CAUTION"
+	warningSection   markdownSection = "WARNING"
+	importantSection markdownSection = "IMPORTANT"
+	tipSection       markdownSection = "TIP"
+	noteSection      markdownSection = "NOTE"
+)
+
+type markdownCategory string
+
+const (
+	prodUsageCategory    markdownCategory = "PROD_USAGE"
+	devOnlyUsageCategory markdownCategory = "DEV_ONLY_USAGE"
+)
+
+type markdownSubCategory string
+
+const (
+	requirementSubCategory markdownSubCategory = "REQUIREMENT"
+	transitiveSubCategory  markdownSubCategory = "TRANSITIVE"
+)
+
+type markdownItem string
+
+const (
+	unknownUpdateItem        markdownItem = "UNKNOWN_UPDATE"
+	semverMajorUpgradeItem   markdownItem = "SEMVER_MAJOR_UPGRADE"
+	semverMinorUpgradeItem   markdownItem = "SEMVER_MINOR_UPGRADE"
+	semverPatchUpgradeItem   markdownItem = "SEMVER_PATCH_UPGRADE"
+	semverMajorDowngradeItem markdownItem = "SEMVER_MAJOR_DOWNGRADE"
+	semverMinorDowngradeItem markdownItem = "SEMVER_MINOR_DOWNGRADE"
+	semverPatchDowngradeItem markdownItem = "SEMVER_PATCH_DOWNGRADE"
+	removalItem              markdownItem = "REMOVAL"
+	additionItem             markdownItem = "ADDITION"
+	sameItem                 markdownItem = "SAME"
+)
+
+type (
+	pkgList          []*shared.PackageChange
+	itemsMap         map[markdownItem]pkgList
+	subCategoriesMap map[markdownSubCategory]itemsMap
+	categoriesMap    map[markdownCategory]subCategoriesMap
+	sectionsMap      map[markdownSection]categoriesMap
+)
+
 type pkgRowMode int
 
 const (

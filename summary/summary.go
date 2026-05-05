@@ -14,17 +14,17 @@ const (
 	categoryHeaderLevel = 3
 )
 
-func Generate(mrkList SectionsMap) string {
+func generate(mrkList sectionsMap) string {
 	if len(mrkList) == 0 {
 		return ""
 	}
 
 	builder := markdown.NewBuilder()
 
-	inOrderMapIteratorHelper[MarkdownSection, CategoriesMap](
+	inOrderMapIteratorHelper[markdownSection, categoriesMap](
 		mrkList,
 		getSectionsOrder(),
-		func(sectionName MarkdownSection, categoriesMap CategoriesMap) {
+		func(sectionName markdownSection, categoriesMap categoriesMap) {
 			processSection(builder, categoriesMap, sectionName)
 		},
 	)
@@ -34,7 +34,7 @@ func Generate(mrkList SectionsMap) string {
 	return builder.String()
 }
 
-func processSection(builder *markdown.Builder, categoriesMap CategoriesMap, sectionName MarkdownSection) {
+func processSection(builder *markdown.Builder, categoriesMap categoriesMap, sectionName markdownSection) {
 	if len(categoriesMap) == 0 {
 		return
 	}
@@ -46,12 +46,12 @@ func processSection(builder *markdown.Builder, categoriesMap CategoriesMap, sect
 		0,
 	)
 
-	inOrderMapIteratorHelper[MarkdownCategory, SubCategoriesMap](
+	inOrderMapIteratorHelper[markdownCategory, subCategoriesMap](
 		categoriesMap,
 		getCategoriesOrder(),
-		func(categoryName MarkdownCategory, subCategoriesMap SubCategoriesMap) {
-			openedDetails := categoryName == ProdUsageCategory &&
-				(CautionSection == sectionName || WarningSection == sectionName || ImportantSection == sectionName)
+		func(categoryName markdownCategory, subCategoriesMap subCategoriesMap) {
+			openedDetails := categoryName == prodUsageCategory &&
+				(cautionSection == sectionName || warningSection == sectionName || importantSection == sectionName)
 
 			processCategory(builder, subCategoriesMap, categoryName, openedDetails)
 		},
@@ -62,8 +62,8 @@ func processSection(builder *markdown.Builder, categoriesMap CategoriesMap, sect
 
 func processCategory(
 	builder *markdown.Builder,
-	subCategoriesMap SubCategoriesMap,
-	categoryName MarkdownCategory,
+	subCategoriesMap subCategoriesMap,
+	categoryName markdownCategory,
 	openedDetails bool,
 ) {
 	if len(subCategoriesMap) == 0 {
@@ -98,7 +98,7 @@ func processCategory(
 	)
 }
 
-func processPkgList(builder *markdown.Builder, pkgList PkgList, tableMode pkgRowMode, indentDepth int) {
+func processPkgList(builder *markdown.Builder, pkgList pkgList, tableMode pkgRowMode, indentDepth int) {
 	if len(pkgList) == 0 {
 		return
 	}

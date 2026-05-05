@@ -2,52 +2,42 @@ package summary
 
 import (
 	"fmt"
-	"maps"
 	"os"
-	"slices"
-	"sort"
 	"strings"
 
 	"github.com/yoanm/go-deps-diff/shared"
 )
 
 func GenerateForChanges(changes shared.DiffMap) string {
-	return Generate(buildDefaultSectionsMap(changes))
+	return generate(buildDefaultSectionsMap(changes))
 }
 
-func buildDefaultSectionsMap(changes shared.DiffMap) SectionsMap {
-	list := SectionsMap{}
-	if len(changes) == 0 {
-		return list
-	}
+func buildDefaultSectionsMap(changes shared.DiffMap) sectionsMap {
+	list := sectionsMap{}
 
-	keys := slices.Collect(maps.Keys(changes))
-	sort.Strings(keys)
-
-	for _, key := range keys {
-		change := changes[key]
+	for _, change := range changes {
 		categoryType, subCategoryType := getMarkdownCategoryType(change)
 		itemType := getMarkdownItemType(change)
 		sectionType := getMarkdownSectionType(subCategoryType, itemType, change.Package.IsAbandoned())
 
 		switch {
 		case list[sectionType] == nil:
-			list[sectionType] = make(CategoriesMap)
+			list[sectionType] = make(categoriesMap)
 
 			fallthrough
 		case list[sectionType][categoryType] == nil:
-			list[sectionType][categoryType] = make(SubCategoriesMap)
+			list[sectionType][categoryType] = make(subCategoriesMap)
 
 			fallthrough
 		case list[sectionType][categoryType][subCategoryType] == nil:
-			list[sectionType][categoryType][subCategoryType] = make(ItemsMap)
+			list[sectionType][categoryType][subCategoryType] = make(itemsMap)
 
 			fallthrough
 		case list[sectionType][categoryType][subCategoryType][itemType] == nil:
-			list[sectionType][categoryType][subCategoryType][itemType] = PkgList{}
+			list[sectionType][categoryType][subCategoryType][itemType] = pkgList{}
 		}
 
-		_debugPackageList(sectionType, categoryType, subCategoryType, itemType, change)
+		// _debugPackageList(sectionType, categoryType, subCategoryType, itemType, change)
 
 		list[sectionType][categoryType][subCategoryType][itemType] = append(
 			list[sectionType][categoryType][subCategoryType][itemType],
@@ -59,19 +49,19 @@ func buildDefaultSectionsMap(changes shared.DiffMap) SectionsMap {
 }
 
 func getMarkdownSectionType(
-	subCategoryType MarkdownSubCategory,
-	itemType MarkdownItem,
+	subCategoryType markdownSubCategory,
+	itemType markdownItem,
 	isAbandoned bool,
-) MarkdownSection {
+) markdownSection {
 	switch {
 	case isCandidateForCautionSection(subCategoryType, itemType, isAbandoned):
-		return CautionSection
+		return cautionSection
 	case isCandidateForWarningSection(subCategoryType, itemType, isAbandoned):
-		return WarningSection
+		return warningSection
 	case isCandidateForImportantSection(subCategoryType, itemType):
-		return ImportantSection
+		return importantSection
 	case isCandidateForTipSection(subCategoryType, itemType):
-		return TipSection
+		return tipSection
 	}
 
 	//# Note
@@ -96,10 +86,10 @@ func getMarkdownSectionType(
 	//- ADDITION
 	//- SAME
 
-	return NoteSection
+	return noteSection
 }
 
-func isCandidateForCautionSection(subCategoryType MarkdownSubCategory, itemType MarkdownItem, isAbandoned bool) bool {
+func isCandidateForCautionSection(subCategoryType markdownSubCategory, itemType markdownItem, isAbandoned bool) bool {
 	//# Caution
 	//## Production usage
 	//### Requirements
@@ -114,13 +104,13 @@ func isCandidateForCautionSection(subCategoryType MarkdownSubCategory, itemType 
 	//- ADDITION__ABANDONED
 	//### Transitives
 	// -> process prod usage and dev-only usage the same way
-	return subCategoryType == RequirementSubCategory &&
-		(itemType == UnknownUpdateItem ||
-			itemType == SemverMajorDowngradeItem ||
-			(itemType == AdditionItem && isAbandoned))
+	return subCategoryType == requirementSubCategory &&
+		(itemType == unknownUpdateItem ||
+			itemType == semverMajorDowngradeItem ||
+			(itemType == additionItem && isAbandoned))
 }
 
-func isCandidateForWarningSection(subCategoryType MarkdownSubCategory, itemType MarkdownItem, isAbandoned bool) bool {
+func isCandidateForWarningSection(subCategoryType markdownSubCategory, itemType markdownItem, isAbandoned bool) bool {
 	//# Warning
 	//## Production usage
 	//### Requirements
@@ -139,18 +129,18 @@ func isCandidateForWarningSection(subCategoryType MarkdownSubCategory, itemType 
 	//- SEMVER_MAJOR_DOWNGRADE
 	//- ADDITION__ABANDONED
 	// -> process prod usage and dev-only usage the same way
-	if subCategoryType == RequirementSubCategory &&
-		(itemType == SemverMajorUpgradeItem || itemType == SemverMinorDowngradeItem) {
+	if subCategoryType == requirementSubCategory &&
+		(itemType == semverMajorUpgradeItem || itemType == semverMinorDowngradeItem) {
 		return true
 	}
 
-	return subCategoryType == TransitiveSubCategory &&
-		(itemType == UnknownUpdateItem ||
-			itemType == SemverMajorDowngradeItem ||
-			(itemType == AdditionItem && isAbandoned))
+	return subCategoryType == transitiveSubCategory &&
+		(itemType == unknownUpdateItem ||
+			itemType == semverMajorDowngradeItem ||
+			(itemType == additionItem && isAbandoned))
 }
 
-func isCandidateForImportantSection(subCategoryType MarkdownSubCategory, itemType MarkdownItem) bool {
+func isCandidateForImportantSection(subCategoryType markdownSubCategory, itemType markdownItem) bool {
 	// # Important
 	//## Production usage
 	//### Requirements
@@ -167,15 +157,15 @@ func isCandidateForImportantSection(subCategoryType MarkdownSubCategory, itemTyp
 	//- SEMVER_MAJOR_UPGRADE
 	//- SEMVER_MINOR_DOWNGRADE
 	// -> process prod usage and dev-only usage the same way
-	if subCategoryType == RequirementSubCategory && (itemType == SemverPatchDowngradeItem || itemType == RemovalItem) {
+	if subCategoryType == requirementSubCategory && (itemType == semverPatchDowngradeItem || itemType == removalItem) {
 		return true
 	}
 
-	return subCategoryType == TransitiveSubCategory &&
-		(itemType == SemverMajorUpgradeItem || itemType == SemverMinorDowngradeItem)
+	return subCategoryType == transitiveSubCategory &&
+		(itemType == semverMajorUpgradeItem || itemType == semverMinorDowngradeItem)
 }
 
-func isCandidateForTipSection(subCategoryType MarkdownSubCategory, itemType MarkdownItem) bool {
+func isCandidateForTipSection(subCategoryType markdownSubCategory, itemType markdownItem) bool {
 	// # Tip
 	//## Production usage
 	//### Requirements
@@ -192,77 +182,77 @@ func isCandidateForTipSection(subCategoryType MarkdownSubCategory, itemType Mark
 	//- SEMVER_PATCH_DOWNGRADE
 	//- REMOVAL
 	// -> process prod usage and dev-only usage the same way
-	if subCategoryType == RequirementSubCategory && (itemType == SemverMinorUpgradeItem || itemType == AdditionItem) {
+	if subCategoryType == requirementSubCategory && (itemType == semverMinorUpgradeItem || itemType == additionItem) {
 		return true
 	}
 
-	return subCategoryType == TransitiveSubCategory && (itemType == SemverPatchDowngradeItem || itemType == RemovalItem)
+	return subCategoryType == transitiveSubCategory && (itemType == semverPatchDowngradeItem || itemType == removalItem)
 }
 
-func getMarkdownCategoryType(change *shared.PackageChange) (MarkdownCategory, MarkdownSubCategory) {
-	category := ProdUsageCategory // By default, for security, better than defining a package as dev-only while it's not
+func getMarkdownCategoryType(change *shared.PackageChange) (markdownCategory, markdownSubCategory) {
+	category := prodUsageCategory // By default, for security, better than defining a package as dev-only while it's not
 	if change.Package.IsDevOnly() {
-		category = DevOnlyUsageCategory
+		category = devOnlyUsageCategory
 	}
 
 	if change.Package.IsRootRequirement() || change.Package.IsRootDevRequirement() {
-		return category, RequirementSubCategory
+		return category, requirementSubCategory
 	} else {
-		return category, TransitiveSubCategory
+		return category, transitiveSubCategory
 	}
 }
 
-func getMarkdownItemType(change *shared.PackageChange) MarkdownItem { //nolint:cyclop,lll // 13 vs 10 allowed, but 13 actual cases
+func getMarkdownItemType(change *shared.PackageChange) markdownItem { //nolint:cyclop,lll // 13 vs 10 allowed, but 13 actual cases
 	switch change.Operation.Name {
 	// - UNKNOWN_UPDATE
 	// - UNKNOWN_UPDATE
 	case shared.UnknownUpdateOperation:
-		return UnknownUpdateItem
+		return unknownUpdateItem
 	// - SEMVER_MAJOR_UPGRADE
 	// - SEMVER_MINOR_UPGRADE
 	// - SEMVER_PATCH_UPGRADE
 	case shared.UpgradeOperation:
-		//nolint:exhaustive // SemverExtra + SemverUnknown + SemverNoUpdate managed as UnknownUpdateItem !
+		//nolint:exhaustive // SemverExtra + SemverUnknown + SemverNoUpdate managed as unknownUpdateItem !
 		switch change.Operation.SemverType {
 		case shared.SemverMajorUpdate:
-			return SemverMajorUpgradeItem
+			return semverMajorUpgradeItem
 		case shared.SemverMinorUpdate:
-			return SemverMinorUpgradeItem
+			return semverMinorUpgradeItem
 		case shared.SemverPatchUpdate:
-			return SemverPatchUpgradeItem
+			return semverPatchUpgradeItem
 		}
 	// - SEMVER_MAJOR_DOWNGRADE
 	// - SEMVER_MINOR_DOWNGRADE
 	// - SEMVER_PATCH_DOWNGRADE
 	case shared.DowngradeOperation:
-		//nolint:exhaustive // SemverExtra + SemverUnknown + SemverNoUpdate managed as UnknownUpdateItem !
+		//nolint:exhaustive // SemverExtra + SemverUnknown + SemverNoUpdate managed as unknownUpdateItem !
 		switch change.Operation.SemverType {
 		case shared.SemverMajorUpdate:
-			return SemverMajorDowngradeItem
+			return semverMajorDowngradeItem
 		case shared.SemverMinorUpdate:
-			return SemverMinorDowngradeItem
+			return semverMinorDowngradeItem
 		case shared.SemverPatchUpdate:
-			return SemverPatchDowngradeItem
+			return semverPatchDowngradeItem
 		}
 	// - REMOVAL
 	case shared.RemovalOperation:
-		return RemovalItem
+		return removalItem
 	// - ADDITION
 	case shared.AdditionOperation:
-		return AdditionItem
+		return additionItem
 	// - SAME
 	case shared.NoChangeOperation:
-		return SameItem
+		return sameItem
 	}
 
-	return UnknownUpdateItem // Fallback on unknown
+	return unknownUpdateItem // Fallback on unknown
 }
 
 func _debugPackageList(
-	sectionType MarkdownSection,
-	categoryType MarkdownCategory,
-	subCategoryType MarkdownSubCategory,
-	itemType MarkdownItem,
+	sectionType markdownSection,
+	categoryType markdownCategory,
+	subCategoryType markdownSubCategory,
+	itemType markdownItem,
 	change *shared.PackageChange,
 ) {
 	expectedTypeKey := strings.ToLower(string(sectionType)) +
@@ -273,7 +263,7 @@ func _debugPackageList(
 	}
 
 	expectedTypeKey += "/" + string(itemType)
-	if itemType == UnknownUpdateItem && change.Operation.SemverType == shared.SemverExtraUpdate {
+	if itemType == unknownUpdateItem && change.Operation.SemverType == shared.SemverExtraUpdate {
 		expectedTypeKey += "+SEMVER_EXTRA"
 	} else if change.Package.IsAbandoned() {
 		expectedTypeKey += "+ABANDONED"
