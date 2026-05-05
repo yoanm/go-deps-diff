@@ -1,13 +1,15 @@
 package summary
 
 import (
+	"testing"
+
 	"github.com/yoanm/go-deps-diff/shared"
 	"github.com/yoanm/go-deps-diff/shared_test"
-	"testing"
 )
 
 func Test_buildItemMrkRowCells_count(t *testing.T) {
 	t.Parallel()
+
 	pkg := shared_test.GetDummyPackage()
 
 	tests := []struct {
@@ -28,7 +30,7 @@ func Test_buildItemMrkRowCells_count(t *testing.T) {
 		},
 		{
 			name: "Name, version, operation and previous version - operation with only one version",
-			change: &shared.PackageChange{
+			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
 				Package:   pkg,
 				Operation: shared_test.AdditionOp,
 			},
@@ -47,7 +49,7 @@ func Test_buildItemMrkRowCells_count(t *testing.T) {
 		},
 		{
 			name: "Name, version and operation - operation with only one version",
-			change: &shared.PackageChange{
+			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
 				Package:   pkg,
 				Operation: shared_test.AdditionOp,
 			},
@@ -67,7 +69,7 @@ func Test_buildItemMrkRowCells_count(t *testing.T) {
 		},
 		{
 			name: "Name and version only - operation with only one version",
-			change: &shared.PackageChange{
+			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
 				Package:   pkg,
 				Operation: shared_test.AdditionOp,
 			},
