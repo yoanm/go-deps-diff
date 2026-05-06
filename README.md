@@ -55,7 +55,7 @@ func main() {
 
 ## Features
 
-- ✅ Detects added, removed and updated packages, with detailed information about the type of update
+- ✅ Detects added, removed and updated packages, as well as unchanged packages
 - ✅ Semantic version parsing (MAJOR/MINOR/PATCH/EXTRA)
 - ✅ Update direction detection (DOWNGRADE/UPGRADE) for semver compatible versions (UNKNOWN_UPDATE otherwise)
 - ✅ Support for both regular and dev dependencies

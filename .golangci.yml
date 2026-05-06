@@ -117,6 +117,8 @@ linters:
       check:
         - switch
         - map
+      default-signifies-exhaustive: true
+      ignore-enum-members: "_test.+"
     funlen:
       lines: 100
       statements: 50

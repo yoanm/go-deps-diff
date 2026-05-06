@@ -7,6 +7,14 @@ else
     SED_INPLACE_OPTION=-i
 endif
 
+define buildDocForSubPackage
+	echo "Generate doc for $(1) sub-package ..."; \
+	cd $(1) > /dev/null; \
+	goreadme -constants -variabless -types -methods -functions -factories -recursive > README.md; \
+	sed ${SED_INPLACE_OPTION} -E "s/]\((\/.+)\.go/](.\1.go/g" README.md; \
+	cd - > /dev/null;
+endef
+
 .DEFAULT_GOAL = default
 
 .PHONY: default
@@ -44,20 +52,8 @@ build-doc:
 	echo "Generate doc for main package ..."
 	goreadme -constants -variabless -types -methods -functions -factories -recursive > DOC.md
 	# Generate doc for sub-packages
-	find * -prune -type d \( -path "composer" -o -path "shared" -o -path "shared_test" -o -path "managers" \) | while IFS= read -r d; do \
-		echo "Generate doc for **$$d** sub-package ..."; \
-		cd $$d > /dev/null; \
-		goreadme -constants -variabless -types -methods -functions -factories -recursive > README.md; \
-		sed ${SED_INPLACE_OPTION} -E "s/]\((\/.+)\.go/](.\1.go/g" README.md; \
-		cd - > /dev/null; \
-	done
-	# Generate doc for sub-sub-packages
-	find * -d 1 -prune -type d \( -path "managers/composer" \) | while IFS= read -r d; do \
-		echo "Generate doc for **$$d** sub-sub-package ..."; \
-		cd $$d > /dev/null; \
-		goreadme -constants -variabless -types -methods -functions -factories -recursive > README.md; \
-		sed ${SED_INPLACE_OPTION} -E "s/]\((\/.+)\.go/](.\1.go/g" README.md; \
-		cd - > /dev/null; \
+	find * -maxdepth 1 -type d \( -path "shared" -o -path "shared_test" -o -path "managers" -o -path "managers/composer" -o -path "summary" -o -path "summary/markdown" \) | while IFS= read -r d; do \
+		$(call buildDocForSubPackage,$$d) \
 	done
 
 ##—— 🐹 Golang —————————————————————————————————————————————

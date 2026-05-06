@@ -1,0 +1,361 @@
+{
+    "packages": [
+        {
+            "name": "caution-prod_usage-requirement/UNKNOWN_UPDATE",
+            "version": "2.9.x-dev",
+            "dist": {"reference": "12345678"},
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "caution-prod_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA",
+            "version": "2.9.2+alpha",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE",
+            "version": "2.9.x-dev",
+            "dist": {"reference": "12345678"},
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE+SEMVER_EXTRA",
+            "version": "2.9.2+alpha",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "caution-prod_usage-requirement/SEMVER_MAJOR_DOWNGRADE",
+            "version": "1.18.4",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "caution-prod_usage-requirement+dev_req/SEMVER_MAJOR_DOWNGRADE",
+            "version": "1.18.4",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "caution-prod_usage-requirement/ADDITION+ABANDONED",
+            "version": "1.18.4",
+            "abandoned": true,
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "caution-prod_usage-requirement+dev_req/ADDITION+ABANDONED",
+            "version": "1.18.4",
+            "abandoned": true,
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "warning-prod_usage-requirement/SEMVER_MAJOR_UPGRADE",
+            "version": "3.0.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "warning-prod_usage-requirement+dev_req/SEMVER_MAJOR_UPGRADE",
+            "version": "3.0.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "warning-prod_usage-requirement/SEMVER_MINOR_DOWNGRADE",
+            "version": "3.0.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "warning-prod_usage-requirement+dev_req/SEMVER_MINOR_DOWNGRADE",
+            "version": "3.0.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "warning-prod_usage-transitive/UNKNOWN_UPDATE",
+            "version": "2.9.x-dev",
+            "dist": {"reference": "12345678"},
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "warning-prod_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA",
+            "version": "2.9.2+alpha",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "warning-prod_usage-transitive/SEMVER_MAJOR_DOWNGRADE",
+            "version": "1.2.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "warning-prod_usage-transitive/ADDITION+ABANDONED",
+            "version": "1.18.4",
+            "abandoned": true,
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "important-prod_usage-requirement/SEMVER_PATCH_DOWNGRADE",
+            "version": "3.0.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "important-prod_usage-requirement+dev_req/SEMVER_PATCH_DOWNGRADE",
+            "version": "3.0.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "important-prod_usage-transitive/SEMVER_MAJOR_UPGRADE",
+            "version": "3.0.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "important-prod_usage-transitive/SEMVER_MINOR_DOWNGRADE",
+            "version": "3.0.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "tip-prod_usage-requirement/SEMVER_MINOR_UPGRADE+ABANDONED",
+            "version": "3.2.0",
+            "abandoned": true,
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "tip-prod_usage-requirement+dev_req/SEMVER_MINOR_UPGRADE",
+            "version": "3.1.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "tip-prod_usage-requirement+dev_req/SEMVER_MINOR_UPGRADE+ABANDONED",
+            "version": "3.2.0",
+            "abandoned": true,
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "tip-prod_usage-requirement/SEMVER_MINOR_UPGRADE",
+            "version": "3.1.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "tip-prod_usage-requirement/ADDITION",
+            "version": "1.18.4",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "tip-prod_usage-requirement+dev_req/ADDITION",
+            "version": "1.18.4",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "tip-prod_usage-transitive/SEMVER_PATCH_DOWNGRADE",
+            "version": "3.0.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-prod_usage-requirement/SEMVER_PATCH_UPGRADE",
+            "version": "3.1.1",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-prod_usage-requirement+dev_req/SEMVER_PATCH_UPGRADE",
+            "version": "3.1.1",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-prod_usage-requirement/SAME",
+            "version": "3.1.1",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-prod_usage-requirement/SAME+ABANDONED",
+            "version": "3.1.1",
+            "abandoned":  true,
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-prod_usage-requirement+dev_req/SAME",
+            "version": "3.1.1",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-prod_usage-requirement+dev_req/SAME+ABANDONED",
+            "version": "3.1.1",
+            "abandoned":  true,
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-prod_usage-requirement/SEMVER_PATCH_UPGRADE",
+            "version": "3.1.1",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-prod_usage-requirement+dev_req/SEMVER_PATCH_UPGRADE",
+            "version": "3.1.1",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-prod_usage-transitive/SEMVER_MINOR_UPGRADE",
+            "version": "3.1.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-prod_usage-transitive/SEMVER_MINOR_UPGRADE+ABANDONED",
+            "version": "3.2.0",
+            "abandoned": true,
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-prod_usage-transitive/SEMVER_PATCH_UPGRADE",
+            "version": "3.1.1",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-prod_usage-transitive/ADDITION",
+            "version": "1.18.4",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-prod_usage-transitive/SAME",
+            "version": "3.1.1",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-prod_usage-transitive/SAME+ABANDONED",
+            "version": "3.1.1",
+            "abandoned":  true,
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        }
+    ],
+    "packages-dev": [
+        {
+            "name": "caution-dev_only_usage-requirement/UNKNOWN_UPDATE",
+            "version": "2.9.x-dev",
+            "dist": {"reference": "12345678"},
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "caution-dev_only_usage-requirement/SEMVER_MAJOR_DOWNGRADE",
+            "version": "1.2.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "caution-dev_only_usage-requirement/ADDITION+ABANDONED",
+            "version": "1.18.4",
+            "abandoned": true,
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "caution-dev_only_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA",
+            "version": "2.9.2+alpha",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "warning-dev_only_usage-requirement/SEMVER_MAJOR_UPGRADE",
+            "version": "3.0.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "warning-dev_only_usage-requirement/SEMVER_MINOR_DOWNGRADE",
+            "version": "3.0.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "important-dev_only_usage-requirement/SEMVER_PATCH_DOWNGRADE",
+            "version": "3.0.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "tip-dev_only_usage-requirement/SEMVER_MINOR_UPGRADE",
+            "version": "3.1.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "tip-dev_only_usage-requirement/SEMVER_MINOR_UPGRADE+ABANDONED",
+            "version": "3.2.0",
+            "abandoned": true,
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "warning-dev_only_usage-transitive/UNKNOWN_UPDATE",
+            "version": "2.9.x-dev",
+            "dist": {"reference": "12345678"},
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "warning-dev_only_usage-transitive/SEMVER_MAJOR_DOWNGRADE",
+            "version": "1.2.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "warning-dev_only_usage-transitive/ADDITION+ABANDONED",
+            "version": "1.18.4",
+            "abandoned": true,
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-dev_only_usage-requirement/SEMVER_PATCH_UPGRADE",
+            "version": "3.0.1",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "tip-dev_only_usage-requirement/ADDITION",
+            "version": "3.0.1",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-dev_only_usage-requirement/SAME",
+            "version": "3.1.1",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-dev_only_usage-requirement/SAME+ABANDONED",
+            "version": "3.1.1",
+            "abandoned":  true,
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "warning-dev_only_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA",
+            "version": "2.9.2+alpha",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "important-dev_only_usage-transitive/SEMVER_MAJOR_UPGRADE",
+            "version": "3.0.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "important-dev_only_usage-transitive/SEMVER_MINOR_DOWNGRADE",
+            "version": "3.0.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "tip-dev_only_usage-transitive/SEMVER_PATCH_DOWNGRADE",
+            "version": "3.0.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-dev_only_usage-transitive/SEMVER_MINOR_UPGRADE",
+            "version": "3.1.0",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-dev_only_usage-transitive/SEMVER_PATCH_UPGRADE",
+            "version": "3.1.1",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-dev_only_usage-transitive/ADDITION",
+            "version": "1.18.4",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-dev_only_usage-transitive/SEMVER_MINOR_UPGRADE+ABANDONED",
+            "version": "3.2.0",
+            "abandoned": true,
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-dev_only_usage-transitive/SAME",
+            "version": "3.1.1",
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        },
+        {
+            "name": "note-dev_only_usage-transitive/SAME+ABANDONED",
+            "version": "3.1.1",
+            "abandoned":  true,
+            "homepage": "http://www.squizlabs.com/php-codesniffer"
+        }
+    ]
+}

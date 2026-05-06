@@ -28,5 +28,9 @@ Diff compares two packages maps and returns the differences.
 
 * [shared_test](./shared_test)
 
+* [summary](./summary)
+
+* [summary/markdown](./summary/markdown)
+
 ---
 Readme created from Go doc with [goreadme](https://github.com/posener/goreadme)
