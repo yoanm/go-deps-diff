@@ -131,7 +131,12 @@ func buildItemMrkRowCells(item *shared.PackageChange, tableMode pkgRowMode) []st
 
 func buildItemMrkFullPkgRowCells(item *shared.PackageChange, cellList []string, pkgVersionCell string) []string {
 	if item.Operation.Name != shared.AdditionOperation { // Version will be printed at the end for added package !
-		cellList = append(cellList, pkgVersionCell)
+		switch item.Operation.Name {
+		case shared.UnknownUpdateOperation, shared.UpgradeOperation, shared.DowngradeOperation:
+			cellList = append(cellList, buildPackageVersionHTMLCell(item.PreviousVersion))
+		default:
+			cellList = append(cellList, pkgVersionCell)
+		}
 	}
 
 	colspan := 0
@@ -144,10 +149,8 @@ func buildItemMrkFullPkgRowCells(item *shared.PackageChange, cellList []string, 
 	cellList = append(cellList, buildOperationHTMLCell(item.Operation, colspan))
 
 	switch item.Operation.Name { //nolint:exhaustive // Only those cases should be handled here !
-	case shared.AdditionOperation:
+	case shared.AdditionOperation, shared.UnknownUpdateOperation, shared.UpgradeOperation, shared.DowngradeOperation:
 		cellList = append(cellList, pkgVersionCell)
-	case shared.UnknownUpdateOperation, shared.UpgradeOperation, shared.DowngradeOperation:
-		cellList = append(cellList, buildPackageVersionHTMLCell(item.PreviousVersion))
 	}
 
 	return cellList
