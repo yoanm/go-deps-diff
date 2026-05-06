@@ -89,3 +89,23 @@ func Test_buildItemMrkRowCells_count(t *testing.T) {
 		})
 	}
 }
+
+const _testInvalidPkgRowMode pkgRowMode = -1
+
+func Test_buildItemMrkRowCells_panic(t *testing.T) {
+	t.Parallel()
+
+	defer func() {
+		if r := recover(); r == nil {
+			t.Log("function thrown a panic as expected.")
+		}
+	}()
+
+	_ = buildItemMrkRowCells(
+		//nolint:exhaustruct // Useless for the test purpose
+		&shared.PackageChange{Package: shared_test.GetDummyPackage(), Operation: shared_test.AdditionOp},
+		_testInvalidPkgRowMode,
+	)
+
+	t.Fatal("The code did not panic")
+}
