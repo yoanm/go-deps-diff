@@ -2,7 +2,7 @@ package summary
 
 import (
 	"fmt"
-	"os"
+	"log/slog"
 	"strconv"
 
 	"github.com/yoanm/go-deps-diff/shared"
@@ -32,7 +32,7 @@ func GenerateForChanges(changes shared.DiffMap) string {
 }
 
 func processSection(builder *markdown.Builder, categoriesMap categoriesMap, sectionName markdownSection) {
-	fmt.Fprintln(os.Stderr, "Processing section:", sectionName)
+	slog.Debug("Processing section: " + string(sectionName))
 	builder.Header(
 		getSectionHeaderFor(sectionName)+"<br/><sub><sup>"+getSectionDescriptionFor(sectionName)+"</sub></sup>",
 		sectionHeaderLevel,
@@ -59,7 +59,7 @@ func processCategory(
 	categoryName markdownCategory,
 	openedDetails bool,
 ) {
-	fmt.Fprintln(os.Stderr, "Processing category:", categoryName)
+	slog.Debug("Processing category: " + string(categoryName))
 
 	noChangePkgList, otherChangePkgList := splitItemList(subCategoriesMap)
 

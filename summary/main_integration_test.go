@@ -21,12 +21,12 @@ func TestIntegration_GenerateForChanges(t *testing.T) {
 	}{
 		{
 			name:       "Full",
-			changes:    integrationBaseChanges,
+			changes:    _integrationFullChanges,
 			goldenFile: "./testdata/golden-full-summary.md",
 		},
 		{
 			name:       "Special case - shortest table size - Table with only three column needed",
-			changes:    integrationOnlyThreeColumnsNeeded,
+			changes:    _integrationOnlyThreeColumnsNeeded,
 			goldenFile: "./testdata/golden-3columns-summary.md",
 		},
 	}
@@ -51,7 +51,7 @@ func TestIntegration_GenerateForChanges(t *testing.T) {
 }
 
 //nolint:gochecknoglobals // Just to keep it outside the function
-var integrationBaseChanges = shared.DiffMap{
+var _integrationFullChanges = shared.DiffMap{
 	"caution-dev_only_usage-requirement/ADDITION+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-dev_only_usage-requirement/ADDITION+ABANDONED",
@@ -1000,7 +1000,7 @@ var integrationBaseChanges = shared.DiffMap{
 }
 
 //nolint:gochecknoglobals // Just to keep it outside the function
-var integrationOnlyThreeColumnsNeeded = shared.DiffMap{
+var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 	"caution-dev_only_usage-requirement/ADDITION+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-dev_only_usage-requirement/ADDITION+ABANDONED",

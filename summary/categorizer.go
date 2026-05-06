@@ -256,7 +256,7 @@ func _debugPackageList(
 	}
 
 	if change.Package.GetName() != expectedTypeKey {
-		fmt.Fprintln(os.Stderr, "package mismatch: got", change.Package.GetName(), ", want", expectedTypeKey)
+		slog.Error("package mismatch: got " + change.Package.GetName() + ", want " + expectedTypeKey)
 	}
 }
 */

@@ -2,6 +2,7 @@ package summary
 
 import (
 	"fmt"
+	"log/slog"
 	"slices"
 	"strings"
 
@@ -27,6 +28,7 @@ func splitItemList(subCategoriesMap subCategoriesMap) (pkgList, pkgList) {
 					})
 
 					for _, item := range pkgList {
+						slog.Debug("Processing package: " + item.Package.GetName())
 						// Keep track of no change items to display them at the end of the section.
 						// - No change items are far less meaningful than the other items
 						// Idea behind the comment is to quickly spot a change which may lead to an issue or caused an
