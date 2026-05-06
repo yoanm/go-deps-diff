@@ -75,7 +75,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MAJOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2"},
 	},
 	"caution-dev_only_usage-requirement/UNKNOWN_UPDATE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -88,7 +88,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "UNKNOWN"},
-		PreviousVersion: shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168"},
 	},
 	"caution-dev_only_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA": {
 		Package: &shared_test.TestPkgWrapper{
@@ -101,7 +101,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "EXTRA"},
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta"},
 	},
 	"caution-prod_usage-requirement+dev_req/ADDITION+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -126,7 +126,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MAJOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2"},
 	},
 	"caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -139,7 +139,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "UNKNOWN"},
-		PreviousVersion: shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168"},
 	},
 	"caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE+SEMVER_EXTRA": {
 		Package: &shared_test.TestPkgWrapper{
@@ -152,7 +152,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "EXTRA"},
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta"},
 	},
 	"caution-prod_usage-requirement/ADDITION+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -177,7 +177,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MAJOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2"},
 	},
 	"caution-prod_usage-requirement/UNKNOWN_UPDATE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -190,7 +190,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "UNKNOWN"},
-		PreviousVersion: shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168"},
 	},
 	"caution-prod_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA": {
 		Package: &shared_test.TestPkgWrapper{
@@ -203,7 +203,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "EXTRA"},
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta"},
 	},
 	"warning-dev_only_usage-requirement/SEMVER_MAJOR_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -216,7 +216,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MAJOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3"},
 	},
 	"warning-dev_only_usage-requirement/SEMVER_MINOR_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -229,7 +229,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MINOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 	},
 	"warning-dev_only_usage-transitive/ADDITION+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -254,7 +254,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MAJOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2"},
 	},
 	"warning-dev_only_usage-transitive/UNKNOWN_UPDATE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -267,7 +267,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "UNKNOWN"},
-		PreviousVersion: shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168"},
 	},
 	"warning-dev_only_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA": {
 		Package: &shared_test.TestPkgWrapper{
@@ -280,7 +280,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "EXTRA"},
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta"},
 	},
 	"warning-prod_usage-requirement+dev_req/SEMVER_MAJOR_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -293,7 +293,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MAJOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3"},
 	},
 	"warning-prod_usage-requirement+dev_req/SEMVER_MINOR_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -306,7 +306,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MINOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 	},
 	"warning-prod_usage-requirement/SEMVER_MAJOR_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -319,7 +319,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MAJOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3"},
 	},
 	"warning-prod_usage-requirement/SEMVER_MINOR_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -332,7 +332,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MINOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 	},
 	"warning-prod_usage-transitive/ADDITION+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -357,7 +357,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MAJOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2"},
 	},
 	"warning-prod_usage-transitive/UNKNOWN_UPDATE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -370,7 +370,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "UNKNOWN"},
-		PreviousVersion: shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168"},
 	},
 	"warning-prod_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA": {
 		Package: &shared_test.TestPkgWrapper{
@@ -383,7 +383,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "EXTRA"},
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta"},
 	},
 	"important-dev_only_usage-requirement/REMOVAL": {
 		Package: &shared_test.TestPkgWrapper{
@@ -420,7 +420,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "PATCH"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 	},
 	"important-dev_only_usage-transitive/SEMVER_MAJOR_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -433,7 +433,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MAJOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3"},
 	},
 	"important-dev_only_usage-transitive/SEMVER_MINOR_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -446,7 +446,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MINOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 	},
 	"important-prod_usage-requirement+dev_req/REMOVAL": {
 		Package: &shared_test.TestPkgWrapper{
@@ -483,7 +483,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "PATCH"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 	},
 	"important-prod_usage-requirement/REMOVAL": {
 		Package: &shared_test.TestPkgWrapper{
@@ -520,7 +520,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "PATCH"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 	},
 	"important-prod_usage-transitive/SEMVER_MAJOR_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -533,7 +533,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MAJOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3"},
+		PreviousVersion: &shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3"},
 	},
 	"important-prod_usage-transitive/SEMVER_MINOR_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -546,7 +546,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MINOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 	},
 	"tip-dev_only_usage-requirement/ADDITION": {
 		Package: &shared_test.TestPkgWrapper{
@@ -571,7 +571,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 	},
 	"tip-dev_only_usage-requirement/SEMVER_MINOR_UPGRADE+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -584,7 +584,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 	},
 	"tip-dev_only_usage-transitive/REMOVAL": {
 		Package: &shared_test.TestPkgWrapper{
@@ -621,7 +621,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "PATCH"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 	},
 	"tip-prod_usage-requirement+dev_req/ADDITION": {
 		Package: &shared_test.TestPkgWrapper{
@@ -646,7 +646,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 	},
 	"tip-prod_usage-requirement+dev_req/SEMVER_MINOR_UPGRADE+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -659,7 +659,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 	},
 	"tip-prod_usage-requirement/ADDITION": {
 		Package: &shared_test.TestPkgWrapper{
@@ -684,7 +684,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 	},
 	"tip-prod_usage-requirement/SEMVER_MINOR_UPGRADE+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -697,7 +697,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 	},
 	"tip-prod_usage-transitive/REMOVAL": {
 		Package: &shared_test.TestPkgWrapper{
@@ -734,7 +734,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "PATCH"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 	},
 	"note-dev_only_usage-requirement/SAME": {
 		Package: &shared_test.TestPkgWrapper{
@@ -771,7 +771,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "PATCH"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 	},
 	"note-dev_only_usage-transitive/ADDITION": {
 		Package: &shared_test.TestPkgWrapper{
@@ -820,7 +820,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 	},
 	"note-dev_only_usage-transitive/SEMVER_MINOR_UPGRADE+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -833,7 +833,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 	},
 	"note-dev_only_usage-transitive/SEMVER_PATCH_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -846,7 +846,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "PATCH"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 	},
 	"note-prod_usage-requirement+dev_req/SAME": {
 		Package: &shared_test.TestPkgWrapper{
@@ -883,7 +883,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: true,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "PATCH"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 	},
 	"note-prod_usage-requirement/SAME": {
 		Package: &shared_test.TestPkgWrapper{
@@ -920,7 +920,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "PATCH"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 	},
 	"note-prod_usage-transitive/ADDITION": {
 		Package: &shared_test.TestPkgWrapper{
@@ -969,7 +969,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 	},
 	"note-prod_usage-transitive/SEMVER_MINOR_UPGRADE+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -982,7 +982,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 	},
 	"note-prod_usage-transitive/SEMVER_PATCH_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -995,7 +995,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "PATCH"},
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 	},
 }
 

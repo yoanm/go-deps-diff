@@ -8,7 +8,7 @@ type PkgWrapper interface {
 	GetName() string // Returns the package name (e.g., "vendor/package")
 	// GetVersion returns the package Version (e.g., "1.2.3" or "dev-master").
 	// For removed packages, this returns the last known Version.
-	GetVersion() PkgVersion
+	GetVersion() *PkgVersion
 	// IsAbandoned is true if the package is marked as abandoned (no longer maintained)
 	IsAbandoned() bool
 	// IsDevOnly is true if package is only for dev environment (dev-only dependency).

@@ -112,7 +112,7 @@ func buildItemMrkRowCells(item *shared.PackageChange, tableMode pkgRowMode) []st
 		cellList = append(cellList, pkgVersionCell)
 
 	case withOperationPkgRowMode:
-		operationCell := buildOperationHTMLCell(item.Operation, 0)
+		operationCell := buildOperationHTMLCell(&item.Operation, 0)
 		if item.Operation.Name != shared.AdditionOperation {
 			cellList = append(cellList, pkgVersionCell, operationCell)
 		} else {
@@ -141,7 +141,7 @@ func buildItemMrkFullPkgRowCells(item *shared.PackageChange, cellList []string, 
 		colspan = 2
 	}
 
-	cellList = append(cellList, buildOperationHTMLCell(item.Operation, colspan))
+	cellList = append(cellList, buildOperationHTMLCell(&item.Operation, colspan))
 
 	switch item.Operation.Name { //nolint:exhaustive // Only those cases should be handled here !
 	case shared.AdditionOperation:
@@ -153,7 +153,7 @@ func buildItemMrkFullPkgRowCells(item *shared.PackageChange, cellList []string, 
 	return cellList
 }
 
-func buildOperationHTMLCell(operation shared.Operation, colspan int) string {
+func buildOperationHTMLCell(operation *shared.Operation, colspan int) string {
 	opColspanDirective := ""
 	if colspan > 1 {
 		opColspanDirective = fmt.Sprintf(" colspan=\"%d\"", colspan)
@@ -162,7 +162,7 @@ func buildOperationHTMLCell(operation shared.Operation, colspan int) string {
 	return "<td align=\"center\"" + opColspanDirective + ">" + getOperationSymbol(operation) + "</td>"
 }
 
-func buildPackageVersionHTMLCell(version shared.PkgVersion) string {
+func buildPackageVersionHTMLCell(version *shared.PkgVersion) string {
 	return "<td align=\"right\">" + version.Label + "</td>"
 }
 

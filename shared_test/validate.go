@@ -56,7 +56,16 @@ func ValidateWrapperPackage(actualPackage, expectedPackage shared.PkgWrapper) er
 	return nil
 }
 
-func ValidatePackageVersion(actualVersion, expectedVersion shared.PkgVersion) error {
+func ValidatePackageVersion(actualVersion, expectedVersion *shared.PkgVersion) error {
+	if nil == actualVersion && nil == expectedVersion {
+		return nil // All good
+	}
+	if nil != actualVersion && nil == expectedVersion {
+		return fmt.Errorf("unexpected Raw value. Expected: nil Actual: %v", actualVersion)
+	}
+	if nil == actualVersion && nil != expectedVersion {
+		return fmt.Errorf("unexpected Raw value. Expected: %v Actual: nil", expectedVersion)
+	}
 	if actualVersion.Raw != expectedVersion.Raw {
 		return fmt.Errorf("unexpected Raw value. Expected: %v Actual: %v", expectedVersion.Raw, actualVersion.Raw)
 	}
@@ -87,8 +96,8 @@ func (w *TestPkgWrapper) GetName() string {
 func (w *TestPkgWrapper) IsAbandoned() bool {
 	return w.Abandoned
 }
-func (w *TestPkgWrapper) GetVersion() shared.PkgVersion {
-	return w.Version
+func (w *TestPkgWrapper) GetVersion() *shared.PkgVersion {
+	return &w.Version
 }
 func (w *TestPkgWrapper) GetLink() string {
 	return w.Link

@@ -103,14 +103,14 @@ func buildSectionCounters(subCategoriesMap subCategoriesMap) sectionSummaryCntMa
 			// For unknownUpdateItem, try to catch basic unknown update rather than a SEMVER_EXTRA update.
 			if itemType == unknownUpdateItem {
 				if pkg := findSemverExtraUpdateChange(pkgList); pkg != nil {
-					cntMap[itemType].title = getOperationSymbol(pkg.Operation)
+					cntMap[itemType].title = getOperationSymbol(&pkg.Operation)
 
 					continue
 				}
 			}
 			// Fallback on first available one if sample is not defined yet
 			if len(pkgList) > 0 && len(cntMap[itemType].title) == 0 {
-				cntMap[itemType].title = getOperationSymbol(pkgList[0].Operation)
+				cntMap[itemType].title = getOperationSymbol(&pkgList[0].Operation)
 			}
 		}
 	}

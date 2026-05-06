@@ -22,7 +22,7 @@ func BuildMapFromBytes(reqContent, lockContent []byte) (shared.PackageMap, error
 
 // BuildMap creates an efficient lookup map for composer packages.
 func BuildMap(reqData *ComposerReq, lockData *ComposerLock) (shared.PackageMap, error) {
-	packageMap := make(map[string]shared.PkgWrapper)
+	packageMap := make(shared.PackageMap)
 
 	// Add regular packages
 	if lockData.Packages != nil {

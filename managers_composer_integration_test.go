@@ -221,7 +221,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.DowngradeOperation,
 			SemverType: shared.SemverMajorUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "4.0.4", Label: "4.0.4"},
+		PreviousVersion: &shared.PkgVersion{Raw: "4.0.4", Label: "4.0.4"},
 	},
 	"symfony/asset": { // symfony/asset	v4.4.27 	↗️️ 	v5.4.21
 		Package: &shared_test.TestPkgWrapper{
@@ -237,7 +237,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.UpgradeOperation,
 			SemverType: shared.SemverMajorUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "v4.4.27", Label: "v4.4.27"},
+		PreviousVersion: &shared.PkgVersion{Raw: "v4.4.27", Label: "v4.4.27"},
 	},
 	"yoanm/jsonrpc-server-sdk": { // yoanm/jsonrpc-server-sdk	dev-master#dcd886d❗ 	➡️ 	v1.3.0
 		Package: &shared_test.TestPkgWrapper{
@@ -253,7 +253,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.UnknownUpdateOperation,
 			SemverType: shared.SemverUnknownUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "dcd886d0ae9246129ec8fbf5e082eff1fc3c49ea", Label: "dev-master#dcd886d"},
+		PreviousVersion: &shared.PkgVersion{Raw: "dcd886d0ae9246129ec8fbf5e082eff1fc3c49ea", Label: "dev-master#dcd886d"},
 	},
 	"yoanm/jsonrpc-server-doc-sdk": { // yoanm/jsonrpc-server-doc-sdk	➕️ 	dev-master#a0febcc❗
 		Package: &shared_test.TestPkgWrapper{
@@ -284,7 +284,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.DowngradeOperation,
 			SemverType: shared.SemverMinorUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "v4.8.0", Label: "v4.8.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "v4.8.0", Label: "v4.8.0"},
 	},
 	"symfony/deprecation-contracts": { // symfony/deprecation-contracts	v2.2.0 	↗️️ 	v2.5.2
 		Package: &shared_test.TestPkgWrapper{
@@ -300,7 +300,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.UpgradeOperation,
 			SemverType: shared.SemverMinorUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "v2.2.0", Label: "v2.2.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "v2.2.0", Label: "v2.2.0"},
 	},
 	"symfony/polyfill-ctype": { // symfony/polyfill-ctype	v1.23.0 	↗️️ 	v1.27.0
 		Package: &shared_test.TestPkgWrapper{
@@ -316,7 +316,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.UpgradeOperation,
 			SemverType: shared.SemverMinorUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "v1.23.0", Label: "v1.23.0"},
+		PreviousVersion: &shared.PkgVersion{Raw: "v1.23.0", Label: "v1.23.0"},
 	},
 	"symfony/polyfill-php80": { // symfony/polyfill-php80	v1.23.1 	↗️️ 	v1.27.0
 		Package: &shared_test.TestPkgWrapper{
@@ -332,7 +332,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.UpgradeOperation,
 			SemverType: shared.SemverMinorUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "v1.23.1", Label: "v1.23.1"},
+		PreviousVersion: &shared.PkgVersion{Raw: "v1.23.1", Label: "v1.23.1"},
 	},
 	"phpstan/phpstan": { // phpstan/phpstan	0.12.96 	↗️️ 	0.12.100
 		Package: &shared_test.TestPkgWrapper{
@@ -348,7 +348,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.UpgradeOperation,
 			SemverType: shared.SemverPatchUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "0.12.96", Label: "0.12.96"},
+		PreviousVersion: &shared.PkgVersion{Raw: "0.12.96", Label: "0.12.96"},
 	},
 	"sebastian/code-unit": { // sebastian/code-unit	1.0.8 	↘️‼️️ 	1.0.7
 		Package: &shared_test.TestPkgWrapper{
@@ -364,7 +364,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.DowngradeOperation,
 			SemverType: shared.SemverPatchUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "1.0.8", Label: "1.0.8"},
+		PreviousVersion: &shared.PkgVersion{Raw: "1.0.8", Label: "1.0.8"},
 	},
 	"symfony/cache-contracts": { // symfony/cache-contracts	v1.1.1 	↗️️ 	v1.1.13
 		Package: &shared_test.TestPkgWrapper{
@@ -380,7 +380,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.UpgradeOperation,
 			SemverType: shared.SemverPatchUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "v1.1.1", Label: "v1.1.1"},
+		PreviousVersion: &shared.PkgVersion{Raw: "v1.1.1", Label: "v1.1.1"},
 	},
 	"psr/cache": { // ➕ 	psr/cache 	3.0.0
 		Package: &shared_test.TestPkgWrapper{
@@ -396,7 +396,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.AdditionOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"psr/container": { // ➕ 	psr/container 	1.1.2
 		Package: &shared_test.TestPkgWrapper{
@@ -412,7 +411,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.AdditionOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"symfony/console": { // ➕ 	symfony/console 	v5.4.21
 		Package: &shared_test.TestPkgWrapper{
@@ -428,7 +426,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.AdditionOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"symfony/polyfill-intl-grapheme": { // ➕ 	symfony/polyfill-intl-grapheme 	v1.27.0
 		Package: &shared_test.TestPkgWrapper{
@@ -444,7 +441,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.AdditionOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"symfony/polyfill-intl-normalizer": { // ➕ 	symfony/polyfill-intl-normalizer 	v1.27.0
 		Package: &shared_test.TestPkgWrapper{
@@ -460,7 +456,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.AdditionOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"symfony/polyfill-mbstring": { // ➕ 	symfony/polyfill-mbstring 	v1.27.0
 		Package: &shared_test.TestPkgWrapper{
@@ -476,7 +471,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.AdditionOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"symfony/polyfill-php73": { // ➕ 	symfony/polyfill-php73 	v1.27.0
 		Package: &shared_test.TestPkgWrapper{
@@ -492,7 +486,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.AdditionOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"symfony/service-contracts": { // ➕ 	symfony/service-contracts 	v2.5.2
 		Package: &shared_test.TestPkgWrapper{
@@ -508,7 +501,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.AdditionOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"symfony/string": { // ➕ 	symfony/string 	v6.2.7
 		Package: &shared_test.TestPkgWrapper{
@@ -524,7 +516,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.AdditionOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"doctrine/instantiator": { // ➖ 	doctrine/instantiator 	1.4.0
 		Package: &shared_test.TestPkgWrapper{
@@ -540,7 +531,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"myclabs/deep-copy": { // ➖ 	myclabs/deep-copy 	1.10.2
 		Package: &shared_test.TestPkgWrapper{
@@ -556,7 +546,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"nikic/php-parser": { // ➖ 	nikic/php-parser 	v4.12.0
 		Package: &shared_test.TestPkgWrapper{
@@ -572,7 +561,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"phar-io/manifest": { // ➖ 	phar-io/manifest 	2.0.3
 		Package: &shared_test.TestPkgWrapper{
@@ -588,7 +576,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"phar-io/version": { // ➖ 	phar-io/version 	3.1.0
 		Package: &shared_test.TestPkgWrapper{
@@ -604,7 +591,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"phpdocumentor/reflection-common": { // ➖ 	phpdocumentor/reflection-common 	2.2.0
 		Package: &shared_test.TestPkgWrapper{
@@ -620,7 +606,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"phpdocumentor/reflection-docblock": { // ➖ 	phpdocumentor/reflection-docblock 	5.2.2
 		Package: &shared_test.TestPkgWrapper{
@@ -636,7 +621,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"phpdocumentor/type-resolver": { // ➖ 	phpdocumentor/type-resolver 	1.4.0
 		Package: &shared_test.TestPkgWrapper{
@@ -652,7 +636,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"phpspec/prophecy": { // ➖ 	phpspec/prophecy 	1.13.0
 		Package: &shared_test.TestPkgWrapper{
@@ -668,7 +651,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"phpunit/php-code-coverage": { // ➖ 	phpunit/php-code-coverage 	9.2.6
 		Package: &shared_test.TestPkgWrapper{
@@ -684,7 +666,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"phpunit/php-file-iterator": { // ➖ 	phpunit/php-file-iterator 	3.0.5
 		Package: &shared_test.TestPkgWrapper{
@@ -700,7 +681,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"phpunit/php-invoker": { // ➖ 	phpunit/php-invoker 	3.1.1
 		Package: &shared_test.TestPkgWrapper{
@@ -716,7 +696,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"phpunit/php-text-template": { // ➖ 	phpunit/php-text-template 	2.0.4
 		Package: &shared_test.TestPkgWrapper{
@@ -732,7 +711,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"phpunit/php-timer": { // ➖ 	phpunit/php-timer 	5.0.3
 		Package: &shared_test.TestPkgWrapper{
@@ -748,7 +726,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"phpunit/phpunit": { // ➖ 	phpunit/phpunit 	9.3.0
 		Package: &shared_test.TestPkgWrapper{
@@ -764,7 +741,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"sebastian/code-unit-reverse-lookup": { // ➖ 	sebastian/code-unit-reverse-lookup 	2.0.3
 		Package: &shared_test.TestPkgWrapper{
@@ -780,7 +756,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"sebastian/comparator": { // ➖ 	sebastian/comparator 	4.0.6
 		Package: &shared_test.TestPkgWrapper{
@@ -796,7 +771,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"sebastian/complexity": { // ➖ 	sebastian/complexity 	2.0.2
 		Package: &shared_test.TestPkgWrapper{
@@ -812,7 +786,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"sebastian/environment": { // ➖ 	sebastian/environment 	5.1.3
 		Package: &shared_test.TestPkgWrapper{
@@ -828,7 +801,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"sebastian/exporter": { // ➖ 	sebastian/exporter 	4.0.3
 		Package: &shared_test.TestPkgWrapper{
@@ -844,7 +816,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"sebastian/global-state": { // ➖ 	sebastian/global-state 	5.0.3
 		Package: &shared_test.TestPkgWrapper{
@@ -860,7 +831,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"sebastian/lines-of-code": { // ➖ 	sebastian/lines-of-code 	1.0.3
 		Package: &shared_test.TestPkgWrapper{
@@ -876,7 +846,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"sebastian/object-enumerator": { // ➖ 	sebastian/object-enumerator 	4.0.4
 		Package: &shared_test.TestPkgWrapper{
@@ -892,7 +861,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"sebastian/object-reflector": { // ➖ 	sebastian/object-reflector 	2.0.4
 		Package: &shared_test.TestPkgWrapper{
@@ -908,7 +876,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"sebastian/recursion-context": { // ➖ 	sebastian/recursion-context 	4.0.4
 		Package: &shared_test.TestPkgWrapper{
@@ -924,7 +891,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"sebastian/resource-operations": { // ➖ 	sebastian/resource-operations 	3.0.3
 		Package: &shared_test.TestPkgWrapper{
@@ -940,7 +906,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"sebastian/type": { // ➖ 	sebastian/type 	2.3.4
 		Package: &shared_test.TestPkgWrapper{
@@ -956,7 +921,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"sebastian/version": { // ➖ 	sebastian/version 	3.0.2
 		Package: &shared_test.TestPkgWrapper{
@@ -972,7 +936,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"theseer/tokenizer": { // ➖ 	theseer/tokenizer 	1.2.1
 		Package: &shared_test.TestPkgWrapper{
@@ -988,7 +951,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"twig/twig": { // ➖ 	twig/twig 	v1.44.4
 		Package: &shared_test.TestPkgWrapper{
@@ -1004,7 +966,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"webmozart/assert": { // ➖ 	webmozart/assert 	1.10.0
 		Package: &shared_test.TestPkgWrapper{
@@ -1020,7 +981,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"yoanm/init-php-repository": { // ➖ 	yoanm/init-php-repository 	dev-master#02c0922❗
 		Package: &shared_test.TestPkgWrapper{
@@ -1036,7 +996,6 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 			Name:       shared.RemovalOperation,
 			SemverType: shared.SemverNoUpdate,
 		},
-		PreviousVersion: shared.PkgVersion{Raw: "", Label: ""},
 	},
 	"squizlabs/php_codesniffer": { // ➖ 	squizlabs/php_codesniffer 	3.6.2
 		Package: &shared_test.TestPkgWrapper{

@@ -13,7 +13,7 @@ func getPackageSymbol(pkg shared.PkgWrapper) string {
 	}
 }
 
-func getOperationSymbol(operation shared.Operation) string {
+func getOperationSymbol(operation *shared.Operation) string {
 	switch operation.Name {
 	case shared.UnknownUpdateOperation:
 		if operation.SemverType == shared.SemverExtraUpdate {
@@ -36,7 +36,7 @@ func getOperationSymbol(operation shared.Operation) string {
 	return "❔"
 }
 
-func getUpdateOperationSymbol(operation shared.Operation, isDowngrade bool) string {
+func getUpdateOperationSymbol(operation *shared.Operation, isDowngrade bool) string {
 	emojiUpdated := "🔺"
 	if isDowngrade {
 		emojiUpdated = "🔻"

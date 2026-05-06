@@ -23,7 +23,7 @@ func Test_buildItemMrkRowCells_count(t *testing.T) {
 			change: &shared.PackageChange{
 				Package:         pkg,
 				Operation:       shared_test.DowngradeMajorOp,
-				PreviousVersion: shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3"},
+				PreviousVersion: &shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3"},
 			},
 			mode:          fullPkgRowMode,
 			expectedCount: 4,
@@ -42,7 +42,7 @@ func Test_buildItemMrkRowCells_count(t *testing.T) {
 			change: &shared.PackageChange{
 				Package:         pkg,
 				Operation:       shared_test.DowngradeMajorOp,
-				PreviousVersion: shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3"},
+				PreviousVersion: &shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3"},
 			},
 			mode:          withOperationPkgRowMode,
 			expectedCount: 3,
@@ -62,7 +62,7 @@ func Test_buildItemMrkRowCells_count(t *testing.T) {
 			change: &shared.PackageChange{
 				Package:         pkg,
 				Operation:       shared_test.DowngradeMajorOp,
-				PreviousVersion: shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3"},
+				PreviousVersion: &shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3"},
 			},
 			mode:          versionOnlyPkgRowMode,
 			expectedCount: 2,

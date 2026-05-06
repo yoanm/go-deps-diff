@@ -20,8 +20,8 @@ func (w *ComposerPackageWrapper) IsAbandoned() bool {
 	return w.isAbandoned
 }
 
-func (w *ComposerPackageWrapper) GetVersion() shared.PkgVersion {
-	return w.version
+func (w *ComposerPackageWrapper) GetVersion() *shared.PkgVersion {
+	return &w.version
 }
 
 func (w *ComposerPackageWrapper) GetLink() string {
