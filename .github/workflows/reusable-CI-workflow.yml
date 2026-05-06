@@ -95,7 +95,7 @@ jobs:
         run: go install golang.org/x/perf/cmd/benchstat@latest
 
       - name: Run benchmarks on current code
-        run: go test -run='^$' -bench=. -benchmem -count=7 ./... | tee current.txt
+        run: make benchmark bench_o="-count=7" | tee current.txt
 
       - name: PR - Checkout base branch
         if: github.event_name == 'pull_request'
@@ -106,7 +106,7 @@ jobs:
         run: git checkout HEAD~1
 
       - name: Run benchmarks on original code
-        run: go test -run='^$' -bench=. -benchmem -count=7 ./... | tee previous.txt
+        run: make benchmark bench_o="-count=7" | tee previous.txt
 
       - name: Compare benchmarks
         run: benchstat previous.txt current.txt | tee benchstat.txt
