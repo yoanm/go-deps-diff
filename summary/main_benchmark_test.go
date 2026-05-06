@@ -17,6 +17,7 @@ func BenchmarkGenerateForChanges(b *testing.B) {
 			// Enable debug logs to check speed and allocation even at this level
 			slog.SetLogLoggerLevel(slog.LevelDebug)
 			log.SetOutput(io.Discard) // But drop output to avoid parsing issues later
+
 			_ = summary.GenerateForChanges(_integrationFullChanges)
 		}
 	})
