@@ -7,8 +7,8 @@ else
     SED_INPLACE_OPTION=-i
 endif
 
-define buildDocForPackage
-	echo "Generate doc for package $(1) ..."; \
+define buildDocForSubPackage
+	echo "Generate doc for $(1) sub-package ..."; \
 	cd $(1) > /dev/null; \
 	goreadme -constants -variabless -types -methods -functions -factories -recursive > README.md; \
 	sed ${SED_INPLACE_OPTION} -E "s/]\((\/.+)\.go/](.\1.go/g" README.md; \
@@ -52,12 +52,8 @@ build-doc:
 	echo "Generate doc for main package ..."
 	goreadme -constants -variabless -types -methods -functions -factories -recursive > DOC.md
 	# Generate doc for sub-packages
-	find * -prune -type d \( -path "composer" -o -path "shared" -o -path "shared_test" -o -path "managers" -o -name "summary" \) | while IFS= read -r d; do \
-  		$(call buildDocForPackage,$$d) \
-	done
-	# Generate doc for sub-sub-packages
-	find * -d 1 -prune -type d \( -path "managers/composer" -o -path "summary/markdown" \) | while IFS= read -r d; do \
-		$(call buildDocForPackage,$$d) \
+	find * -maxdepth 1 -type d \( -path "shared" -o -path "shared_test" -o -path "managers" -o -path "managers/composer" -o -path "summary" -o -path "summary/markdown" \) | while IFS= read -r d; do \
+		$(call buildDocForSubPackage,$$d) \
 	done
 
 ##—— 🐹 Golang —————————————————————————————————————————————
