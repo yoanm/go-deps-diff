@@ -2,15 +2,15 @@
 
 ## Types
 
-### type [Builder](./main.go#L16)
+### type [Builder](./main.go#L15)
 
 `type Builder struct { ... }`
 
-#### func [NewBuilder](./main.go#L8)
+#### func [NewBuilder](./main.go#L7)
 
 `func NewBuilder() *Builder`
 
-#### func (*Builder) [Details](./main.go#L22)
+#### func (*Builder) [Details](./markdown_builder.go#L5)
 
 `func (c *Builder) Details(
     summary string,
@@ -19,13 +19,13 @@
     indentDepth int,
 )`
 
-#### func (*Builder) [Header](./main.go#L39)
+#### func (*Builder) [HTMLTable](./html_builder.go#L8)
+
+`func (c *Builder) HTMLTable(rowIterator iter.Seq[[]string], indentDepth int)`
+
+#### func (*Builder) [Header](./markdown_builder.go#L22)
 
 `func (c *Builder) Header(header string, level int, indentDepth int)`
-
-#### func (*Builder) [HtmlTable](./main.go#L45)
-
-`func (c *Builder) HtmlTable(rowIterator iter.Seq[[]string], indentDepth int)`
 
 #### func (*Builder) [String](./builder.go#L7)
 
