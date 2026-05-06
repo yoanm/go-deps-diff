@@ -83,7 +83,7 @@ func ValidatePackageVersion(actualVersion, expectedVersion *shared.PkgVersion) e
 type TestPkgWrapper struct {
 	Name               string
 	Abandoned          bool
-	Version            shared.PkgVersion
+	Version            *shared.PkgVersion
 	Link               string
 	DevOnly            bool // true if only in lock file "packages-dev" section (dev-only dependency)
 	RootRequirement    bool // true if exists in requirement file "require" section
@@ -97,7 +97,7 @@ func (w *TestPkgWrapper) IsAbandoned() bool {
 	return w.Abandoned
 }
 func (w *TestPkgWrapper) GetVersion() *shared.PkgVersion {
-	return &w.Version
+	return w.Version
 }
 func (w *TestPkgWrapper) GetLink() string {
 	return w.Link

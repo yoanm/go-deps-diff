@@ -56,7 +56,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-dev_only_usage-requirement/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -68,7 +68,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-dev_only_usage-requirement/SEMVER_MAJOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
+			Version:            &shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -81,7 +81,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-dev_only_usage-requirement/UNKNOWN_UPDATE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567"},
+			Version:            &shared.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -94,7 +94,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-dev_only_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha"},
+			Version:            &shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -107,7 +107,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement+dev_req/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -119,7 +119,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement+dev_req/SEMVER_MAJOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -132,7 +132,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567"},
+			Version:            &shared.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -145,7 +145,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE+SEMVER_EXTRA",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha"},
+			Version:            &shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -158,7 +158,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -170,7 +170,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement/SEMVER_MAJOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -183,7 +183,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement/UNKNOWN_UPDATE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567"},
+			Version:            &shared.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -196,7 +196,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha"},
+			Version:            &shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -209,7 +209,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-requirement/SEMVER_MAJOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -222,7 +222,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-requirement/SEMVER_MINOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -235,7 +235,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-transitive/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -247,7 +247,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-transitive/SEMVER_MAJOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
+			Version:            &shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -260,7 +260,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-transitive/UNKNOWN_UPDATE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567"},
+			Version:            &shared.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -273,7 +273,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha"},
+			Version:            &shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -286,7 +286,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-prod_usage-requirement+dev_req/SEMVER_MAJOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -299,7 +299,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-prod_usage-requirement+dev_req/SEMVER_MINOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -312,7 +312,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-prod_usage-requirement/SEMVER_MAJOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -325,7 +325,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-prod_usage-requirement/SEMVER_MINOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -338,7 +338,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-prod_usage-transitive/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -350,7 +350,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-prod_usage-transitive/SEMVER_MAJOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
+			Version:            &shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -363,7 +363,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-prod_usage-transitive/UNKNOWN_UPDATE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567"},
+			Version:            &shared.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -376,7 +376,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-prod_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha"},
+			Version:            &shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -389,7 +389,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-dev_only_usage-requirement/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+			Version:            &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -401,7 +401,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-dev_only_usage-requirement/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
+			Version:            &shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -413,7 +413,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-dev_only_usage-requirement/SEMVER_PATCH_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -426,7 +426,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-dev_only_usage-transitive/SEMVER_MAJOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -439,7 +439,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-dev_only_usage-transitive/SEMVER_MINOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -452,7 +452,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement+dev_req/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
+			Version:            &shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -464,7 +464,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement+dev_req/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
+			Version:            &shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -476,7 +476,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement+dev_req/SEMVER_PATCH_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -489,7 +489,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+			Version:            &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -501,7 +501,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
+			Version:            &shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -513,7 +513,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement/SEMVER_PATCH_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -526,7 +526,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-prod_usage-transitive/SEMVER_MAJOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -539,7 +539,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-prod_usage-transitive/SEMVER_MINOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -552,7 +552,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-requirement/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+			Version:            &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -564,7 +564,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-requirement/SEMVER_MINOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+			Version:            &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -577,7 +577,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-requirement/SEMVER_MINOR_UPGRADE+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
+			Version:            &shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -590,7 +590,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-transitive/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+			Version:            &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -602,7 +602,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-transitive/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
+			Version:            &shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -614,7 +614,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-transitive/SEMVER_PATCH_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -627,7 +627,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement+dev_req/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -639,7 +639,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement+dev_req/SEMVER_MINOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+			Version:            &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -652,7 +652,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement+dev_req/SEMVER_MINOR_UPGRADE+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
+			Version:            &shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -665,7 +665,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -677,7 +677,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement/SEMVER_MINOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+			Version:            &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -690,7 +690,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement/SEMVER_MINOR_UPGRADE+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
+			Version:            &shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -703,7 +703,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-prod_usage-transitive/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+			Version:            &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -715,7 +715,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-prod_usage-transitive/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
+			Version:            &shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -727,7 +727,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-prod_usage-transitive/SEMVER_PATCH_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -740,7 +740,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-dev_only_usage-requirement/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -752,7 +752,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-dev_only_usage-requirement/SAME+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -764,7 +764,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-dev_only_usage-requirement/SEMVER_PATCH_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+			Version:            &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -777,7 +777,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-dev_only_usage-transitive/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -789,7 +789,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-dev_only_usage-transitive/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -801,7 +801,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-dev_only_usage-transitive/SAME+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -813,7 +813,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-dev_only_usage-transitive/SEMVER_MINOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+			Version:            &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -826,7 +826,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-dev_only_usage-transitive/SEMVER_MINOR_UPGRADE+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
+			Version:            &shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -839,7 +839,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-dev_only_usage-transitive/SEMVER_PATCH_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -852,7 +852,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-prod_usage-requirement+dev_req/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -864,7 +864,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-prod_usage-requirement+dev_req/SAME+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -876,7 +876,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-prod_usage-requirement+dev_req/SEMVER_PATCH_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -889,7 +889,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-prod_usage-requirement/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -901,7 +901,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-prod_usage-requirement/SAME+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -913,7 +913,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-prod_usage-requirement/SEMVER_PATCH_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -926,7 +926,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-prod_usage-transitive/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -938,7 +938,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-prod_usage-transitive/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -950,7 +950,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-prod_usage-transitive/SAME+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -962,7 +962,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-prod_usage-transitive/SEMVER_MINOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+			Version:            &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -975,7 +975,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-prod_usage-transitive/SEMVER_MINOR_UPGRADE+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
+			Version:            &shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -988,7 +988,7 @@ var _integrationFullChanges = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-prod_usage-transitive/SEMVER_PATCH_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -1005,7 +1005,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-dev_only_usage-requirement/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -1017,7 +1017,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement+dev_req/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -1029,7 +1029,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -1041,7 +1041,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-transitive/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -1053,7 +1053,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "warning-prod_usage-transitive/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -1065,7 +1065,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-dev_only_usage-requirement/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+			Version:            &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -1077,7 +1077,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-dev_only_usage-requirement/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
+			Version:            &shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -1089,7 +1089,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement+dev_req/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
+			Version:            &shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -1101,7 +1101,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement+dev_req/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
+			Version:            &shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -1113,7 +1113,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+			Version:            &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -1125,7 +1125,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
+			Version:            &shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -1137,7 +1137,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-requirement/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+			Version:            &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -1149,7 +1149,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-transitive/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+			Version:            &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -1161,7 +1161,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-transitive/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
+			Version:            &shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -1173,7 +1173,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement+dev_req/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -1185,7 +1185,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -1197,7 +1197,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-prod_usage-transitive/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
+			Version:            &shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -1209,7 +1209,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "tip-prod_usage-transitive/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
+			Version:            &shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -1221,7 +1221,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-dev_only_usage-requirement/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -1233,7 +1233,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-dev_only_usage-transitive/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
@@ -1245,7 +1245,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-prod_usage-requirement/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -1257,7 +1257,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "note-prod_usage-transitive/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
+			Version:            &shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4"},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,

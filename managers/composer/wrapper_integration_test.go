@@ -79,7 +79,7 @@ var integrationSimpleFixturesSimpleCaseExpectation = map[string]shared.PkgWrappe
 	"vendor/package-a": &shared_test.TestPkgWrapper{
 		Name:               "vendor/package-a",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3"},
+		Version:            &shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3"},
 		Link:               "https://example.com/wiki/package-a",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -88,7 +88,7 @@ var integrationSimpleFixturesSimpleCaseExpectation = map[string]shared.PkgWrappe
 	"vendor/package-b": &shared_test.TestPkgWrapper{
 		Name:               "vendor/package-b",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v2.0.0", Label: "v2.0.0"},
+		Version:            &shared.PkgVersion{Raw: "v2.0.0", Label: "v2.0.0"},
 		Link:               "https://example.com/wiki/package-b",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -97,7 +97,7 @@ var integrationSimpleFixturesSimpleCaseExpectation = map[string]shared.PkgWrappe
 	"vendor/package-c": &shared_test.TestPkgWrapper{
 		Name:               "vendor/package-c",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.5.1", Label: "3.5.1"},
+		Version:            &shared.PkgVersion{Raw: "3.5.1", Label: "3.5.1"},
 		Link:               "https://example.com/package-c",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -106,7 +106,7 @@ var integrationSimpleFixturesSimpleCaseExpectation = map[string]shared.PkgWrappe
 	"vendor/package-dev-a": &shared_test.TestPkgWrapper{
 		Name:               "vendor/package-dev-a",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+		Version:            &shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
 		Link:               "https://github.com/vendor/package-dev-a",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -115,7 +115,7 @@ var integrationSimpleFixturesSimpleCaseExpectation = map[string]shared.PkgWrappe
 	"vendor/package-dev-b": &shared_test.TestPkgWrapper{
 		Name:               "vendor/package-dev-b",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v1.1.0", Label: "v1.1.0"},
+		Version:            &shared.PkgVersion{Raw: "v1.1.0", Label: "v1.1.0"},
 		Link:               "https://github.com/vendor/package-dev-b",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -128,7 +128,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0001": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0001",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
+		Version:            &shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0001",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -137,7 +137,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0002": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0002",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
+		Version:            &shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0002",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -146,7 +146,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0003": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0003",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
+		Version:            &shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0003",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -155,7 +155,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0004": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0004",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
+		Version:            &shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0004",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -164,7 +164,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0005": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0005",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.2.1-beta.2", Label: "2.2.1-beta.2"},
+		Version:            &shared.PkgVersion{Raw: "2.2.1-beta.2", Label: "2.2.1-beta.2"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0005",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -173,7 +173,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0006": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0006",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+		Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0006",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -182,7 +182,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0007": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0007",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v3.3.1", Label: "v3.3.1"},
+		Version:            &shared.PkgVersion{Raw: "v3.3.1", Label: "v3.3.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0007",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -191,7 +191,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0008": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0008",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
+		Version:            &shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0008",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -200,7 +200,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0009": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0009",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
+		Version:            &shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0009",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -209,7 +209,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0010": &shared_test.TestPkgWrapper{
 		Name:      "vendor/pkg-0010",
 		Abandoned: false,
-		Version: shared.PkgVersion{
+		Version: &shared.PkgVersion{
 			Raw:   "86f73d4043691e3b47499100a436fec5ea150a2a",
 			Label: "dev-master#86f73d4",
 		},
@@ -221,7 +221,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0011": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0011",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
+		Version:            &shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
 		Link:               "",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -230,7 +230,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0012": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0012",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+		Version:            &shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0012",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -239,7 +239,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0013": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0013",
 		Abandoned:          true,
-		Version:            shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
+		Version:            &shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0013",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -248,7 +248,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0014": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0014",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v5.2.2", Label: "v5.2.2"},
+		Version:            &shared.PkgVersion{Raw: "v5.2.2", Label: "v5.2.2"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0014",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -257,7 +257,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0015": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0015",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.0.1-beta.0", Label: "4.0.1-beta.0"},
+		Version:            &shared.PkgVersion{Raw: "4.0.1-beta.0", Label: "4.0.1-beta.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0015",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -266,7 +266,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0016": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0016",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
+		Version:            &shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0016",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -275,7 +275,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0017": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0017",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
+		Version:            &shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0017",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -284,7 +284,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0018": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0018",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+		Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0018",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -293,7 +293,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0019": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0019",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
+		Version:            &shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0019",
 		DevOnly:            false,
 		RootRequirement:    true,
@@ -302,7 +302,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0020": &shared_test.TestPkgWrapper{
 		Name:      "vendor/pkg-0020",
 		Abandoned: false,
-		Version: shared.PkgVersion{
+		Version: &shared.PkgVersion{
 			Raw:   "6063a199b704577d953310b513f3011743943b5e",
 			Label: "dev-feature/main#6063a19",
 		},
@@ -314,7 +314,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0021": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0021",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v2.1.0", Label: "v2.1.0"},
+		Version:            &shared.PkgVersion{Raw: "v2.1.0", Label: "v2.1.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0021",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -323,7 +323,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0022": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0022",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		Version:            &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 		Link:               "",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -332,7 +332,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0023": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0023",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
+		Version:            &shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0023",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -341,7 +341,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0024": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0024",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+		Version:            &shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0024",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -350,7 +350,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0025": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0025",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.1.1-beta.1", Label: "2.1.1-beta.1"},
+		Version:            &shared.PkgVersion{Raw: "2.1.1-beta.1", Label: "2.1.1-beta.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0025",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -359,7 +359,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0026": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0026",
 		Abandoned:          true,
-		Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
+		Version:            &shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0026",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -368,7 +368,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0027": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0027",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
+		Version:            &shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0027",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -377,7 +377,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0028": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0028",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v4.0.1", Label: "v4.0.1"},
+		Version:            &shared.PkgVersion{Raw: "v4.0.1", Label: "v4.0.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0028",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -386,7 +386,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0029": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0029",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
+		Version:            &shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0029",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -395,7 +395,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0030": &shared_test.TestPkgWrapper{
 		Name:      "vendor/pkg-0030",
 		Abandoned: false,
-		Version: shared.PkgVersion{
+		Version: &shared.PkgVersion{
 			Raw:   "b8a56915c984281cdd1dc902cacbbaa0c7c81c36",
 			Label: "2.9.x-dev#b8a5691",
 		},
@@ -407,7 +407,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0031": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0031",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
+		Version:            &shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0031",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -416,7 +416,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0032": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0032",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
+		Version:            &shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0032",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -425,7 +425,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0033": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0033",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
+		Version:            &shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
 		Link:               "",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -434,7 +434,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0034": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0034",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		Version:            &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0034",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -443,7 +443,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0035": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0035",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v1.3.2", Label: "v1.3.2"},
+		Version:            &shared.PkgVersion{Raw: "v1.3.2", Label: "v1.3.2"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0035",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -452,7 +452,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0036": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0036",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+		Version:            &shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0036",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -461,7 +461,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0037": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0037",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
+		Version:            &shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0037",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -470,7 +470,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0038": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0038",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
+		Version:            &shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0038",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -479,7 +479,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0039": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0039",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
+		Version:            &shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0039",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -488,7 +488,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0040": &shared_test.TestPkgWrapper{
 		Name:      "vendor/pkg-0040",
 		Abandoned: false,
-		Version: shared.PkgVersion{
+		Version: &shared.PkgVersion{
 			Raw:   "5695761b4841b1e8bc57429ada7d895fdd548051",
 			Label: "dev-main#5695761",
 		},
@@ -500,7 +500,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0041": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0041",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
+		Version:            &shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0041",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -509,7 +509,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0042": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0042",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v3.2.0", Label: "v3.2.0"},
+		Version:            &shared.PkgVersion{Raw: "v3.2.0", Label: "v3.2.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0042",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -518,7 +518,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0043": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0043",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
+		Version:            &shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0043",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -527,7 +527,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0044": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0044",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
+		Version:            &shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
 		Link:               "",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -536,7 +536,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0045": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0045",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.0.1-beta.0", Label: "2.0.1-beta.0"},
+		Version:            &shared.PkgVersion{Raw: "2.0.1-beta.0", Label: "2.0.1-beta.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0045",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -545,7 +545,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0046": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0046",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		Version:            &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0046",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -554,7 +554,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0047": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0047",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
+		Version:            &shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0047",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -563,7 +563,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0048": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0048",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+		Version:            &shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0048",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -572,7 +572,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0049": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0049",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v5.1.1", Label: "v5.1.1"},
+		Version:            &shared.PkgVersion{Raw: "v5.1.1", Label: "v5.1.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0049",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -581,7 +581,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0050": &shared_test.TestPkgWrapper{
 		Name:      "vendor/pkg-0050",
 		Abandoned: false,
-		Version: shared.PkgVersion{
+		Version: &shared.PkgVersion{
 			Raw:   "7e95d646be53792e94a15b5413916b39ab5c8f58",
 			Label: "dev-master#7e95d64",
 		},
@@ -593,7 +593,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0051": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0051",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
+		Version:            &shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0051",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -602,7 +602,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0052": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0052",
 		Abandoned:          true,
-		Version:            shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
+		Version:            &shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0052",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -611,7 +611,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0053": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0053",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
+		Version:            &shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0053",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -620,7 +620,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0054": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0054",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+		Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0054",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -629,7 +629,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0055": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0055",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.1.1-beta.1", Label: "4.1.1-beta.1"},
+		Version:            &shared.PkgVersion{Raw: "4.1.1-beta.1", Label: "4.1.1-beta.1"},
 		Link:               "",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -638,7 +638,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0056": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0056",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v2.0.2", Label: "v2.0.2"},
+		Version:            &shared.PkgVersion{Raw: "v2.0.2", Label: "v2.0.2"},
 		Link:               "https://example.com/support-source/vendor/pkg-0056",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -647,7 +647,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0057": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0057",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
+		Version:            &shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0057",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -656,7 +656,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0058": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0058",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		Version:            &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0058",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -665,7 +665,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0059": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0059",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
+		Version:            &shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0059",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -674,7 +674,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0060": &shared_test.TestPkgWrapper{
 		Name:      "vendor/pkg-0060",
 		Abandoned: false,
-		Version: shared.PkgVersion{
+		Version: &shared.PkgVersion{
 			Raw:   "0e11ad96f8820b9230f093b0f7db8e8017bd9a97",
 			Label: "3.1.x-dev#0e11ad9",
 		},
@@ -686,7 +686,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0061": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0061",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
+		Version:            &shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0061",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -695,7 +695,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0062": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0062",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
+		Version:            &shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0062",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -704,7 +704,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0063": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0063",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v4.3.0", Label: "v4.3.0"},
+		Version:            &shared.PkgVersion{Raw: "v4.3.0", Label: "v4.3.0"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0063",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -713,7 +713,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0064": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0064",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
+		Version:            &shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0064",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -722,7 +722,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0065": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0065",
 		Abandoned:          true,
-		Version:            shared.PkgVersion{Raw: "2.2.1-beta.2", Label: "2.2.1-beta.2"},
+		Version:            &shared.PkgVersion{Raw: "2.2.1-beta.2", Label: "2.2.1-beta.2"},
 		Link:               "https://example.com/support-source/vendor/pkg-0065",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -731,7 +731,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0066": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0066",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+		Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 		Link:               "",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -740,7 +740,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0067": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0067",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
+		Version:            &shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0067",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -749,7 +749,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0068": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0068",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
+		Version:            &shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0068",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -758,7 +758,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0069": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0069",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
+		Version:            &shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0069",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -767,7 +767,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0070": &shared_test.TestPkgWrapper{
 		Name:      "vendor/pkg-0070",
 		Abandoned: false,
-		Version: shared.PkgVersion{
+		Version: &shared.PkgVersion{
 			Raw:   "1abd40fc0f178273874183910b1203ac6867db2c",
 			Label: "dev-feature/awesome-feature#1abd40f",
 		},
@@ -779,7 +779,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0071": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0071",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
+		Version:            &shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0071",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -788,7 +788,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0072": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0072",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+		Version:            &shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0072",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -797,7 +797,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0073": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0073",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
+		Version:            &shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0073",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -806,7 +806,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0074": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0074",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
+		Version:            &shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0074",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -815,7 +815,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0075": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0075",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.0.1-beta.0", Label: "4.0.1-beta.0"},
+		Version:            &shared.PkgVersion{Raw: "4.0.1-beta.0", Label: "4.0.1-beta.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0075",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -824,7 +824,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0076": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0076",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
+		Version:            &shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0076",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -833,7 +833,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0077": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0077",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v3.1.2", Label: "v3.1.2"},
+		Version:            &shared.PkgVersion{Raw: "v3.1.2", Label: "v3.1.2"},
 		Link:               "",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -842,7 +842,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0078": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0078",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+		Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0078",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -851,7 +851,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0079": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0079",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
+		Version:            &shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0079",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -860,7 +860,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0080": &shared_test.TestPkgWrapper{
 		Name:      "vendor/pkg-0080",
 		Abandoned: false,
-		Version: shared.PkgVersion{
+		Version: &shared.PkgVersion{
 			Raw:   "4599bc2a13ed6bcc3aa8a96e0e4c54174f8be802",
 			Label: "2.1.x-dev#4599bc2",
 		},
@@ -872,7 +872,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0081": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0081",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
+		Version:            &shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0081",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -881,7 +881,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0082": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0082",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		Version:            &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0082",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -890,7 +890,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0083": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0083",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
+		Version:            &shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0083",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -899,7 +899,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0084": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0084",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v5.0.0", Label: "v5.0.0"},
+		Version:            &shared.PkgVersion{Raw: "v5.0.0", Label: "v5.0.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0084",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -908,7 +908,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0085": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0085",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.1.1-beta.1", Label: "2.1.1-beta.1"},
+		Version:            &shared.PkgVersion{Raw: "2.1.1-beta.1", Label: "2.1.1-beta.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0085",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -917,7 +917,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0086": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0086",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
+		Version:            &shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0086",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -926,7 +926,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0087": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0087",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
+		Version:            &shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0087",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -935,7 +935,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0088": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0088",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
+		Version:            &shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
 		Link:               "https://github.com/example/homepage/vendor/pkg-0088",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -944,7 +944,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0089": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0089",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
+		Version:            &shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0089",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -953,7 +953,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0090": &shared_test.TestPkgWrapper{
 		Name:      "vendor/pkg-0090",
 		Abandoned: false,
-		Version: shared.PkgVersion{
+		Version: &shared.PkgVersion{
 			Raw:   "e643d0fa6e8b0a92f19ecce35b77de2d9f9bd749",
 			Label: "dev-master#e643d0f",
 		},
@@ -965,7 +965,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0091": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0091",
 		Abandoned:          true,
-		Version:            shared.PkgVersion{Raw: "v2.3.1", Label: "v2.3.1"},
+		Version:            &shared.PkgVersion{Raw: "v2.3.1", Label: "v2.3.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0091",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -974,7 +974,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0092": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0092",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
+		Version:            &shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0092",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -983,7 +983,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0093": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0093",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
+		Version:            &shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0093",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -992,7 +992,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0094": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0094",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		Version:            &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0094",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -1001,7 +1001,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0095": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0095",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.2.1-beta.2", Label: "4.2.1-beta.2"},
+		Version:            &shared.PkgVersion{Raw: "4.2.1-beta.2", Label: "4.2.1-beta.2"},
 		Link:               "https://example.com/support-source/vendor/pkg-0095",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -1010,7 +1010,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0096": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0096",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+		Version:            &shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0096",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -1019,7 +1019,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0097": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0097",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
+		Version:            &shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0097",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -1028,7 +1028,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0098": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0098",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v4.2.2", Label: "v4.2.2"},
+		Version:            &shared.PkgVersion{Raw: "v4.2.2", Label: "v4.2.2"},
 		Link:               "https://example.com/support-source/vendor/pkg-0098",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -1037,7 +1037,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0099": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0099",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
+		Version:            &shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
 		Link:               "",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -1046,7 +1046,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0100": &shared_test.TestPkgWrapper{
 		Name:      "vendor/pkg-0100",
 		Abandoned: false,
-		Version: shared.PkgVersion{
+		Version: &shared.PkgVersion{
 			Raw:   "f72ac1c48716475182f43a1abcafd368791fa11b",
 			Label: "dev-master#f72ac1c",
 		},
@@ -1058,7 +1058,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0101": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0101",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
+		Version:            &shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0101",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1067,7 +1067,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0102": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0102",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+		Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0102",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1076,7 +1076,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0103": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0103",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
+		Version:            &shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0103",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1085,7 +1085,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0104": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0104",
 		Abandoned:          true,
-		Version:            shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
+		Version:            &shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0104",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1094,7 +1094,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0105": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0105",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v1.1.0", Label: "v1.1.0"},
+		Version:            &shared.PkgVersion{Raw: "v1.1.0", Label: "v1.1.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0105",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1103,7 +1103,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0106": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0106",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		Version:            &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0106",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1112,7 +1112,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0107": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0107",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
+		Version:            &shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0107",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1121,7 +1121,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0108": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0108",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+		Version:            &shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0108",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1130,7 +1130,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0109": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0109",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
+		Version:            &shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0109",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -1139,7 +1139,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0110": &shared_test.TestPkgWrapper{
 		Name:      "vendor/pkg-0110",
 		Abandoned: false,
-		Version: shared.PkgVersion{
+		Version: &shared.PkgVersion{
 			Raw:   "e51d682ae5e7d39ffef508f906b4428249476547",
 			Label: "1.2.x-dev#e51d682",
 		},
@@ -1151,7 +1151,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0111": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0111",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
+		Version:            &shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0111",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1160,7 +1160,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0112": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0112",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v3.0.1", Label: "v3.0.1"},
+		Version:            &shared.PkgVersion{Raw: "v3.0.1", Label: "v3.0.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0112",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1169,7 +1169,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0113": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0113",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
+		Version:            &shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0113",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1178,7 +1178,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0114": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0114",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+		Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0114",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1187,7 +1187,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0115": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0115",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.1.1-beta.1", Label: "4.1.1-beta.1"},
+		Version:            &shared.PkgVersion{Raw: "4.1.1-beta.1", Label: "4.1.1-beta.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0115",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1196,7 +1196,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0116": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0116",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
+		Version:            &shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0116",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1205,7 +1205,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0117": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0117",
 		Abandoned:          true,
-		Version:            shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
+		Version:            &shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0117",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1214,7 +1214,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0118": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0118",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		Version:            &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0118",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1223,7 +1223,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0119": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0119",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v5.3.2", Label: "v5.3.2"},
+		Version:            &shared.PkgVersion{Raw: "v5.3.2", Label: "v5.3.2"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0119",
 		DevOnly:            false,
 		RootRequirement:    false,
@@ -1232,7 +1232,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0120": &shared_test.TestPkgWrapper{
 		Name:      "vendor/pkg-0120",
 		Abandoned: false,
-		Version: shared.PkgVersion{
+		Version: &shared.PkgVersion{
 			Raw:   "840b233e8d7917d5e601fd85a7a78a784a487c05",
 			Label: "dev-master#840b233",
 		},
@@ -1244,7 +1244,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0121": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0121",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
+		Version:            &shared.PkgVersion{Raw: "2.1.1", Label: "2.1.1"},
 		Link:               "",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1253,7 +1253,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0122": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0122",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
+		Version:            &shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0122",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1262,7 +1262,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0123": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0123",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
+		Version:            &shared.PkgVersion{Raw: "4.0.1", Label: "4.0.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0123",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1271,7 +1271,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0124": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0124",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
+		Version:            &shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0124",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1280,7 +1280,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0125": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0125",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.2.1-beta.2", Label: "2.2.1-beta.2"},
+		Version:            &shared.PkgVersion{Raw: "2.2.1-beta.2", Label: "2.2.1-beta.2"},
 		Link:               "https://example.com/support-source/vendor/pkg-0125",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1289,7 +1289,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0126": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0126",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v2.2.0", Label: "v2.2.0"},
+		Version:            &shared.PkgVersion{Raw: "v2.2.0", Label: "v2.2.0"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0126",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1298,7 +1298,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0127": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0127",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
+		Version:            &shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0127",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1307,7 +1307,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0128": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0128",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
+		Version:            &shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0128",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1316,7 +1316,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0129": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0129",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
+		Version:            &shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0129",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1325,7 +1325,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0130": &shared_test.TestPkgWrapper{
 		Name:      "vendor/pkg-0130",
 		Abandoned: false,
-		Version: shared.PkgVersion{
+		Version: &shared.PkgVersion{
 			Raw:   "b1ab687038b06de2b5b8c572d76307fb7dc1354a",
 			Label: "1.2-dev#b1ab687",
 		},
@@ -1337,7 +1337,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0131": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0131",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
+		Version:            &shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0131",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1346,7 +1346,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0132": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0132",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+		Version:            &shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
 		Link:               "",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1355,7 +1355,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0133": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0133",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v4.1.1", Label: "v4.1.1"},
+		Version:            &shared.PkgVersion{Raw: "v4.1.1", Label: "v4.1.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0133",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1364,7 +1364,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0134": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0134",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
+		Version:            &shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0134",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1373,7 +1373,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0135": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0135",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.0.1-beta.0", Label: "4.0.1-beta.0"},
+		Version:            &shared.PkgVersion{Raw: "4.0.1-beta.0", Label: "4.0.1-beta.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0135",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1382,7 +1382,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0136": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0136",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
+		Version:            &shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0136",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1391,7 +1391,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0137": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0137",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
+		Version:            &shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0137",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1400,7 +1400,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0138": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0138",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+		Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0138",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1409,7 +1409,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0139": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0139",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
+		Version:            &shared.PkgVersion{Raw: "4.1.1", Label: "4.1.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0139",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1418,7 +1418,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0140": &shared_test.TestPkgWrapper{
 		Name:      "vendor/pkg-0140",
 		Abandoned: false,
-		Version: shared.PkgVersion{
+		Version: &shared.PkgVersion{
 			Raw:   "882e270be9da8bec0be5c347ebe1e9a634723b4f",
 			Label: "dev-master#882e270",
 		},
@@ -1430,7 +1430,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0141": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0141",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
+		Version:            &shared.PkgVersion{Raw: "2.0.1", Label: "2.0.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0141",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1439,7 +1439,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0142": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0142",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+		Version:            &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0142",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1448,7 +1448,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0143": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0143",
 		Abandoned:          true,
-		Version:            shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
+		Version:            &shared.PkgVersion{Raw: "4.2.1", Label: "4.2.1"},
 		Link:               "",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1457,7 +1457,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0144": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0144",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+		Version:            &shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0144",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1466,7 +1466,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0145": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0145",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.1.1-beta.1", Label: "2.1.1-beta.1"},
+		Version:            &shared.PkgVersion{Raw: "2.1.1-beta.1", Label: "2.1.1-beta.1"},
 		Link:               "https://example.com/support-source/vendor/pkg-0145",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1475,7 +1475,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0146": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0146",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
+		Version:            &shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0146",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1484,7 +1484,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0147": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0147",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "v3.3.0", Label: "v3.3.0"},
+		Version:            &shared.PkgVersion{Raw: "v3.3.0", Label: "v3.3.0"},
 		Link:               "https://example.com/support-docs/vendor/pkg-0147",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1493,7 +1493,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0148": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0148",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
+		Version:            &shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
 		Link:               "https://example.com/support-source/vendor/pkg-0148",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1502,7 +1502,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0149": &shared_test.TestPkgWrapper{
 		Name:               "vendor/pkg-0149",
 		Abandoned:          false,
-		Version:            shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
+		Version:            &shared.PkgVersion{Raw: "2.2.1", Label: "2.2.1"},
 		Link:               "https://example.com/support-wiki/vendor/pkg-0149",
 		DevOnly:            true,
 		RootRequirement:    false,
@@ -1511,7 +1511,7 @@ var integrationSimpleFixturesComplexCaseExpectation = map[string]shared.PkgWrapp
 	"vendor/pkg-0150": &shared_test.TestPkgWrapper{
 		Name:      "vendor/pkg-0150",
 		Abandoned: false,
-		Version: shared.PkgVersion{
+		Version: &shared.PkgVersion{
 			Raw:   "bcfdbc84c28a5bd099476ce1fe0f4e1d2b0d873a",
 			Label: "dev-master#bcfdbc8",
 		},

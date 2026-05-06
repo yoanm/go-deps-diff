@@ -35,7 +35,7 @@ func GetDummyPackage() *TestPkgWrapper {
 	return &TestPkgWrapper{
 		Name:               "vendor/package-" + strconv.Itoa(rand.Int()),
 		Abandoned:          true,
-		Version:            shared.PkgVersion{Raw: version, Label: version},
+		Version:            &shared.PkgVersion{Raw: version, Label: version},
 		Link:               "",
 		DevOnly:            false,
 		RootRequirement:    false,

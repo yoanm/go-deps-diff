@@ -82,7 +82,7 @@ func isAbandonedPkg(pkg *Package) bool {
 const shortRefLength = 7
 
 // parsePkgVersion parses a version string into a PkgVersionOld.
-func parsePkgVersion(pkg *Package) shared.PkgVersion {
+func parsePkgVersion(pkg *Package) *shared.PkgVersion {
 	if !shared.IsSemverValid(pkg.Version) { // Not semver - check if there is a commit reference
 		if ref := getPkgRef(pkg); ref != "" {
 			shortRef := ref
@@ -90,14 +90,14 @@ func parsePkgVersion(pkg *Package) shared.PkgVersion {
 				shortRef = shortRef[:shortRefLength]
 			}
 
-			return shared.PkgVersion{
+			return &shared.PkgVersion{
 				Raw:   ref,
 				Label: pkg.Version + "#" + shortRef,
 			}
 		}
 	}
 
-	return shared.PkgVersion{
+	return &shared.PkgVersion{
 		Raw:   pkg.Version,
 		Label: pkg.Version,
 	}

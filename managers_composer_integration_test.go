@@ -211,7 +211,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "sebastian/diff",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.3", Label: "3.0.3"},
+			Version:            &shared.PkgVersion{Raw: "3.0.3", Label: "3.0.3"},
 			Link:               "https://github.com/sebastianbergmann/diff/tree/3.0.3",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -227,7 +227,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "symfony/asset",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v5.4.21", Label: "v5.4.21"},
+			Version:            &shared.PkgVersion{Raw: "v5.4.21", Label: "v5.4.21"},
 			Link:               "https://github.com/symfony/asset/tree/v5.4.21",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -243,7 +243,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "yoanm/jsonrpc-server-sdk",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v1.3.0", Label: "v1.3.0"},
+			Version:            &shared.PkgVersion{Raw: "v1.3.0", Label: "v1.3.0"},
 			Link:               "https://github.com/yoanm/php-jsonrpc-server-sdk/tree/v1.3.0",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -259,7 +259,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "yoanm/jsonrpc-server-doc-sdk",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "a0febcca883a64c71ed5c97d9e2bacc46a26ff30", Label: "dev-master#a0febcc"},
+			Version:            &shared.PkgVersion{Raw: "a0febcca883a64c71ed5c97d9e2bacc46a26ff30", Label: "dev-master#a0febcc"},
 			Link:               "https://github.com/yoanm/php-jsonrpc-server-doc-sdk/tree/v0.3.0",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -274,7 +274,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "behat/gherkin",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v4.7.0", Label: "v4.7.0"},
+			Version:            &shared.PkgVersion{Raw: "v4.7.0", Label: "v4.7.0"},
 			Link:               "https://github.com/Behat/Gherkin/tree/v4.7.0",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -290,7 +290,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "symfony/deprecation-contracts",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v2.5.2", Label: "v2.5.2"},
+			Version:            &shared.PkgVersion{Raw: "v2.5.2", Label: "v2.5.2"},
 			Link:               "https://github.com/symfony/deprecation-contracts/tree/v2.5.2",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -306,7 +306,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "symfony/polyfill-ctype",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v1.27.0", Label: "v1.27.0"},
+			Version:            &shared.PkgVersion{Raw: "v1.27.0", Label: "v1.27.0"},
 			Link:               "https://github.com/symfony/polyfill-ctype/tree/v1.27.0",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -322,7 +322,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "symfony/polyfill-php80",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v1.27.0", Label: "v1.27.0"},
+			Version:            &shared.PkgVersion{Raw: "v1.27.0", Label: "v1.27.0"},
 			Link:               "https://github.com/symfony/polyfill-php80/tree/v1.27.0",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -338,7 +338,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "phpstan/phpstan",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "0.12.100", Label: "0.12.100"},
+			Version:            &shared.PkgVersion{Raw: "0.12.100", Label: "0.12.100"},
 			Link:               "https://github.com/phpstan/phpstan/tree/0.12.100",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -354,7 +354,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "sebastian/code-unit",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.0.7", Label: "1.0.7"},
+			Version:            &shared.PkgVersion{Raw: "1.0.7", Label: "1.0.7"},
 			Link:               "https://github.com/sebastianbergmann/code-unit/tree/1.0.7",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -370,7 +370,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "symfony/cache-contracts",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v1.1.13", Label: "v1.1.13"},
+			Version:            &shared.PkgVersion{Raw: "v1.1.13", Label: "v1.1.13"},
 			Link:               "https://github.com/symfony/cache-contracts/tree/v1.1.13",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -386,7 +386,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "psr/cache",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
+			Version:            &shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0"},
 			Link:               "https://github.com/php-fig/cache/tree/3.0.0",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -401,7 +401,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "psr/container",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.1.2", Label: "1.1.2"},
+			Version:            &shared.PkgVersion{Raw: "1.1.2", Label: "1.1.2"},
 			Link:               "https://github.com/php-fig/container/tree/1.1.2",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -416,7 +416,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "symfony/console",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v5.4.21", Label: "v5.4.21"},
+			Version:            &shared.PkgVersion{Raw: "v5.4.21", Label: "v5.4.21"},
 			Link:               "https://github.com/symfony/console/tree/v5.4.21",
 			DevOnly:            false,
 			RootRequirement:    true,
@@ -431,7 +431,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "symfony/polyfill-intl-grapheme",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v1.27.0", Label: "v1.27.0"},
+			Version:            &shared.PkgVersion{Raw: "v1.27.0", Label: "v1.27.0"},
 			Link:               "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.27.0",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -446,7 +446,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "symfony/polyfill-intl-normalizer",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v1.27.0", Label: "v1.27.0"},
+			Version:            &shared.PkgVersion{Raw: "v1.27.0", Label: "v1.27.0"},
 			Link:               "https://github.com/symfony/polyfill-intl-normalizer/tree/v1.27.0",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -461,7 +461,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "symfony/polyfill-mbstring",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v1.27.0", Label: "v1.27.0"},
+			Version:            &shared.PkgVersion{Raw: "v1.27.0", Label: "v1.27.0"},
 			Link:               "https://github.com/symfony/polyfill-mbstring/tree/v1.27.0",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -476,7 +476,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "symfony/polyfill-php73",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v1.27.0", Label: "v1.27.0"},
+			Version:            &shared.PkgVersion{Raw: "v1.27.0", Label: "v1.27.0"},
 			Link:               "https://github.com/symfony/polyfill-php73/tree/v1.27.0",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -491,7 +491,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "symfony/service-contracts",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v2.5.2", Label: "v2.5.2"},
+			Version:            &shared.PkgVersion{Raw: "v2.5.2", Label: "v2.5.2"},
 			Link:               "https://github.com/symfony/service-contracts/tree/v2.5.2",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -506,7 +506,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "symfony/string",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v6.2.7", Label: "v6.2.7"},
+			Version:            &shared.PkgVersion{Raw: "v6.2.7", Label: "v6.2.7"},
 			Link:               "https://github.com/symfony/string/tree/v6.2.7",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -521,7 +521,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "doctrine/instantiator",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.4.0", Label: "1.4.0"},
+			Version:            &shared.PkgVersion{Raw: "1.4.0", Label: "1.4.0"},
 			Link:               "https://github.com/doctrine/instantiator/tree/1.4.0",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -536,7 +536,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "myclabs/deep-copy",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.10.2", Label: "1.10.2"},
+			Version:            &shared.PkgVersion{Raw: "1.10.2", Label: "1.10.2"},
 			Link:               "https://github.com/myclabs/DeepCopy/tree/1.10.2",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -551,7 +551,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "nikic/php-parser",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v4.12.0", Label: "v4.12.0"},
+			Version:            &shared.PkgVersion{Raw: "v4.12.0", Label: "v4.12.0"},
 			Link:               "https://github.com/nikic/PHP-Parser/tree/v4.12.0",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -566,7 +566,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "phar-io/manifest",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.0.3", Label: "2.0.3"},
+			Version:            &shared.PkgVersion{Raw: "2.0.3", Label: "2.0.3"},
 			Link:               "https://github.com/phar-io/manifest/tree/2.0.3",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -581,7 +581,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "phar-io/version",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
+			Version:            &shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0"},
 			Link:               "https://github.com/phar-io/version/tree/3.1.0",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -596,7 +596,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "phpdocumentor/reflection-common",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.2.0", Label: "2.2.0"},
+			Version:            &shared.PkgVersion{Raw: "2.2.0", Label: "2.2.0"},
 			Link:               "https://github.com/phpDocumentor/ReflectionCommon/tree/2.x",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -611,7 +611,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "phpdocumentor/reflection-docblock",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "5.2.2", Label: "5.2.2"},
+			Version:            &shared.PkgVersion{Raw: "5.2.2", Label: "5.2.2"},
 			Link:               "https://github.com/phpDocumentor/ReflectionDocBlock/tree/master",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -626,7 +626,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "phpdocumentor/type-resolver",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.4.0", Label: "1.4.0"},
+			Version:            &shared.PkgVersion{Raw: "1.4.0", Label: "1.4.0"},
 			Link:               "https://github.com/phpDocumentor/TypeResolver/tree/1.4.0",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -641,7 +641,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "phpspec/prophecy",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.13.0", Label: "1.13.0"},
+			Version:            &shared.PkgVersion{Raw: "1.13.0", Label: "1.13.0"},
 			Link:               "https://github.com/phpspec/prophecy/tree/1.13.0",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -656,7 +656,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "phpunit/php-code-coverage",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "9.2.6", Label: "9.2.6"},
+			Version:            &shared.PkgVersion{Raw: "9.2.6", Label: "9.2.6"},
 			Link:               "https://github.com/sebastianbergmann/php-code-coverage/tree/9.2.6",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -671,7 +671,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "phpunit/php-file-iterator",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.5", Label: "3.0.5"},
+			Version:            &shared.PkgVersion{Raw: "3.0.5", Label: "3.0.5"},
 			Link:               "https://github.com/sebastianbergmann/php-file-iterator/tree/3.0.5",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -686,7 +686,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "phpunit/php-invoker",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
+			Version:            &shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1"},
 			Link:               "https://github.com/sebastianbergmann/php-invoker/tree/3.1.1",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -701,7 +701,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "phpunit/php-text-template",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.0.4", Label: "2.0.4"},
+			Version:            &shared.PkgVersion{Raw: "2.0.4", Label: "2.0.4"},
 			Link:               "https://github.com/sebastianbergmann/php-text-template/tree/2.0.4",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -716,7 +716,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "phpunit/php-timer",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "5.0.3", Label: "5.0.3"},
+			Version:            &shared.PkgVersion{Raw: "5.0.3", Label: "5.0.3"},
 			Link:               "https://github.com/sebastianbergmann/php-timer/tree/5.0.3",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -731,7 +731,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "phpunit/phpunit",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "9.3.0", Label: "9.3.0"},
+			Version:            &shared.PkgVersion{Raw: "9.3.0", Label: "9.3.0"},
 			Link:               "https://github.com/sebastianbergmann/phpunit/tree/9.3",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -746,7 +746,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "sebastian/code-unit-reverse-lookup",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.0.3", Label: "2.0.3"},
+			Version:            &shared.PkgVersion{Raw: "2.0.3", Label: "2.0.3"},
 			Link:               "https://github.com/sebastianbergmann/code-unit-reverse-lookup/tree/2.0.3",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -761,7 +761,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "sebastian/comparator",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "4.0.6", Label: "4.0.6"},
+			Version:            &shared.PkgVersion{Raw: "4.0.6", Label: "4.0.6"},
 			Link:               "https://github.com/sebastianbergmann/comparator/tree/4.0.6",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -776,7 +776,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "sebastian/complexity",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.0.2", Label: "2.0.2"},
+			Version:            &shared.PkgVersion{Raw: "2.0.2", Label: "2.0.2"},
 			Link:               "https://github.com/sebastianbergmann/complexity/tree/2.0.2",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -791,7 +791,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "sebastian/environment",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "5.1.3", Label: "5.1.3"},
+			Version:            &shared.PkgVersion{Raw: "5.1.3", Label: "5.1.3"},
 			Link:               "https://github.com/sebastianbergmann/environment/tree/5.1.3",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -806,7 +806,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "sebastian/exporter",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "4.0.3", Label: "4.0.3"},
+			Version:            &shared.PkgVersion{Raw: "4.0.3", Label: "4.0.3"},
 			Link:               "https://github.com/sebastianbergmann/exporter/tree/4.0.3",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -821,7 +821,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "sebastian/global-state",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "5.0.3", Label: "5.0.3"},
+			Version:            &shared.PkgVersion{Raw: "5.0.3", Label: "5.0.3"},
 			Link:               "https://github.com/sebastianbergmann/global-state/tree/5.0.3",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -836,7 +836,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "sebastian/lines-of-code",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.0.3", Label: "1.0.3"},
+			Version:            &shared.PkgVersion{Raw: "1.0.3", Label: "1.0.3"},
 			Link:               "https://github.com/sebastianbergmann/lines-of-code/tree/1.0.3",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -851,7 +851,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "sebastian/object-enumerator",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "4.0.4", Label: "4.0.4"},
+			Version:            &shared.PkgVersion{Raw: "4.0.4", Label: "4.0.4"},
 			Link:               "https://github.com/sebastianbergmann/object-enumerator/tree/4.0.4",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -866,7 +866,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "sebastian/object-reflector",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.0.4", Label: "2.0.4"},
+			Version:            &shared.PkgVersion{Raw: "2.0.4", Label: "2.0.4"},
 			Link:               "https://github.com/sebastianbergmann/object-reflector/tree/2.0.4",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -881,7 +881,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "sebastian/recursion-context",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "4.0.4", Label: "4.0.4"},
+			Version:            &shared.PkgVersion{Raw: "4.0.4", Label: "4.0.4"},
 			Link:               "https://github.com/sebastianbergmann/recursion-context/tree/4.0.4",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -896,7 +896,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "sebastian/resource-operations",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.3", Label: "3.0.3"},
+			Version:            &shared.PkgVersion{Raw: "3.0.3", Label: "3.0.3"},
 			Link:               "https://github.com/sebastianbergmann/resource-operations/tree/3.0.3",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -911,7 +911,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "sebastian/type",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.3.4", Label: "2.3.4"},
+			Version:            &shared.PkgVersion{Raw: "2.3.4", Label: "2.3.4"},
 			Link:               "https://github.com/sebastianbergmann/type/tree/2.3.4",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -926,7 +926,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "sebastian/version",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.2", Label: "3.0.2"},
+			Version:            &shared.PkgVersion{Raw: "3.0.2", Label: "3.0.2"},
 			Link:               "https://github.com/sebastianbergmann/version/tree/3.0.2",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -941,7 +941,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "theseer/tokenizer",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.2.1", Label: "1.2.1"},
+			Version:            &shared.PkgVersion{Raw: "1.2.1", Label: "1.2.1"},
 			Link:               "https://github.com/theseer/tokenizer/tree/1.2.1",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -956,7 +956,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "twig/twig",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "v1.44.4", Label: "v1.44.4"},
+			Version:            &shared.PkgVersion{Raw: "v1.44.4", Label: "v1.44.4"},
 			Link:               "https://github.com/twigphp/Twig/tree/v1.44.4",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -971,7 +971,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "webmozart/assert",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.10.0", Label: "1.10.0"},
+			Version:            &shared.PkgVersion{Raw: "1.10.0", Label: "1.10.0"},
 			Link:               "https://github.com/webmozarts/assert/tree/1.10.0",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -986,7 +986,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "yoanm/init-php-repository",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "02c0922c4691e02b606c7cfe4cf8978233b1e978", Label: "dev-master#02c0922"},
+			Version:            &shared.PkgVersion{Raw: "02c0922c4691e02b606c7cfe4cf8978233b1e978", Label: "dev-master#02c0922"},
 			Link:               "https://github.com/yoanm/initPhpRepository/tree/v0.2.0",
 			DevOnly:            false,
 			RootRequirement:    false,
@@ -1001,7 +1001,7 @@ var integrationComposerOriginalDatasetExpectation = shared.DiffMap{
 		Package: &shared_test.TestPkgWrapper{
 			Name:               "squizlabs/php_codesniffer",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168"},
+			Version:            &shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168"},
 			Link:               "https://github.com/squizlabs/PHP_CodeSniffer/wiki",
 			DevOnly:            true,
 			RootRequirement:    false,

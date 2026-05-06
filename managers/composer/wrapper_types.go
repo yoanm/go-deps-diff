@@ -5,7 +5,7 @@ import "github.com/yoanm/go-deps-diff/shared"
 type ComposerPackageWrapper struct {
 	name                 string
 	isAbandoned          bool
-	version              shared.PkgVersion
+	version              *shared.PkgVersion
 	link                 string
 	isDevOnly            bool // true if only in lock file "packages-dev" section (dev-only dependency)
 	isRootRequirement    bool // true if exists in requirement file "require" section
@@ -21,7 +21,7 @@ func (w *ComposerPackageWrapper) IsAbandoned() bool {
 }
 
 func (w *ComposerPackageWrapper) GetVersion() *shared.PkgVersion {
-	return &w.version
+	return w.version
 }
 
 func (w *ComposerPackageWrapper) GetLink() string {
