@@ -2,12 +2,10 @@ engines:
   metric:
     exclude_paths:
       - "**_test.go"
-      - "**/*_test.go"
       - "shared_test/**"  # Not covered as for test purpose only
   duplication:
     exclude_paths:
       - "**_test.go"
-      - "**/*_test.go"
       - "shared_test/**"  # Not covered as for test purpose only
 exclude_paths:
   - "DOC.md" # Auto-generated doc
