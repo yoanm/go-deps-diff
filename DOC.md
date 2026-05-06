@@ -20,6 +20,8 @@ Diff compares two packages maps and returns the differences.
 
 ## Sub Packages
 
+* [.tools](./.tools)
+
 * [managers/composer](./managers/composer)
 
 * [shared](./shared)

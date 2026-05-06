@@ -30,7 +30,7 @@ func main() {
 	stat, _ := os.Stdin.Stat()
 	if (stat.Mode() & os.ModeCharDevice) != 0 { // Data must come from pipe !
 		log.Fatalf(
-			"No input detected. Please pipe benchstat output into this tool: " +
+			"No input detected. Please pipe benchstat output into this tool: "+
 				"cat benchstat.out | %s [threshold_percentage]",
 			path.Base(os.Args[0]),
 		)
@@ -63,12 +63,12 @@ func main() {
 	}
 
 	if len(regList) > 0 {
-		log.("Performance regression detected (threshold: %.1f%%):\n", threshold)
+		slog.Error(fmt.Sprintf("Performance regression detected (threshold: %.1f%%):\n", threshold))
 		for _, reg := range regList {
-			fmt.Println(reg)
+			slog.Error(reg)
 		}
 		os.Exit(1)
 	}
 
-	fmt.Println("All good 🎉.")
+	slog.Info("All good 🎉.")
 }
