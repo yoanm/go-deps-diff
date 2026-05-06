@@ -100,3 +100,9 @@ fmt: ## 🔧 Format code with go fmt
 .PHONY: vet
 vet: ## 🔍 Run go vet (suspicious code patterns)
 	go vet ./...
+
+.PHONY: benchmark
+#### Use bench_o="..." to specify options
+$(eval bench_o ?=)
+benchmark: ## 🔍 Run benchmarks
+	go test -run='^$$' -bench=. -benchmem $(bench_o) ./...
