@@ -52,7 +52,7 @@ func getMarkdownSectionType(
 		return warningSection
 	case isCandidateForImportantSection(subCategoryType, itemType, pkg):
 		return importantSection
-	case isCandidateForTipSection(subCategoryType, itemType, pkg):
+	case isCandidateForTipSection(subCategoryType, itemType):
 		return tipSection
 	}
 
@@ -108,7 +108,7 @@ func isCandidateForCautionSection(
 			(itemType == additionItem && (pkg.IsAbandoned() || pkg.GetVersion().Semver == nil)))
 }
 
-func isCandidateForWarningSection(
+func isCandidateForWarningSection( //nolint:cyclop // 11 vs 10 allowed but easier to maintain that way
 	subCategoryType markdownSubCategory,
 	itemType markdownItem,
 	pkg shared.PkgWrapper,
@@ -182,7 +182,6 @@ func isCandidateForImportantSection(
 func isCandidateForTipSection(
 	subCategoryType markdownSubCategory,
 	itemType markdownItem,
-	pkg shared.PkgWrapper,
 ) bool {
 	// # Tip
 	//## Production usage
