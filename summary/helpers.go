@@ -33,7 +33,7 @@ func splitItemList(subCategoriesMap subCategoriesMap) (pkgList, pkgList) {
 						// - No change items are far less meaningful than the other items
 						// Idea behind the comment is to quickly spot a change which may lead to an issue or caused an
 						// issue, so more visibility to actual changes.
-						if shared.NoChangeOperation == item.Operation.Name {
+						if shared.NoChangeOperation == item.Operation.Name && item.Package.GetVersion().Semver != nil {
 							noChangePkgList = append(noChangePkgList, item)
 						} else {
 							otherChangePkgList = append(otherChangePkgList, item)

@@ -171,7 +171,12 @@ func buildOperationHTMLCell(operation shared.Operation, colspan int) string {
 }
 
 func buildPackageVersionHTMLCell(version shared.PkgVersion) string {
-	return "<td align=\"right\">" + version.Label + "</td>"
+	label := version.Label
+	if version.Semver == nil {
+		label += "❗"
+	}
+
+	return "<td align=\"right\">" + label + "</td>"
 }
 
 func buildPackageNameHTMLCell(pkg shared.PkgWrapper) string {
