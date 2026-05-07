@@ -5,7 +5,7 @@
 ### Production usage <sup>🏭</sup>
 
 <details open>
-  <summary>❓<sup>4</sup>    <sub><sup>🔻.🔹.🔹</sup></sub><sup>2</sup>    ➕️<sup>2</sup></summary>
+  <summary>❓<sup>4</sup>    <sub><sup>🔻.🔹.🔹</sup></sub><sup>2</sup>    ➕️<sup>4</sup></summary>
   <table>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE</a></td><td align="right">2.9.x-dev#2acf168❗</td><td align="center">❓</td><td align="right">2.9.x-dev#1234567❗</td></tr>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE+SEMVER_EXTRA</a></td><td align="right">2.9.2+beta</td><td align="center"><sub><sup>🔹.🔹.🔹❓</sup></sub></td><td align="right">2.9.2+alpha</td></tr>
@@ -15,6 +15,8 @@
     <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">caution-prod_usage-requirement/SEMVER_MAJOR_DOWNGRADE</a></td><td align="right">2.9.2</td><td align="center"><sub><sup>🔻.🔹.🔹</sup></sub></td><td align="right">1.18.4</td></tr>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">caution-prod_usage-requirement+dev_req/ADDITION+ABANDONED</a>💀</td><td align="center" colspan="2">➕️</td><td align="right">1.18.4</td></tr>
     <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">caution-prod_usage-requirement/ADDITION+ABANDONED</a>💀</td><td align="center" colspan="2">➕️</td><td align="right">1.18.4</td></tr>
+    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-prod_usage-requirement+dev_req/ADDITION_NOT_SEMVER</a></td><td align="center" colspan="2">➕️</td><td align="right">dev-master#abcdefgh❗</td></tr>
+    <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-prod_usage-requirement/ADDITION_NOT_SEMVER</a></td><td align="center" colspan="2">➕️</td><td align="right">dev-master#abcdefgh❗</td></tr>
   </table>
 
 </details>
@@ -22,12 +24,13 @@
 ### Dev-only usage <sup>🧪</sup>
 
 <details>
-  <summary>❓<sup>2</sup>    <sub><sup>🔻.🔹.🔹</sup></sub><sup>1</sup>    ➕️<sup>1</sup></summary>
+  <summary>❓<sup>2</sup>    <sub><sup>🔻.🔹.🔹</sup></sub><sup>1</sup>    ➕️<sup>2</sup></summary>
   <table>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">caution-dev_only_usage-requirement/UNKNOWN_UPDATE</a></td><td align="right">2.9.x-dev#2acf168❗</td><td align="center">❓</td><td align="right">2.9.x-dev#1234567❗</td></tr>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">caution-dev_only_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA</a></td><td align="right">2.9.2+beta</td><td align="center"><sub><sup>🔹.🔹.🔹❓</sup></sub></td><td align="right">2.9.2+alpha</td></tr>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">caution-dev_only_usage-requirement/SEMVER_MAJOR_DOWNGRADE</a></td><td align="right">2.9.2</td><td align="center"><sub><sup>🔻.🔹.🔹</sup></sub></td><td align="right">1.2.0</td></tr>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">caution-dev_only_usage-requirement/ADDITION+ABANDONED</a>💀</td><td align="center" colspan="2">➕️</td><td align="right">1.18.4</td></tr>
+    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-dev_only_usage-requirement/ADDITION_NOT_SEMVER</a></td><td align="center" colspan="2">➕️</td><td align="right">dev-master#abcdefgh❗</td></tr>
   </table>
 
 </details>
@@ -39,18 +42,19 @@
 ### Production usage <sup>🏭</sup>
 
 <details open>
-  <summary>❓<sup>2</sup>    <sub><sup>🔻.🔹.🔹</sup></sub><sup>1</sup>    <sub><sup>🔹.🔻.🔹</sup></sub><sup>2</sup>    <sub><sup>🔺.🔹.🔹</sup></sub><sup>2</sup>    ➕️<sup>3</sup></summary>
+  <summary>❓<sup>2</sup>    <sub><sup>🔻.🔹.🔹</sup></sub><sup>1</sup>    <sub><sup>🔹.🔻.🔹</sup></sub><sup>2</sup>    <sub><sup>🔺.🔹.🔹</sup></sub><sup>2</sup>    ➕️<sup>2</sup>    🟰<sup>2</sup></summary>
   <table>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-prod_usage-requirement+dev_req/SEMVER_MINOR_DOWNGRADE</a></td><td align="right">3.1.0</td><td align="center"><sub><sup>🔹.🔻.🔹</sup></sub></td><td align="right">3.0.0</td></tr>
     <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-prod_usage-requirement/SEMVER_MINOR_DOWNGRADE</a></td><td align="right">3.1.0</td><td align="center"><sub><sup>🔹.🔻.🔹</sup></sub></td><td align="right">3.0.0</td></tr>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-prod_usage-requirement+dev_req/SEMVER_MAJOR_UPGRADE</a></td><td align="right">2.9.3</td><td align="center"><sub><sup>🔺.🔹.🔹</sup></sub></td><td align="right">3.0.0</td></tr>
     <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-prod_usage-requirement/SEMVER_MAJOR_UPGRADE</a></td><td align="right">2.9.3</td><td align="center"><sub><sup>🔺.🔹.🔹</sup></sub></td><td align="right">3.0.0</td></tr>
-    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-prod_usage-requirement+dev_req/ADDITION_NOT_SEMVER</a></td><td align="center" colspan="2">➕️</td><td align="right">dev-master#abcdefgh❗</td></tr>
-    <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-prod_usage-requirement/ADDITION_NOT_SEMVER</a></td><td align="center" colspan="2">➕️</td><td align="right">dev-master#abcdefgh❗</td></tr>
+    <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">important-prod_usage-requirement+dev_req/SAME_NOT_SEMVER</a></td><td align="right">dev-master#abcdefgh❗</td><td align="center" colspan="2">🟰</td></tr>
+    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">important-prod_usage-requirement/SAME_NOT_SEMVER</a></td><td align="right">dev-master#abcdefgh❗</td><td align="center" colspan="2">🟰</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-prod_usage-transitive/UNKNOWN_UPDATE</a></td><td align="right">2.9.x-dev#2acf168❗</td><td align="center">❓</td><td align="right">2.9.x-dev#1234567❗</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-prod_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA</a></td><td align="right">2.9.2+beta</td><td align="center"><sub><sup>🔹.🔹.🔹❓</sup></sub></td><td align="right">2.9.2+alpha</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-prod_usage-transitive/SEMVER_MAJOR_DOWNGRADE</a></td><td align="right">2.9.2</td><td align="center"><sub><sup>🔻.🔹.🔹</sup></sub></td><td align="right">1.2.0</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-prod_usage-transitive/ADDITION+ABANDONED</a>💀</td><td align="center" colspan="2">➕️</td><td align="right">1.18.4</td></tr>
+    <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-prod_usage-transitive/ADDITION_NOT_SEMVER</a></td><td align="center" colspan="2">➕️</td><td align="right">dev-master#abcdefgh❗</td></tr>
   </table>
 
 </details>
@@ -58,15 +62,16 @@
 ### Dev-only usage <sup>🧪</sup>
 
 <details>
-  <summary>❓<sup>2</sup>    <sub><sup>🔻.🔹.🔹</sup></sub><sup>1</sup>    <sub><sup>🔹.🔻.🔹</sup></sub><sup>1</sup>    <sub><sup>🔺.🔹.🔹</sup></sub><sup>1</sup>    ➕️<sup>2</sup></summary>
+  <summary>❓<sup>2</sup>    <sub><sup>🔻.🔹.🔹</sup></sub><sup>1</sup>    <sub><sup>🔹.🔻.🔹</sup></sub><sup>1</sup>    <sub><sup>🔺.🔹.🔹</sup></sub><sup>1</sup>    ➕️<sup>2</sup>    🟰<sup>1</sup></summary>
   <table>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-dev_only_usage-requirement/SEMVER_MINOR_DOWNGRADE</a></td><td align="right">3.1.0</td><td align="center"><sub><sup>🔹.🔻.🔹</sup></sub></td><td align="right">3.0.0</td></tr>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-dev_only_usage-requirement/SEMVER_MAJOR_UPGRADE</a></td><td align="right">2.9.3</td><td align="center"><sub><sup>🔺.🔹.🔹</sup></sub></td><td align="right">3.0.0</td></tr>
-    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-dev_only_usage-requirement/ADDITION_NOT_SEMVER</a></td><td align="center" colspan="2">➕️</td><td align="right">dev-master#abcdefgh❗</td></tr>
+    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">important-dev_only_usage-requirement/SAME_NOT_SEMVER</a></td><td align="right">dev-master#abcdefgh❗</td><td align="center" colspan="2">🟰</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-dev_only_usage-transitive/UNKNOWN_UPDATE</a></td><td align="right">2.9.x-dev#2acf168❗</td><td align="center">❓</td><td align="right">2.9.x-dev#1234567❗</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-dev_only_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA</a></td><td align="right">2.9.2+beta</td><td align="center"><sub><sup>🔹.🔹.🔹❓</sup></sub></td><td align="right">2.9.2+alpha</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-dev_only_usage-transitive/SEMVER_MAJOR_DOWNGRADE</a></td><td align="right">2.9.2</td><td align="center"><sub><sup>🔻.🔹.🔹</sup></sub></td><td align="right">1.2.0</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-dev_only_usage-transitive/ADDITION+ABANDONED</a>💀</td><td align="center" colspan="2">➕️</td><td align="right">1.18.4</td></tr>
+    <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-dev_only_usage-transitive/ADDITION_NOT_SEMVER</a></td><td align="center" colspan="2">➕️</td><td align="right">dev-master#abcdefgh❗</td></tr>
   </table>
 
 </details>
@@ -78,7 +83,7 @@
 ### Production usage <sup>🏭</sup>
 
 <details open>
-  <summary><sub><sup>🔹.🔻.🔹</sup></sub><sup>1</sup>    <sub><sup>🔹.🔹.🔻</sup></sub><sup>2</sup>    <sub><sup>🔺.🔹.🔹</sup></sub><sup>1</sup>    ❌<sup>4</sup>    ➕️<sup>1</sup>    🟰<sup>2</sup></summary>
+  <summary><sub><sup>🔹.🔻.🔹</sup></sub><sup>1</sup>    <sub><sup>🔹.🔹.🔻</sup></sub><sup>2</sup>    <sub><sup>🔺.🔹.🔹</sup></sub><sup>1</sup>    ❌<sup>4</sup>    🟰<sup>1</sup></summary>
   <table>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">important-prod_usage-requirement+dev_req/SEMVER_PATCH_DOWNGRADE</a></td><td align="right">3.0.1</td><td align="center"><sub><sup>🔹.🔹.🔻</sup></sub></td><td align="right">3.0.0</td></tr>
     <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">important-prod_usage-requirement/SEMVER_PATCH_DOWNGRADE</a></td><td align="right">3.0.1</td><td align="center"><sub><sup>🔹.🔹.🔻</sup></sub></td><td align="right">3.0.0</td></tr>
@@ -86,11 +91,9 @@
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">important-prod_usage-requirement+dev_req/REMOVAL+ABANDONED</a>💀</td><td align="right">3.2.1</td><td align="center" colspan="2">❌</td></tr>
     <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">important-prod_usage-requirement/REMOVAL</a></td><td align="right">3.0.1</td><td align="center" colspan="2">❌</td></tr>
     <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">important-prod_usage-requirement/REMOVAL+ABANDONED</a>💀</td><td align="right">3.2.1</td><td align="center" colspan="2">❌</td></tr>
-    <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">important-prod_usage-requirement+dev_req/SAME_NOT_SEMVER</a></td><td align="right">dev-master#abcdefgh❗</td><td align="center" colspan="2">🟰</td></tr>
-    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">important-prod_usage-requirement/SAME_NOT_SEMVER</a></td><td align="right">dev-master#abcdefgh❗</td><td align="center" colspan="2">🟰</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">important-prod_usage-transitive/SEMVER_MINOR_DOWNGRADE</a></td><td align="right">3.1.0</td><td align="center"><sub><sup>🔹.🔻.🔹</sup></sub></td><td align="right">3.0.0</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">important-prod_usage-transitive/SEMVER_MAJOR_UPGRADE</a></td><td align="right">2.9.3</td><td align="center"><sub><sup>🔺.🔹.🔹</sup></sub></td><td align="right">3.0.0</td></tr>
-    <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-prod_usage-transitive/ADDITION_NOT_SEMVER</a></td><td align="center" colspan="2">➕️</td><td align="right">dev-master#abcdefgh❗</td></tr>
+    <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">tip-prod_usage-transitive/SAME_NOT_SEMVER</a></td><td align="right">dev-master#abcdefgh❗</td><td align="center" colspan="2">🟰</td></tr>
   </table>
 
 </details>
@@ -98,15 +101,14 @@
 ### Dev-only usage <sup>🧪</sup>
 
 <details>
-  <summary><sub><sup>🔹.🔻.🔹</sup></sub><sup>1</sup>    <sub><sup>🔹.🔹.🔻</sup></sub><sup>1</sup>    <sub><sup>🔺.🔹.🔹</sup></sub><sup>1</sup>    ❌<sup>2</sup>    ➕️<sup>1</sup>    🟰<sup>1</sup></summary>
+  <summary><sub><sup>🔹.🔻.🔹</sup></sub><sup>1</sup>    <sub><sup>🔹.🔹.🔻</sup></sub><sup>1</sup>    <sub><sup>🔺.🔹.🔹</sup></sub><sup>1</sup>    ❌<sup>2</sup>    🟰<sup>1</sup></summary>
   <table>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">important-dev_only_usage-requirement/SEMVER_PATCH_DOWNGRADE</a></td><td align="right">3.0.1</td><td align="center"><sub><sup>🔹.🔹.🔻</sup></sub></td><td align="right">3.0.0</td></tr>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">important-dev_only_usage-requirement/REMOVAL</a></td><td align="right">3.0.1</td><td align="center" colspan="2">❌</td></tr>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">important-dev_only_usage-requirement/REMOVAL+ABANDONED</a>💀</td><td align="right">3.2.1</td><td align="center" colspan="2">❌</td></tr>
-    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">important-dev_only_usage-requirement/SAME_NOT_SEMVER</a></td><td align="right">dev-master#abcdefgh❗</td><td align="center" colspan="2">🟰</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">important-dev_only_usage-transitive/SEMVER_MINOR_DOWNGRADE</a></td><td align="right">3.1.0</td><td align="center"><sub><sup>🔹.🔻.🔹</sup></sub></td><td align="right">3.0.0</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">important-dev_only_usage-transitive/SEMVER_MAJOR_UPGRADE</a></td><td align="right">2.9.3</td><td align="center"><sub><sup>🔺.🔹.🔹</sup></sub></td><td align="right">3.0.0</td></tr>
-    <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-dev_only_usage-transitive/ADDITION_NOT_SEMVER</a></td><td align="center" colspan="2">➕️</td><td align="right">dev-master#abcdefgh❗</td></tr>
+    <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">tip-dev_only_usage-transitive/SAME_NOT_SEMVER</a></td><td align="right">dev-master#abcdefgh❗</td><td align="center" colspan="2">🟰</td></tr>
   </table>
 
 </details>
@@ -118,7 +120,7 @@
 ### Production usage <sup>🏭</sup>
 
 <details>
-  <summary><sub><sup>🔹.🔹.🔻</sup></sub><sup>1</sup>    ❌<sup>2</sup>    <sub><sup>🔹.🔺.🔹</sup></sub><sup>4</sup>    ➕️<sup>2</sup>    🟰<sup>1</sup></summary>
+  <summary><sub><sup>🔹.🔹.🔻</sup></sub><sup>1</sup>    ❌<sup>2</sup>    <sub><sup>🔹.🔺.🔹</sup></sub><sup>4</sup>    ➕️<sup>2</sup></summary>
   <table>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">tip-prod_usage-requirement+dev_req/SEMVER_MINOR_UPGRADE</a></td><td align="right">3.0.0</td><td align="center"><sub><sup>🔹.🔺.🔹</sup></sub></td><td align="right">3.1.0</td></tr>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">tip-prod_usage-requirement+dev_req/SEMVER_MINOR_UPGRADE+ABANDONED</a>💀</td><td align="right">3.0.1</td><td align="center"><sub><sup>🔹.🔺.🔹</sup></sub></td><td align="right">3.2.0</td></tr>
@@ -129,7 +131,6 @@
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">tip-prod_usage-transitive/SEMVER_PATCH_DOWNGRADE</a></td><td align="right">3.0.1</td><td align="center"><sub><sup>🔹.🔹.🔻</sup></sub></td><td align="right">3.0.0</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">tip-prod_usage-transitive/REMOVAL</a></td><td align="right">3.0.1</td><td align="center" colspan="2">❌</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">tip-prod_usage-transitive/REMOVAL+ABANDONED</a>💀</td><td align="right">3.2.1</td><td align="center" colspan="2">❌</td></tr>
-    <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">tip-prod_usage-transitive/SAME_NOT_SEMVER</a></td><td align="right">dev-master#abcdefgh❗</td><td align="center" colspan="2">🟰</td></tr>
   </table>
 
 </details>
@@ -137,7 +138,7 @@
 ### Dev-only usage <sup>🧪</sup>
 
 <details>
-  <summary><sub><sup>🔹.🔹.🔻</sup></sub><sup>1</sup>    ❌<sup>2</sup>    <sub><sup>🔹.🔺.🔹</sup></sub><sup>2</sup>    ➕️<sup>1</sup>    🟰<sup>1</sup></summary>
+  <summary><sub><sup>🔹.🔹.🔻</sup></sub><sup>1</sup>    ❌<sup>2</sup>    <sub><sup>🔹.🔺.🔹</sup></sub><sup>2</sup>    ➕️<sup>1</sup></summary>
   <table>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">tip-dev_only_usage-requirement/SEMVER_MINOR_UPGRADE</a></td><td align="right">3.0.0</td><td align="center"><sub><sup>🔹.🔺.🔹</sup></sub></td><td align="right">3.1.0</td></tr>
     <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">tip-dev_only_usage-requirement/SEMVER_MINOR_UPGRADE+ABANDONED</a>💀</td><td align="right">3.0.1</td><td align="center"><sub><sup>🔹.🔺.🔹</sup></sub></td><td align="right">3.2.0</td></tr>
@@ -145,7 +146,6 @@
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">tip-dev_only_usage-transitive/SEMVER_PATCH_DOWNGRADE</a></td><td align="right">3.0.1</td><td align="center"><sub><sup>🔹.🔹.🔻</sup></sub></td><td align="right">3.0.0</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">tip-dev_only_usage-transitive/REMOVAL</a></td><td align="right">3.0.1</td><td align="center" colspan="2">❌</td></tr>
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">tip-dev_only_usage-transitive/REMOVAL+ABANDONED</a>💀</td><td align="right">3.2.1</td><td align="center" colspan="2">❌</td></tr>
-    <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">tip-dev_only_usage-transitive/SAME_NOT_SEMVER</a></td><td align="right">dev-master#abcdefgh❗</td><td align="center" colspan="2">🟰</td></tr>
   </table>
 
 </details>

@@ -92,18 +92,20 @@ func isCandidateForCautionSection(
 	//- UNKNOWN_UPDATE
 	//- SEMVER_MAJOR_DOWNGRADE
 	//- ADDITION__ABANDONED
+	//- ADDITION__NOT_SEMVER
 	//### Transitives
 	//## Dev-only usage
 	//### Requirements
 	//- UNKNOWN_UPDATE
 	//- SEMVER_MAJOR_DOWNGRADE
 	//- ADDITION__ABANDONED
+	//- ADDITION__NOT_SEMVER
 	//### Transitives
 	// -> process prod usage and dev-only usage the same way
 	return subCategoryType == requirementSubCategory &&
 		(itemType == unknownUpdateItem ||
 			itemType == semverMajorDowngradeItem ||
-			(itemType == additionItem && pkg.IsAbandoned()))
+			(itemType == additionItem && (pkg.IsAbandoned() || pkg.GetVersion().Semver == nil)))
 }
 
 func isCandidateForWarningSection(
@@ -116,31 +118,33 @@ func isCandidateForWarningSection(
 	//### Requirements
 	//- SEMVER_MAJOR_UPGRADE
 	//- SEMVER_MINOR_DOWNGRADE
-	//- ADDITION__NOT_SEMVER
+	//- SAME__NOT_SEMVER
 	//### Transitives
 	//- UNKNOWN_UPDATE
 	//- SEMVER_MAJOR_DOWNGRADE
 	//- ADDITION__ABANDONED
+	//- ADDITION__NOT_SEMVER
 	//## Dev-only usage
 	//### Requirements
 	//- SEMVER_MAJOR_UPGRADE
 	//- SEMVER_MINOR_DOWNGRADE
-	//- ADDITION__NOT_SEMVER
+	//- SAME__NOT_SEMVER
 	//### Transitives
 	//- UNKNOWN_UPDATE
 	//- SEMVER_MAJOR_DOWNGRADE
 	//- ADDITION__ABANDONED
+	//- ADDITION__NOT_SEMVER
 	// -> process prod usage and dev-only usage the same way
-	if subCategoryType == requirementSubCategory && ((itemType == semverMajorUpgradeItem ||
-		itemType == semverMinorDowngradeItem) ||
-		(itemType == additionItem && pkg.GetVersion().Semver == nil)) {
+	if subCategoryType == requirementSubCategory &&
+		((itemType == semverMajorUpgradeItem || itemType == semverMinorDowngradeItem) ||
+			(itemType == sameItem && pkg.GetVersion().Semver == nil)) {
 		return true
 	}
 
 	return subCategoryType == transitiveSubCategory &&
 		(itemType == unknownUpdateItem ||
 			itemType == semverMajorDowngradeItem ||
-			(itemType == additionItem && pkg.IsAbandoned()))
+			(itemType == additionItem && (pkg.IsAbandoned() || pkg.GetVersion().Semver == nil)))
 }
 
 func isCandidateForImportantSection(
@@ -153,30 +157,26 @@ func isCandidateForImportantSection(
 	//### Requirements
 	//- SEMVER_PATCH_DOWNGRADE
 	//- REMOVAL
-	//- SAME__NOT_SEMVER
 	//### Transitives
 	//- SEMVER_MAJOR_UPGRADE
 	//- SEMVER_MINOR_DOWNGRADE
-	//- ADDITION__NOT_SEMVER
+	//- SAME__NOT_SEMVER
 	//## Dev-only usage
 	//### Requirements
 	//- SEMVER_PATCH_DOWNGRADE
 	//- REMOVAL
-	//- SAME__NOT_SEMVER
 	//### Transitives
 	//- SEMVER_MAJOR_UPGRADE
 	//- SEMVER_MINOR_DOWNGRADE
-	//- ADDITION__NOT_SEMVER
+	//- SAME__NOT_SEMVER
 	// -> process prod usage and dev-only usage the same way
-	if subCategoryType == requirementSubCategory &&
-		((itemType == semverPatchDowngradeItem || itemType == removalItem) ||
-			(itemType == sameItem && pkg.GetVersion().Semver == nil)) {
+	if subCategoryType == requirementSubCategory && (itemType == semverPatchDowngradeItem || itemType == removalItem) {
 		return true
 	}
 
 	return subCategoryType == transitiveSubCategory &&
 		((itemType == semverMajorUpgradeItem || itemType == semverMinorDowngradeItem) ||
-			(itemType == additionItem && pkg.GetVersion().Semver == nil))
+			(itemType == sameItem && pkg.GetVersion().Semver == nil))
 }
 
 func isCandidateForTipSection(
@@ -192,7 +192,6 @@ func isCandidateForTipSection(
 	//### Transitives
 	//- SEMVER_PATCH_DOWNGRADE
 	//- REMOVAL
-	//- SAME__NOT_SEMVER
 	//## Dev-only usage
 	//### Requirements
 	//- SEMVER_MINOR_UPGRADE
@@ -200,15 +199,12 @@ func isCandidateForTipSection(
 	//### Transitives
 	//- SEMVER_PATCH_DOWNGRADE
 	//- REMOVAL
-	//- SAME__NOT_SEMVER
 	// -> process prod usage and dev-only usage the same way
 	if subCategoryType == requirementSubCategory && (itemType == semverMinorUpgradeItem || itemType == additionItem) {
 		return true
 	}
 
-	return subCategoryType == transitiveSubCategory &&
-		((itemType == semverPatchDowngradeItem || itemType == removalItem) ||
-			(itemType == sameItem && pkg.GetVersion().Semver == nil))
+	return subCategoryType == transitiveSubCategory && (itemType == semverPatchDowngradeItem || itemType == removalItem)
 }
 
 func getMarkdownCategoryType(change *shared.PackageChange) (markdownCategory, markdownSubCategory) {
