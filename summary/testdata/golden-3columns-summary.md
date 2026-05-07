@@ -1,5 +1,5 @@
 
-## Hazardous changes<br/><sub><sup>☣️ Changes that are likely unexpected and/or likely to cause trouble</sub></sup>
+## Hazardous changes<br/><sub><sup>☣️ Changes that are unlikely expected and/or likely to cause trouble</sub></sup>
 
 
 ### Production usage <sup>🏭</sup>
@@ -24,7 +24,7 @@
 </details>
 <hr/>
 
-## Error-prone changes<br/><sub><sup>⚠️ Changes that may not cause trouble in production but are likely unexpected and/or prone to cause trouble</sub></sup>
+## Error-prone changes<br/><sub><sup>⚠️ Changes that are likely unexpected and/or prone to cause trouble</sub></sup>
 
 
 ### Production usage <sup>🏭</sup>
@@ -48,7 +48,7 @@
 </details>
 <hr/>
 
-## Noteworthy changes<br/><sub><sup>🕵️ Changes unlikely to cause production issues, but worth noting if problems arise</sub></sup>
+## Noteworthy changes<br/><sub><sup>🕵️ Changes that are unlikely to cause production issue, but worth noting if problems arise</sub></sup>
 
 
 ### Production usage <sup>🏭</sup>
@@ -76,7 +76,7 @@
 </details>
 <hr/>
 
-## Pretty safe changes<br/><sub><sup>👀 Changes that are unlikely to cause trouble in production</sub></sup>
+## Pretty safe changes<br/><sub><sup>👀 Changes that are unlikely to cause trouble</sub></sup>
 
 
 ### Production usage <sup>🏭</sup>
@@ -147,6 +147,13 @@
 <details>
   <summary>Captions</summary>
 
+  #### Versions
+
+  <table>
+    <tr><td align="center">_VERSION_❗</td><td align="left">Version is not semver compliant.<br/>Usually a commit ref or branch.</td></tr>
+  </table>
+
+
   #### Operations
 
   <table>
@@ -171,7 +178,7 @@
     <tr><td align="center">🗄</td><td align="left">Package is explicitly required for production usage</td></tr>
     <tr><td align="center">🧰</td><td align="left">Package is explicitly required for dev-only usage</td></tr>
     <tr><td align="center">🔗️</td><td align="left">Transitive dependency package</td></tr>
-    <tr><td align="center">💀</td><td align="left">Package is declared abandoned. You should replace it.</td></tr>
+    <tr><td align="center">💀</td><td align="left">Package is declared abandoned.<br/>You should replace it.</td></tr>
   </table>
 
 

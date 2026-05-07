@@ -117,7 +117,7 @@ func Test_buildSectionCounters(t *testing.T) {
 		t.Run(testCase.name, func(t *testing.T) {
 			t.Parallel()
 
-			current := buildSectionCounters(testCase.categories)
+			current := buildItemsCounters(testCase.categories)
 
 			for key, val := range testCase.expected {
 				currentVal, currentExists := current[key]
@@ -217,7 +217,7 @@ var (
 			},
 		},
 	}
-	_testBuildSectionCountersBaseExpectations = map[markdownItem]*multiCounter{
+	_testBuildSectionCountersBaseExpectations = map[markdownItem]*itemsCounter{
 		additionItem:             {title: "➕️", count: 1},
 		removalItem:              {title: "❌", count: 2},
 		sameItem:                 {title: "🟰", count: 3},
@@ -244,7 +244,7 @@ var (
 		},
 	}
 	//nolint:exhaustive // Meaningless in the test context
-	_testBuildSectionCountersSemverExtraUpdateFallbackExpectations = map[markdownItem]*multiCounter{
+	_testBuildSectionCountersSemverExtraUpdateFallbackExpectations = map[markdownItem]*itemsCounter{
 		unknownUpdateItem: {title: "<sub><sup>🔹.🔹.🔹❓</sup></sub>", count: 5},
 	}
 )

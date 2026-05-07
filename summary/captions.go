@@ -17,8 +17,16 @@ func processSummaryCaption(builder *markdown.Builder) {
 	builder.Details("Captions", createCaptionContent, false, 0)
 }
 
-func createCaptionContent(builder *markdown.Builder, indentDepth int) {
-	operationHelpList := simpleSymbolHelpList{
+var (
+	//nolint:gochecknoglobals // Just to avoid multiple creation at runtime
+	versionHelpList = simpleSymbolHelpList{
+		{
+			symbol:  "<td align=\"center\">_VERSION_❗</td>",
+			message: "<td align=\"left\">Version is not semver compliant.<br/>Usually a commit ref or branch.</td>",
+		},
+	}
+	//nolint:gochecknoglobals // Just to avoid multiple creation at runtime
+	operationHelpList = simpleSymbolHelpList{
 		{symbol: "<td align=\"center\">❓</td>", message: "<td align=\"left\">Unknown update</td>"},
 		{symbol: "<td align=\"center\">❌</td>", message: "<td align=\"left\">Removed package</td>"},
 		{symbol: "<td align=\"center\">➕️</td>", message: "<td align=\"left\">Added package</td>"},
@@ -35,7 +43,8 @@ func createCaptionContent(builder *markdown.Builder, indentDepth int) {
 		},
 		{symbol: "<td align=\"center\">❔</td>", message: "<td align=\"left\">Unmanaged operation</td>"},
 	}
-	pkgTypeHelpList := simpleSymbolHelpList{
+	//nolint:gochecknoglobals // Just to avoid multiple creation at runtime
+	pkgTypeHelpList = simpleSymbolHelpList{
 		{
 			symbol:  "<td align=\"center\">🗄</td>",
 			message: "<td align=\"left\">Package is explicitly required for production usage</td>",
@@ -47,22 +56,26 @@ func createCaptionContent(builder *markdown.Builder, indentDepth int) {
 		{symbol: "<td align=\"center\">🔗️</td>", message: "<td align=\"left\">Transitive dependency package</td>"},
 		{
 			symbol:  "<td align=\"center\">💀</td>",
-			message: "<td align=\"left\">Package is declared abandoned. You should replace it.</td>",
+			message: "<td align=\"left\">Package is declared abandoned.<br/>You should replace it.</td>",
 		},
 	}
-	prodDevOnlyHelpList := simpleSymbolHelpList{
+	//nolint:gochecknoglobals // Just to avoid multiple creation at runtime
+	prodDevOnlyHelpList = simpleSymbolHelpList{
 		{symbol: "<td align=\"center\">🏭</td>", message: "<td align=\"left\">Package is available in <b>production</b></td>"},
 		{
 			symbol:  "<td align=\"center\">🧪</td>",
 			message: "<td align=\"left\">Package is only available for <b>dev-only</b>, it won't exist in production</td>",
 		},
 	}
-	// Operations
-	createCaptionSection(builder, "Operations", operationHelpList, captionHeaderLevel, indentDepth)
-	// Package types
-	createCaptionSection(builder, "Package types", pkgTypeHelpList, captionHeaderLevel, indentDepth)
+)
+
+func createCaptionContent(builder *markdown.Builder, indentDepth int) {
+	createCaptionSection(builder, "Versions", versionHelpList, indentDepth)
+	createCaptionSection(builder, "Operations", operationHelpList, indentDepth)
+	createCaptionSection(builder, "Package types", pkgTypeHelpList, indentDepth)
+
 	// Prod vs dev-only
-	createCaptionSection(builder, "Production vs Dev-only usage", prodDevOnlyHelpList, captionHeaderLevel, indentDepth)
+	createCaptionSection(builder, "Production vs Dev-only usage", prodDevOnlyHelpList, indentDepth)
 	builder.WriteLine("There is a difference between **Usage** and **Requirement**.", indentDepth)
 	builder.WriteEol()
 	builder.WriteLine("- A **Requirement** can be defined as dev-only or not.", indentDepth)
@@ -85,10 +98,9 @@ func createCaptionSection(
 	builder *markdown.Builder,
 	section string,
 	helpList simpleSymbolHelpList,
-	level int,
 	indentDepth int,
 ) {
-	builder.Header(section, level, indentDepth)
+	builder.Header(section, captionHeaderLevel, indentDepth)
 	builder.HTMLTable(
 		func(yield func([]string) bool) {
 			for _, helpData := range helpList {

@@ -72,14 +72,19 @@ func processCategory(
 			}
 
 			if len(noChangePkgList) > 0 {
-				builder.Details(
-					"Unchanged packages 🟰<sup>"+strconv.Itoa(len(noChangePkgList))+"</sup>",
-					func(builder *markdown.Builder, indentDepth int) {
-						processPkgList(builder, noChangePkgList, versionOnlyPkgRowMode, indentDepth)
-					},
-					false, // Always closed by default (goal is to avoid polluting other changes)
-					indentDepth,
-				)
+				if !openedDetails && len(otherChangePkgList) == 0 {
+					// Remove closed details if there is only packages without change
+					processPkgList(builder, noChangePkgList, versionOnlyPkgRowMode, indentDepth)
+				} else {
+					builder.Details(
+						"Unchanged packages 🟰<sup>"+strconv.Itoa(len(noChangePkgList))+"</sup>",
+						func(builder *markdown.Builder, indentDepth int) {
+							processPkgList(builder, noChangePkgList, versionOnlyPkgRowMode, indentDepth)
+						},
+						false,
+						indentDepth,
+					)
+				}
 			}
 		},
 		openedDetails,
@@ -166,7 +171,12 @@ func buildOperationHTMLCell(operation shared.Operation, colspan int) string {
 }
 
 func buildPackageVersionHTMLCell(version shared.PkgVersion) string {
-	return "<td align=\"right\">" + version.Label + "</td>"
+	label := version.Label
+	if version.Semver == nil {
+		label += "❗"
+	}
+
+	return "<td align=\"right\">" + label + "</td>"
 }
 
 func buildPackageNameHTMLCell(pkg shared.PkgWrapper) string {

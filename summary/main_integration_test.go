@@ -29,6 +29,11 @@ func TestIntegration_GenerateForChanges(t *testing.T) {
 			changes:    _integrationOnlyThreeColumnsNeeded,
 			goldenFile: "./testdata/golden-3columns-summary.md",
 		},
+		{
+			name:       "Special case - force opened/closed details",
+			changes:    _integrationForceOpenedClosed,
+			goldenFile: "./testdata/golden-force_opened_details.md",
+		},
 	}
 	for _, testCase := range tests {
 		t.Run(testCase.name, func(t *testing.T) {
@@ -62,7 +67,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"caution-dev_only_usage-requirement/SEMVER_MAJOR_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -74,7 +79,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MAJOR"},
+		Operation:       shared_test.DowngradeMajorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"caution-dev_only_usage-requirement/UNKNOWN_UPDATE": {
@@ -87,7 +92,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "UNKNOWN"},
+		Operation:       shared_test.UnknownUpdateOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168", Semver: nil}, //nolint:lll // Meaningless for tests !
 	},
 	"caution-dev_only_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA": {
@@ -100,7 +105,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "EXTRA"},
+		Operation:       shared_test.SemverExtraUpdateOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: "+beta"}}, //nolint:lll // Meaningless for tests !
 	},
 	"caution-prod_usage-requirement+dev_req/ADDITION+ABANDONED": {
@@ -113,7 +118,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"caution-prod_usage-requirement+dev_req/SEMVER_MAJOR_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -125,7 +130,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MAJOR"},
+		Operation:       shared_test.DowngradeMajorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE": {
@@ -138,7 +143,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "UNKNOWN"},
+		Operation:       shared_test.UnknownUpdateOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168", Semver: nil}, //nolint:lll // Meaningless for tests !
 	},
 	"caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE+SEMVER_EXTRA": {
@@ -151,7 +156,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "EXTRA"},
+		Operation:       shared_test.SemverExtraUpdateOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: "+beta"}}, //nolint:lll // Meaningless for tests !
 	},
 	"caution-prod_usage-requirement/ADDITION+ABANDONED": {
@@ -164,7 +169,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"caution-prod_usage-requirement/SEMVER_MAJOR_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -176,7 +181,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MAJOR"},
+		Operation:       shared_test.DowngradeMajorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"caution-prod_usage-requirement/UNKNOWN_UPDATE": {
@@ -189,7 +194,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "UNKNOWN"},
+		Operation:       shared_test.UnknownUpdateOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168", Semver: nil}, //nolint:lll // Meaningless for tests !
 	},
 	"caution-prod_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA": {
@@ -202,7 +207,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "EXTRA"},
+		Operation:       shared_test.SemverExtraUpdateOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: "+beta"}}, //nolint:lll // Meaningless for tests !
 	},
 	"warning-dev_only_usage-requirement/SEMVER_MAJOR_UPGRADE": {
@@ -215,8 +220,20 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MAJOR"},
+		Operation:       shared_test.UpgradeMajorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 3, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+	},
+	"warning-dev_only_usage-requirement/ADDITION_NOT_SEMVER": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "warning-dev_only_usage-requirement/ADDITION_NOT_SEMVER",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            true,
+			RootRequirement:    false,
+			RootDevRequirement: true,
+		},
+		Operation: shared_test.AdditionOp,
 	},
 	"warning-dev_only_usage-requirement/SEMVER_MINOR_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -228,7 +245,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MINOR"},
+		Operation:       shared_test.DowngradeMinorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"warning-dev_only_usage-transitive/ADDITION+ABANDONED": {
@@ -241,7 +258,19 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
+	},
+	"warning-dev_only_usage-transitive/ADDITION_NOT_SEMVER": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "warning-dev_only_usage-transitive/ADDITION_NOT_SEMVER",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            true,
+			RootRequirement:    false,
+			RootDevRequirement: false,
+		},
+		Operation: shared_test.AdditionOp,
 	},
 	"warning-dev_only_usage-transitive/SEMVER_MAJOR_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -253,7 +282,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MAJOR"},
+		Operation:       shared_test.DowngradeMajorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"warning-dev_only_usage-transitive/UNKNOWN_UPDATE": {
@@ -266,7 +295,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "UNKNOWN"},
+		Operation:       shared_test.UnknownUpdateOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168", Semver: nil}, //nolint:lll // Meaningless for tests !,
 	},
 	"warning-dev_only_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA": {
@@ -279,7 +308,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "EXTRA"},
+		Operation:       shared_test.SemverExtraUpdateOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: "+beta"}}, //nolint:lll // Meaningless for tests !
 	},
 	"warning-prod_usage-requirement+dev_req/SEMVER_MAJOR_UPGRADE": {
@@ -292,7 +321,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MAJOR"},
+		Operation:       shared_test.UpgradeMajorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 3, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"warning-prod_usage-requirement+dev_req/SEMVER_MINOR_DOWNGRADE": {
@@ -305,7 +334,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MINOR"},
+		Operation:       shared_test.DowngradeMinorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"warning-prod_usage-requirement/SEMVER_MAJOR_UPGRADE": {
@@ -318,7 +347,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MAJOR"},
+		Operation:       shared_test.UpgradeMajorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 3, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"warning-prod_usage-requirement/SEMVER_MINOR_DOWNGRADE": {
@@ -331,8 +360,34 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MINOR"},
+		Operation:       shared_test.DowngradeMinorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+	},
+	"warning-prod_usage-requirement/ADDITION_NOT_SEMVER": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "warning-prod_usage-requirement/ADDITION_NOT_SEMVER",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            false,
+			RootRequirement:    true,
+			RootDevRequirement: false,
+		},
+		Operation:       shared_test.AdditionOp,
+		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 3, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+	},
+	"warning-prod_usage-requirement+dev_req/ADDITION_NOT_SEMVER": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "warning-prod_usage-requirement+dev_req/ADDITION_NOT_SEMVER",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            false,
+			RootRequirement:    false,
+			RootDevRequirement: true,
+		},
+		Operation:       shared_test.AdditionOp,
+		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 3, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"warning-prod_usage-transitive/ADDITION+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -344,7 +399,19 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
+	},
+	"warning-prod_usage-transitive/ADDITION_NOT_SEMVER": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "warning-prod_usage-transitive/ADDITION_NOT_SEMVER",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            false,
+			RootRequirement:    false,
+			RootDevRequirement: false,
+		},
+		Operation: shared_test.AdditionOp,
 	},
 	"warning-prod_usage-transitive/SEMVER_MAJOR_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -356,7 +423,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MAJOR"},
+		Operation:       shared_test.DowngradeMajorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"warning-prod_usage-transitive/UNKNOWN_UPDATE": {
@@ -369,7 +436,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "UNKNOWN"},
+		Operation:       shared_test.UnknownUpdateOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168", Semver: nil}, //nolint:lll // Meaningless for tests !
 	},
 	"warning-prod_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA": {
@@ -382,7 +449,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UNKNOWN_UPDATE", SemverType: "EXTRA"},
+		Operation:       shared_test.SemverExtraUpdateOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: "+beta"}}, //nolint:lll // Meaningless for tests !
 	},
 	"important-dev_only_usage-requirement/REMOVAL": {
@@ -395,7 +462,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"important-dev_only_usage-requirement/REMOVAL+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -407,7 +474,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"important-dev_only_usage-requirement/SEMVER_PATCH_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -419,8 +486,20 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "PATCH"},
+		Operation:       shared_test.DowngradePatchOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+	},
+	"important-dev_only_usage-requirement/SAME_NOT_SEMVER": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "important-dev_only_usage-requirement/SAME_NOT_SEMVER",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            true,
+			RootRequirement:    false,
+			RootDevRequirement: true,
+		},
+		Operation: shared_test.SameOp,
 	},
 	"important-dev_only_usage-transitive/SEMVER_MAJOR_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -432,7 +511,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MAJOR"},
+		Operation:       shared_test.UpgradeMajorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 3, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"important-dev_only_usage-transitive/SEMVER_MINOR_DOWNGRADE": {
@@ -445,7 +524,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MINOR"},
+		Operation:       shared_test.DowngradeMinorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"important-prod_usage-requirement+dev_req/REMOVAL": {
@@ -458,7 +537,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"important-prod_usage-requirement+dev_req/REMOVAL+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -470,7 +549,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"important-prod_usage-requirement+dev_req/SEMVER_PATCH_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -482,7 +561,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "PATCH"},
+		Operation:       shared_test.DowngradePatchOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"important-prod_usage-requirement/REMOVAL": {
@@ -495,7 +574,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"important-prod_usage-requirement/REMOVAL+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -507,7 +586,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"important-prod_usage-requirement/SEMVER_PATCH_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -519,8 +598,32 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "PATCH"},
+		Operation:       shared_test.DowngradePatchOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+	},
+	"important-prod_usage-requirement/SAME_NOT_SEMVER": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "important-prod_usage-requirement/SAME_NOT_SEMVER",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            false,
+			RootRequirement:    false,
+			RootDevRequirement: true,
+		},
+		Operation: shared_test.SameOp,
+	},
+	"important-prod_usage-requirement+dev_req/SAME_NOT_SEMVER": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "important-prod_usage-requirement+dev_req/SAME_NOT_SEMVER",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            false,
+			RootRequirement:    true,
+			RootDevRequirement: false,
+		},
+		Operation: shared_test.SameOp,
 	},
 	"important-prod_usage-transitive/SEMVER_MAJOR_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -532,7 +635,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MAJOR"},
+		Operation:       shared_test.UpgradeMajorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 3, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"important-prod_usage-transitive/SEMVER_MINOR_DOWNGRADE": {
@@ -545,7 +648,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "MINOR"},
+		Operation:       shared_test.DowngradeMinorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"tip-dev_only_usage-requirement/ADDITION": {
@@ -558,7 +661,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"tip-dev_only_usage-requirement/SEMVER_MINOR_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -570,7 +673,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
+		Operation:       shared_test.UpgradeMinorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"tip-dev_only_usage-requirement/SEMVER_MINOR_UPGRADE+ABANDONED": {
@@ -583,7 +686,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
+		Operation:       shared_test.UpgradeMinorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"tip-dev_only_usage-transitive/REMOVAL": {
@@ -596,7 +699,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"tip-dev_only_usage-transitive/REMOVAL+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -608,7 +711,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"tip-dev_only_usage-transitive/SEMVER_PATCH_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -620,8 +723,20 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "PATCH"},
+		Operation:       shared_test.DowngradePatchOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+	},
+	"tip-dev_only_usage-transitive/SAME_NOT_SEMVER": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "tip-dev_only_usage-transitive/SAME_NOT_SEMVER",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            true,
+			RootRequirement:    false,
+			RootDevRequirement: false,
+		},
+		Operation: shared_test.SameOp,
 	},
 	"tip-prod_usage-requirement+dev_req/ADDITION": {
 		Package: &shared_test.TestPkgWrapper{
@@ -633,7 +748,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"tip-prod_usage-requirement+dev_req/SEMVER_MINOR_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -645,7 +760,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
+		Operation:       shared_test.UpgradeMinorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"tip-prod_usage-requirement+dev_req/SEMVER_MINOR_UPGRADE+ABANDONED": {
@@ -658,7 +773,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
+		Operation:       shared_test.UpgradeMinorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"tip-prod_usage-requirement/ADDITION": {
@@ -671,7 +786,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"tip-prod_usage-requirement/SEMVER_MINOR_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -683,7 +798,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
+		Operation:       shared_test.UpgradeMinorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"tip-prod_usage-requirement/SEMVER_MINOR_UPGRADE+ABANDONED": {
@@ -696,7 +811,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
+		Operation:       shared_test.UpgradeMinorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"tip-prod_usage-transitive/REMOVAL": {
@@ -709,7 +824,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"tip-prod_usage-transitive/REMOVAL+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -721,7 +836,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"tip-prod_usage-transitive/SEMVER_PATCH_DOWNGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -733,8 +848,21 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "DOWNGRADE", SemverType: "PATCH"},
+		Operation:       shared_test.DowngradePatchOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+	},
+	"tip-prod_usage-transitive/SAME_NOT_SEMVER": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "tip-prod_usage-transitive/SAME_NOT_SEMVER",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            false,
+			RootRequirement:    false,
+			RootDevRequirement: false,
+		},
+		Operation:       shared_test.SameOp,
+		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"note-dev_only_usage-requirement/SAME": {
 		Package: &shared_test.TestPkgWrapper{
@@ -746,7 +874,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+		Operation: shared_test.SameOp,
 	},
 	"note-dev_only_usage-requirement/SAME+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -758,7 +886,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+		Operation: shared_test.SameOp,
 	},
 	"note-dev_only_usage-requirement/SEMVER_PATCH_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -770,7 +898,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "PATCH"},
+		Operation:       shared_test.UpgradePatchOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"note-dev_only_usage-transitive/ADDITION": {
@@ -783,7 +911,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"note-dev_only_usage-transitive/SAME": {
 		Package: &shared_test.TestPkgWrapper{
@@ -795,7 +923,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+		Operation: shared_test.SameOp,
 	},
 	"note-dev_only_usage-transitive/SAME+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -807,7 +935,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+		Operation: shared_test.SameOp,
 	},
 	"note-dev_only_usage-transitive/SEMVER_MINOR_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -819,7 +947,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
+		Operation:       shared_test.UpgradeMinorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"note-dev_only_usage-transitive/SEMVER_MINOR_UPGRADE+ABANDONED": {
@@ -832,7 +960,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
+		Operation:       shared_test.UpgradeMinorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"note-dev_only_usage-transitive/SEMVER_PATCH_UPGRADE": {
@@ -845,7 +973,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "PATCH"},
+		Operation:       shared_test.UpgradePatchOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"note-prod_usage-requirement+dev_req/SAME": {
@@ -858,7 +986,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+		Operation: shared_test.SameOp,
 	},
 	"note-prod_usage-requirement+dev_req/SAME+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -870,7 +998,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+		Operation: shared_test.SameOp,
 	},
 	"note-prod_usage-requirement+dev_req/SEMVER_PATCH_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -882,7 +1010,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "PATCH"},
+		Operation:       shared_test.UpgradePatchOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"note-prod_usage-requirement/SAME": {
@@ -895,7 +1023,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+		Operation: shared_test.SameOp,
 	},
 	"note-prod_usage-requirement/SAME+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -907,7 +1035,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+		Operation: shared_test.SameOp,
 	},
 	"note-prod_usage-requirement/SEMVER_PATCH_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -919,7 +1047,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "PATCH"},
+		Operation:       shared_test.UpgradePatchOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"note-prod_usage-transitive/ADDITION": {
@@ -932,7 +1060,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"note-prod_usage-transitive/SAME": {
 		Package: &shared_test.TestPkgWrapper{
@@ -944,7 +1072,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+		Operation: shared_test.SameOp,
 	},
 	"note-prod_usage-transitive/SAME+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -956,7 +1084,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+		Operation: shared_test.SameOp,
 	},
 	"note-prod_usage-transitive/SEMVER_MINOR_UPGRADE": {
 		Package: &shared_test.TestPkgWrapper{
@@ -968,7 +1096,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
+		Operation:       shared_test.UpgradeMinorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"note-prod_usage-transitive/SEMVER_MINOR_UPGRADE+ABANDONED": {
@@ -981,7 +1109,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "MINOR"},
+		Operation:       shared_test.UpgradeMinorOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 	"note-prod_usage-transitive/SEMVER_PATCH_UPGRADE": {
@@ -994,7 +1122,7 @@ var _integrationFullChanges = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared.Operation{Name: "UPGRADE", SemverType: "PATCH"},
+		Operation:       shared_test.UpgradePatchOp,
 		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 	},
 }
@@ -1011,7 +1139,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"caution-prod_usage-requirement+dev_req/ADDITION+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1023,7 +1151,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"caution-prod_usage-requirement/ADDITION+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1035,7 +1163,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"warning-dev_only_usage-transitive/ADDITION+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1047,7 +1175,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"warning-prod_usage-transitive/ADDITION+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1059,7 +1187,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"important-dev_only_usage-requirement/REMOVAL": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1071,7 +1199,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"important-dev_only_usage-requirement/REMOVAL+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1083,7 +1211,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"important-prod_usage-requirement+dev_req/REMOVAL": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1095,7 +1223,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"important-prod_usage-requirement+dev_req/REMOVAL+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1107,7 +1235,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"important-prod_usage-requirement/REMOVAL": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1119,7 +1247,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"important-prod_usage-requirement/REMOVAL+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1131,7 +1259,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"tip-dev_only_usage-requirement/ADDITION": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1143,7 +1271,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"tip-dev_only_usage-transitive/REMOVAL": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1155,7 +1283,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"tip-dev_only_usage-transitive/REMOVAL+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1167,7 +1295,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"tip-prod_usage-requirement+dev_req/ADDITION": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1179,7 +1307,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"tip-prod_usage-requirement/ADDITION": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1191,7 +1319,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"tip-prod_usage-transitive/REMOVAL": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1203,7 +1331,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"tip-prod_usage-transitive/REMOVAL+ABANDONED": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1215,7 +1343,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "REMOVAL", SemverType: "NONE"},
+		Operation: shared_test.RemovalOp,
 	},
 	"note-dev_only_usage-requirement/SAME": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1227,7 +1355,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+		Operation: shared_test.SameOp,
 	},
 	"note-dev_only_usage-transitive/ADDITION": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1239,7 +1367,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
 	},
 	"note-prod_usage-requirement/SAME": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1251,7 +1379,7 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+		Operation: shared_test.SameOp,
 	},
 	"note-prod_usage-transitive/ADDITION": {
 		Package: &shared_test.TestPkgWrapper{
@@ -1263,6 +1391,70 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+		Operation: shared_test.AdditionOp,
+	},
+}
+
+//nolint:gochecknoglobals // Just to keep it outside the function
+var _integrationForceOpenedClosed = shared.DiffMap{
+	"note-dev_only_usage-requirement/SAME": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "note-dev_only_usage-requirement/SAME",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            true,
+			RootRequirement:    false,
+			RootDevRequirement: true,
+		},
+		Operation: shared_test.SameOp,
+	},
+	"note-dev_only_usage-requirement/SAME-2": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "note-dev_only_usage-requirement/SAME-2",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            true,
+			RootRequirement:    false,
+			RootDevRequirement: true,
+		},
+		Operation: shared_test.SameOp,
+	},
+	"note-dev_only_usage-requirement/SAME-3": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "note-dev_only_usage-requirement/SAME-3",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            true,
+			RootRequirement:    false,
+			RootDevRequirement: true,
+		},
+		Operation: shared_test.SameOp,
+	},
+	"note-dev_only_usage-requirement/SAME-4": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "note-dev_only_usage-requirement/SAME-4",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            true,
+			RootRequirement:    false,
+			RootDevRequirement: true,
+		},
+		Operation: shared_test.SameOp,
+	},
+	"note-prod_usage-requirement/SAME": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "note-prod_usage-requirement/SAME",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            false,
+			RootRequirement:    true,
+			RootDevRequirement: false,
+		},
+		Operation: shared_test.SameOp,
 	},
 }

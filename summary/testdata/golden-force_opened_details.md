@@ -1,14 +1,13 @@
 
-## Hazardous changes<br/><sub><sup>☣️ Changes that are unlikely expected and/or likely to cause trouble</sub></sup>
+## Note<br/><sub><sup>ℹ️ All remaining changes, mostly for your information</sub></sup>
 
 
 ### Production usage <sup>🏭</sup>
 
-<details open>
-  <summary><sub><sup>🔹.🔹.🔹❓</sup></sub><sup>2</sup></summary>
+<details>
+  <summary>🟰<sup>1</sup></summary>
   <table>
-    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE+SEMVER_EXTRA</a></td><td align="right">2.9.2+alpha</td><td align="center"><sub><sup>🔹.🔹.🔹❓</sup></sub></td><td align="right">2.9.2+beta</td></tr>
-    <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">caution-prod_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA</a></td><td align="right">2.9.2+alpha</td><td align="center"><sub><sup>🔹.🔹.🔹❓</sup></sub></td><td align="right">2.9.2+beta</td></tr>
+    <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">note-prod_usage-requirement/SAME</a></td><td align="right">3.1.1</td></tr>
   </table>
 
 </details>
@@ -16,33 +15,12 @@
 ### Dev-only usage <sup>🧪</sup>
 
 <details>
-  <summary><sub><sup>🔹.🔹.🔹❓</sup></sub><sup>1</sup></summary>
+  <summary>🟰<sup>4</sup></summary>
   <table>
-    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">caution-dev_only_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA</a></td><td align="right">2.9.2+alpha</td><td align="center"><sub><sup>🔹.🔹.🔹❓</sup></sub></td><td align="right">2.9.2+beta</td></tr>
-  </table>
-
-</details>
-<hr/>
-
-## Error-prone changes<br/><sub><sup>⚠️ Changes that are likely unexpected and/or prone to cause trouble</sub></sup>
-
-
-### Production usage <sup>🏭</sup>
-
-<details open>
-  <summary><sub><sup>🔹.🔹.🔹❓</sup></sub><sup>1</sup></summary>
-  <table>
-    <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-prod_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA</a></td><td align="right">2.9.2+alpha</td><td align="center"><sub><sup>🔹.🔹.🔹❓</sup></sub></td><td align="right">2.9.2+beta</td></tr>
-  </table>
-
-</details>
-
-### Dev-only usage <sup>🧪</sup>
-
-<details>
-  <summary><sub><sup>🔹.🔹.🔹❓</sup></sub><sup>1</sup></summary>
-  <table>
-    <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">warning-dev_only_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA</a></td><td align="right">2.9.2+alpha</td><td align="center"><sub><sup>🔹.🔹.🔹❓</sup></sub></td><td align="right">2.9.2+beta</td></tr>
+    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">note-dev_only_usage-requirement/SAME</a></td><td align="right">3.1.1</td></tr>
+    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">note-dev_only_usage-requirement/SAME-2</a></td><td align="right">3.1.1</td></tr>
+    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">note-dev_only_usage-requirement/SAME-3</a></td><td align="right">3.1.1</td></tr>
+    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">note-dev_only_usage-requirement/SAME-4</a></td><td align="right">3.1.1</td></tr>
   </table>
 
 </details>
@@ -51,6 +29,13 @@
 
 <details>
   <summary>Captions</summary>
+
+  #### Versions
+
+  <table>
+    <tr><td align="center">_VERSION_❗</td><td align="left">Version is not semver compliant.<br/>Usually a commit ref or branch.</td></tr>
+  </table>
+
 
   #### Operations
 
@@ -76,7 +61,7 @@
     <tr><td align="center">🗄</td><td align="left">Package is explicitly required for production usage</td></tr>
     <tr><td align="center">🧰</td><td align="left">Package is explicitly required for dev-only usage</td></tr>
     <tr><td align="center">🔗️</td><td align="left">Transitive dependency package</td></tr>
-    <tr><td align="center">💀</td><td align="left">Package is declared abandoned. You should replace it.</td></tr>
+    <tr><td align="center">💀</td><td align="left">Package is declared abandoned.<br/>You should replace it.</td></tr>
   </table>
 
 

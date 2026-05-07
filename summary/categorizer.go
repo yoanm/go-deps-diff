@@ -10,7 +10,7 @@ func buildSectionsMap(changes shared.DiffMap) sectionsMap {
 	for _, change := range changes {
 		categoryType, subCategoryType := getMarkdownCategoryType(change)
 		itemType := getMarkdownItemType(change)
-		sectionType := getMarkdownSectionType(subCategoryType, itemType, change.Package.IsAbandoned())
+		sectionType := getMarkdownSectionType(subCategoryType, itemType, change.Package)
 
 		switch {
 		case list[sectionType] == nil:
@@ -43,14 +43,14 @@ func buildSectionsMap(changes shared.DiffMap) sectionsMap {
 func getMarkdownSectionType(
 	subCategoryType markdownSubCategory,
 	itemType markdownItem,
-	isAbandoned bool,
+	pkg shared.PkgWrapper,
 ) markdownSection {
 	switch {
-	case isCandidateForCautionSection(subCategoryType, itemType, isAbandoned):
+	case isCandidateForCautionSection(subCategoryType, itemType, pkg):
 		return cautionSection
-	case isCandidateForWarningSection(subCategoryType, itemType, isAbandoned):
+	case isCandidateForWarningSection(subCategoryType, itemType, pkg):
 		return warningSection
-	case isCandidateForImportantSection(subCategoryType, itemType):
+	case isCandidateForImportantSection(subCategoryType, itemType, pkg):
 		return importantSection
 	case isCandidateForTipSection(subCategoryType, itemType):
 		return tipSection
@@ -81,58 +81,77 @@ func getMarkdownSectionType(
 	return noteSection
 }
 
-func isCandidateForCautionSection(subCategoryType markdownSubCategory, itemType markdownItem, isAbandoned bool) bool {
+func isCandidateForCautionSection(
+	subCategoryType markdownSubCategory,
+	itemType markdownItem,
+	pkg shared.PkgWrapper,
+) bool {
 	//# Caution
 	//## Production usage
 	//### Requirements
 	//- UNKNOWN_UPDATE
 	//- SEMVER_MAJOR_DOWNGRADE
 	//- ADDITION__ABANDONED
+	//- ADDITION__NOT_SEMVER
 	//### Transitives
 	//## Dev-only usage
 	//### Requirements
 	//- UNKNOWN_UPDATE
 	//- SEMVER_MAJOR_DOWNGRADE
 	//- ADDITION__ABANDONED
+	//- ADDITION__NOT_SEMVER
 	//### Transitives
 	// -> process prod usage and dev-only usage the same way
 	return subCategoryType == requirementSubCategory &&
 		(itemType == unknownUpdateItem ||
 			itemType == semverMajorDowngradeItem ||
-			(itemType == additionItem && isAbandoned))
+			(itemType == additionItem && (pkg.IsAbandoned() || pkg.GetVersion().Semver == nil)))
 }
 
-func isCandidateForWarningSection(subCategoryType markdownSubCategory, itemType markdownItem, isAbandoned bool) bool {
+func isCandidateForWarningSection( //nolint:cyclop // 11 vs 10 allowed but easier to maintain that way
+	subCategoryType markdownSubCategory,
+	itemType markdownItem,
+	pkg shared.PkgWrapper,
+) bool {
 	//# Warning
 	//## Production usage
 	//### Requirements
 	//- SEMVER_MAJOR_UPGRADE
 	//- SEMVER_MINOR_DOWNGRADE
+	//- SAME__NOT_SEMVER
 	//### Transitives
 	//- UNKNOWN_UPDATE
 	//- SEMVER_MAJOR_DOWNGRADE
 	//- ADDITION__ABANDONED
+	//- ADDITION__NOT_SEMVER
 	//## Dev-only usage
 	//### Requirements
 	//- SEMVER_MAJOR_UPGRADE
 	//- SEMVER_MINOR_DOWNGRADE
+	//- SAME__NOT_SEMVER
 	//### Transitives
 	//- UNKNOWN_UPDATE
 	//- SEMVER_MAJOR_DOWNGRADE
 	//- ADDITION__ABANDONED
+	//- ADDITION__NOT_SEMVER
 	// -> process prod usage and dev-only usage the same way
 	if subCategoryType == requirementSubCategory &&
-		(itemType == semverMajorUpgradeItem || itemType == semverMinorDowngradeItem) {
+		((itemType == semverMajorUpgradeItem || itemType == semverMinorDowngradeItem) ||
+			(itemType == sameItem && pkg.GetVersion().Semver == nil)) {
 		return true
 	}
 
 	return subCategoryType == transitiveSubCategory &&
 		(itemType == unknownUpdateItem ||
 			itemType == semverMajorDowngradeItem ||
-			(itemType == additionItem && isAbandoned))
+			(itemType == additionItem && (pkg.IsAbandoned() || pkg.GetVersion().Semver == nil)))
 }
 
-func isCandidateForImportantSection(subCategoryType markdownSubCategory, itemType markdownItem) bool {
+func isCandidateForImportantSection(
+	subCategoryType markdownSubCategory,
+	itemType markdownItem,
+	pkg shared.PkgWrapper,
+) bool {
 	// # Important
 	//## Production usage
 	//### Requirements
@@ -141,6 +160,7 @@ func isCandidateForImportantSection(subCategoryType markdownSubCategory, itemTyp
 	//### Transitives
 	//- SEMVER_MAJOR_UPGRADE
 	//- SEMVER_MINOR_DOWNGRADE
+	//- SAME__NOT_SEMVER
 	//## Dev-only usage
 	//### Requirements
 	//- SEMVER_PATCH_DOWNGRADE
@@ -148,16 +168,21 @@ func isCandidateForImportantSection(subCategoryType markdownSubCategory, itemTyp
 	//### Transitives
 	//- SEMVER_MAJOR_UPGRADE
 	//- SEMVER_MINOR_DOWNGRADE
+	//- SAME__NOT_SEMVER
 	// -> process prod usage and dev-only usage the same way
 	if subCategoryType == requirementSubCategory && (itemType == semverPatchDowngradeItem || itemType == removalItem) {
 		return true
 	}
 
 	return subCategoryType == transitiveSubCategory &&
-		(itemType == semverMajorUpgradeItem || itemType == semverMinorDowngradeItem)
+		((itemType == semverMajorUpgradeItem || itemType == semverMinorDowngradeItem) ||
+			(itemType == sameItem && pkg.GetVersion().Semver == nil))
 }
 
-func isCandidateForTipSection(subCategoryType markdownSubCategory, itemType markdownItem) bool {
+func isCandidateForTipSection(
+	subCategoryType markdownSubCategory,
+	itemType markdownItem,
+) bool {
 	// # Tip
 	//## Production usage
 	//### Requirements

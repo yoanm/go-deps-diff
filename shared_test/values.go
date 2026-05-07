@@ -30,12 +30,13 @@ var (
 )
 
 func GetDummyPackage() *TestPkgWrapper {
-	version := strconv.Itoa(rand.Int()) + "." + strconv.Itoa(rand.Int()) + "." + strconv.Itoa(rand.Int())
+	major, minor, patch := rand.Int(), rand.Int(), rand.Int()
+	version := strconv.Itoa(major) + "." + strconv.Itoa(minor) + "." + strconv.Itoa(patch)
 
 	return &TestPkgWrapper{
 		Name:               "vendor/package-" + strconv.Itoa(rand.Int()),
 		Abandoned:          true,
-		Version:            shared.PkgVersion{Raw: version, Label: version},
+		Version:            shared.PkgVersion{Raw: version, Label: version, Semver: &shared.SemverVersion{Major: major, Minor: minor, Patch: patch, Extra: ""}}, // nolint:lll // Meaningless for tests
 		Link:               "",
 		DevOnly:            false,
 		RootRequirement:    false,
