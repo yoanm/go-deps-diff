@@ -1,5 +1,5 @@
 
-## Hazardous changes<br/><sub><sup>☣️ Changes that are likely unexpected and/or likely to cause trouble</sub></sup>
+## Hazardous changes<br/><sub><sup>☣️ Changes that are unlikely expected and/or likely to cause trouble</sub></sup>
 
 
 ### Production usage <sup>🏭</sup>
@@ -24,7 +24,7 @@
 </details>
 <hr/>
 
-## Error-prone changes<br/><sub><sup>⚠️ Changes that may not cause trouble in production but are likely unexpected and/or prone to cause trouble</sub></sup>
+## Error-prone changes<br/><sub><sup>⚠️ Changes that are likely unexpected and/or prone to cause trouble</sub></sup>
 
 
 ### Production usage <sup>🏭</sup>

@@ -1,5 +1,5 @@
 
-## Hazardous changes<br/><sub><sup>☣️ Changes that are likely unexpected and/or likely to cause trouble</sub></sup>
+## Hazardous changes<br/><sub><sup>☣️ Changes that are unlikely expected and/or likely to cause trouble</sub></sup>
 
 
 ### Production usage <sup>🏭</sup>
@@ -24,7 +24,7 @@
 </details>
 <hr/>
 
-## Error-prone changes<br/><sub><sup>⚠️ Changes that may not cause trouble in production but are likely unexpected and/or prone to cause trouble</sub></sup>
+## Error-prone changes<br/><sub><sup>⚠️ Changes that are likely unexpected and/or prone to cause trouble</sub></sup>
 
 
 ### Production usage <sup>🏭</sup>
@@ -48,7 +48,7 @@
 </details>
 <hr/>
 
-## Noteworthy changes<br/><sub><sup>🕵️ Changes that are unlikely to cause production issues, but worth noting if problems arise</sub></sup>
+## Noteworthy changes<br/><sub><sup>🕵️ Changes that are unlikely to cause production issue, but worth noting if problems arise</sub></sup>
 
 
 ### Production usage <sup>🏭</sup>
@@ -76,7 +76,7 @@
 </details>
 <hr/>
 
-## Pretty safe changes<br/><sub><sup>👀 Changes that are unlikely to cause trouble in production</sub></sup>
+## Pretty safe changes<br/><sub><sup>👀 Changes that are unlikely to cause trouble</sub></sup>
 
 
 ### Production usage <sup>🏭</sup>

@@ -22,13 +22,13 @@ func getSectionHeaderFor(section markdownSection) string {
 func getSectionDescriptionFor(section markdownSection) string {
 	switch section {
 	case cautionSection:
-		return "☣️ Changes that are likely unexpected and/or likely to cause trouble"
+		return "☣️ Changes that are unlikely expected and/or likely to cause trouble"
 	case warningSection:
-		return "⚠️ Changes that may not cause trouble in production but are likely unexpected and/or prone to cause trouble" //nolint:lll // Meaningless here
+		return "⚠️ Changes that are likely unexpected and/or prone to cause trouble"
 	case importantSection:
-		return "🕵️ Changes that are unlikely to cause production issues, but worth noting if problems arise"
+		return "🕵️ Changes that are unlikely to cause production issue, but worth noting if problems arise"
 	case tipSection:
-		return "👀 Changes that are unlikely to cause trouble in production"
+		return "👀 Changes that are unlikely to cause trouble"
 	case noteSection:
 		return "ℹ️ All remaining changes, mostly for your information"
 	}
