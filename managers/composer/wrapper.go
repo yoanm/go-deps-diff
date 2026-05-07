@@ -90,7 +90,7 @@ func parsePkgVersion(pkg *Package) shared.PkgVersion {
 	)
 
 	if semver, err = shared.ParseSemverVersion(pkg.Version); err != nil {
-		if shared.IsSemverValid(pkg.Version) { // Something went wrong during parsing then
+		if shared.IsSemverValid(pkg.Version) { // Something went wrong during parsing then (unlikely to happen though)
 			slog.Warn(fmt.Errorf("error while parsing semver version %s: %w", pkg.Version, err).Error())
 		} else if ref := getPkgRef(pkg); ref != "" { // Not semver - check if there is a commit reference
 			shortRef := ref

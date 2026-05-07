@@ -6,6 +6,8 @@ import (
 	"testing"
 
 	"github.com/yoanm/go-deps-diff/managers/composer"
+	"github.com/yoanm/go-deps-diff/shared"
+	"github.com/yoanm/go-deps-diff/shared_test"
 )
 
 func TestBuildMapFromBytes_Error(t *testing.T) {
@@ -445,42 +447,37 @@ func TestVersionProperty(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
-		name          string
-		lock          []byte
-		expectedRaw   string
-		expectedLabel string
+		name     string
+		lock     []byte
+		expected shared.PkgVersion
 	}{
 		{
 			name: "Semver version",
 			lock: []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.2.3",
 				"dist": {"reference": "abc123"}
 			}]}`),
-			expectedRaw:   "1.2.3",
-			expectedLabel: "1.2.3",
+			expected: shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3", Semver: &shared.SemverVersion{Major: 1, Minor: 2, Patch: 3, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 		},
 		{
 			name: "Semver version with extra",
 			lock: []byte(`{"packages": [{"name": "vendor/pkg", "version": "1.2.3+beta",
 				"dist": {"reference": "abc123"}
 			}]}`),
-			expectedRaw:   "1.2.3+beta",
-			expectedLabel: "1.2.3+beta",
+			expected: shared.PkgVersion{Raw: "1.2.3+beta", Label: "1.2.3+beta", Semver: &shared.SemverVersion{Major: 1, Minor: 2, Patch: 3, Extra: "+beta"}}, //nolint:lll // Meaningless for tests !,
 		},
 		{
 			name: "not semver - dist reference",
 			lock: []byte(`{"packages": [{"name": "vendor/pkg", "version": "dev-master",
 				"dist": {"reference": "abc123"}
 			}]}`),
-			expectedRaw:   "abc123",
-			expectedLabel: "dev-master#abc123",
+			expected: shared.PkgVersion{Raw: "abc123", Label: "dev-master#abc123", Semver: nil},
 		},
 		{
 			name: "not semver - source reference (no dist)",
 			lock: []byte(`{"packages": [{"name": "vendor/pkg", "version": "dev-master",
 				"source": {"reference": "def456"}
 			}]}`),
-			expectedRaw:   "def456",
-			expectedLabel: "dev-master#def456",
+			expected: shared.PkgVersion{Raw: "def456", Label: "dev-master#def456", Semver: nil},
 		},
 		{
 			name: "not semver - dist preferred over source",
@@ -488,14 +485,12 @@ func TestVersionProperty(t *testing.T) {
 				"source": {"reference": "nop"},
 				"dist": {"reference": "abc123"}
 			}]}`),
-			expectedRaw:   "abc123",
-			expectedLabel: "dev-master#abc123",
+			expected: shared.PkgVersion{Raw: "abc123", Label: "dev-master#abc123", Semver: nil},
 		},
 		{
-			name:          "no reference",
-			lock:          []byte(`{"packages": [{"name": "vendor/pkg", "version": "dev-master"}]}`),
-			expectedRaw:   "dev-master",
-			expectedLabel: "dev-master",
+			name:     "not semver - no reference",
+			lock:     []byte(`{"packages": [{"name": "vendor/pkg", "version": "dev-master"}]}`),
+			expected: shared.PkgVersion{Raw: "dev-master", Label: "dev-master", Semver: nil},
 		},
 	}
 
@@ -513,13 +508,10 @@ func TestVersionProperty(t *testing.T) {
 			}
 
 			pkg, pkgExists := pkgMap["vendor/pkg"]
-			switch {
-			case !pkgExists:
-				t.Fatal("package 'vendor/pkg' is expected in the package map")
-			case pkg.GetVersion().Raw != testCase.expectedRaw:
-				t.Fatalf("GetVersion().Raw = %v, want %v", pkg.GetVersion().Raw, testCase.expectedRaw)
-			case pkg.GetVersion().Label != testCase.expectedLabel:
-				t.Fatalf("GetVersion().Label = %v, want %v", pkg.GetVersion().Label, testCase.expectedLabel)
+			if !pkgExists {
+				t.Error("package 'vendor/pkg' is expected in the package map")
+			} else if err2 := shared_test.ValidatePackageVersion(pkg.GetVersion(), testCase.expected); err2 != nil {
+				t.Error(err2)
 			}
 		})
 	}
