@@ -15,13 +15,13 @@ func TestDiff_NoChange(t *testing.T) {
 	previous := map[string]shared.PkgWrapper{
 		"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 			Name:    "vendor/pkg",
-			Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+			Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 		},
 	}
 	current := map[string]shared.PkgWrapper{
 		"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 			Name:    "vendor/pkg",
-			Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+			Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 		},
 	}
 
@@ -65,7 +65,7 @@ func TestDiff_BasicComparison(t *testing.T) {
 			current: map[string]shared.PkgWrapper{
 				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 				},
 			},
 			expectedOperationName: shared.AdditionOperation,
@@ -76,13 +76,13 @@ func TestDiff_BasicComparison(t *testing.T) {
 			previous: map[string]shared.PkgWrapper{
 				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 				},
 			},
 			current: map[string]shared.PkgWrapper{
 				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 				},
 			},
 			expectedOperationName: shared.NoChangeOperation,
@@ -93,7 +93,7 @@ func TestDiff_BasicComparison(t *testing.T) {
 			previous: map[string]shared.PkgWrapper{
 				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 				},
 			},
 			current:               map[string]shared.PkgWrapper{},
@@ -105,13 +105,13 @@ func TestDiff_BasicComparison(t *testing.T) {
 			previous: map[string]shared.PkgWrapper{
 				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 				},
 			},
 			current: map[string]shared.PkgWrapper{
 				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "2.0.0", Label: "2.0.0"},
+					Version: shared.PkgVersion{Raw: "2.0.0", Label: "2.0.0", Semver: &shared.SemverVersion{Major: 2, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 				},
 			},
 			expectedOperationName: shared.UpgradeOperation,
@@ -122,13 +122,13 @@ func TestDiff_BasicComparison(t *testing.T) {
 			previous: map[string]shared.PkgWrapper{
 				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0"},
+					Version: shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0", Semver: &shared.SemverVersion{Major: 1, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 				},
 			},
 			current: map[string]shared.PkgWrapper{
 				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0"},
+					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
 				},
 			},
 			expectedOperationName: shared.DowngradeOperation,
@@ -139,13 +139,13 @@ func TestDiff_BasicComparison(t *testing.T) {
 			previous: map[string]shared.PkgWrapper{
 				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "abcdef", Label: "dev-master#abcdef"},
+					Version: shared.PkgVersion{Raw: "abcdef", Label: "dev-master#abcdef", Semver: nil},
 				},
 			},
 			current: map[string]shared.PkgWrapper{
 				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "fedcba", Label: "1.0.0#fedcba"},
+					Version: shared.PkgVersion{Raw: "fedcba", Label: "1.0.0#fedcba", Semver: nil},
 				},
 			},
 
