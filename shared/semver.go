@@ -28,16 +28,20 @@ func (e InvalidSemverComponentError) Error() string {
 	return "invalid semver component: " + e.Version
 }
 
+var semverValidateVersionRegexp = regexp.MustCompile(`^v?\d+\.\d+\.\d+.*$`)
+
 func IsSemverValid(value string) bool {
 	// Pattern: optional 'v', then MAJOR.MINOR.PATCH, then optional extra data (e.g. -beta, +build, etc.)
-	return regexp.MustCompile(`^v?\d+\.\d+\.\d+.*$`).MatchString(value)
+	return semverValidateVersionRegexp.MatchString(value)
 }
+
+var semverParseVersionRegexp = regexp.MustCompile(`^(v)?(\d+)\.(\d+)\.(\d+)(.*)$`)
 
 // ParseSemverVersion parses a semantic Version string
 // Returns nil if parsing fails.
 func ParseSemverVersion(version string) (*SemverVersion, error) {
 	// Pattern: optional 'v', then MAJOR.MINOR.PATCH, then optional extra
-	matches := regexp.MustCompile(`^(v)?(\d+)\.(\d+)\.(\d+)(.*)$`).FindStringSubmatch(version)
+	matches := semverParseVersionRegexp.FindStringSubmatch(version)
 	if matches == nil {
 		return nil, &InvalidSemverVersionError{Version: version}
 	}
