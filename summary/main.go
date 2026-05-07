@@ -53,6 +53,8 @@ func processSection(builder *markdown.Builder, categoriesMap categoriesMap, sect
 	builder.WriteLine("<hr/>", 0)
 }
 
+const autoOpenDetailsMaxCount = 3
+
 func processCategory(
 	builder *markdown.Builder,
 	subCategoriesMap subCategoriesMap,
@@ -62,6 +64,10 @@ func processCategory(
 	slog.Debug("Processing category: " + string(categoryName))
 
 	noChangePkgList, otherChangePkgList := splitItemList(subCategoriesMap)
+	// Opened details in case there is only package with no changes (avoid double opening for nothing)
+	if !openedDetails && len(otherChangePkgList) == 0 {
+		openedDetails = true
+	}
 
 	builder.Header(getCategoryHeaderFor(categoryName), categoryHeaderLevel, 0)
 	builder.Details(
@@ -72,12 +78,17 @@ func processCategory(
 			}
 
 			if len(noChangePkgList) > 0 {
+				openedSubDetails := false
+				if len(otherChangePkgList) <= autoOpenDetailsMaxCount {
+					openedSubDetails = true
+				}
+
 				builder.Details(
 					"Unchanged packages 🟰<sup>"+strconv.Itoa(len(noChangePkgList))+"</sup>",
 					func(builder *markdown.Builder, indentDepth int) {
 						processPkgList(builder, noChangePkgList, versionOnlyPkgRowMode, indentDepth)
 					},
-					false, // Always closed by default (goal is to avoid polluting other changes)
+					openedSubDetails,
 					indentDepth,
 				)
 			}

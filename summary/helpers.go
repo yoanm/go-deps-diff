@@ -66,22 +66,22 @@ func guessShortestPkgRowMode(abandonedPkgList pkgList) pkgRowMode {
 	return withOperationPkgRowMode
 }
 
-type multiCounter struct {
+type itemsCounter struct {
 	title string
 	count int
 }
-type sectionSummaryCntMap map[markdownItem]*multiCounter
+type sectionSummaryCntMap map[markdownItem]*itemsCounter
 
 func buildSectionSummaryMrk(subCategoriesMap subCategoriesMap) string {
-	cntMap := buildSectionCounters(subCategoriesMap)
+	cntMap := buildItemsCounters(subCategoriesMap)
 
 	partList := make([]string, len(cntMap))
 	partKey := 0
 
-	inOrderMapIteratorHelper[markdownItem, *multiCounter](
+	inOrderMapIteratorHelper[markdownItem, *itemsCounter](
 		cntMap,
 		getItemsOrder(),
-		func(key markdownItem, data *multiCounter) {
+		func(key markdownItem, data *itemsCounter) {
 			partList[partKey] = fmt.Sprintf("%s<sup>%d</sup>", data.title, data.count)
 			partKey++
 		},
@@ -90,13 +90,13 @@ func buildSectionSummaryMrk(subCategoriesMap subCategoriesMap) string {
 	return strings.Join(partList, "    ")
 }
 
-func buildSectionCounters(subCategoriesMap subCategoriesMap) sectionSummaryCntMap {
+func buildItemsCounters(subCategoriesMap subCategoriesMap) sectionSummaryCntMap {
 	cntMap := make(sectionSummaryCntMap)
 
 	for _, itemsMap := range subCategoriesMap {
 		for itemType, pkgList := range itemsMap {
 			if nil == cntMap[itemType] {
-				cntMap[itemType] = &multiCounter{title: "", count: 0}
+				cntMap[itemType] = &itemsCounter{title: "", count: 0}
 			}
 
 			cntMap[itemType].count += len(pkgList)

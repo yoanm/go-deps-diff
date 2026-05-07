@@ -12,7 +12,7 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 	t.Parallel()
 
 	pkg := shared_test.GetDummyPackage()
-	prevVersion := shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3"}
+	prevVersion := shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3", Semver: &shared.SemverVersion{Major: 1, Minor: 2, Patch: 3, Extra: ""}} //nolint:lll // Meaningless for tests !
 
 	tests := []struct {
 		name     string
@@ -29,7 +29,7 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 			},
 			mode: fullPkgRowMode,
 			expected: []string{
-				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(prevVersion),
 				buildOperationHTMLCell(shared_test.DowngradeMajorOp, 0),
@@ -44,7 +44,7 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 			},
 			mode: fullPkgRowMode,
 			expected: []string{
-				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildOperationHTMLCell(shared_test.AdditionOp, 2),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
@@ -58,7 +58,7 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 			},
 			mode: fullPkgRowMode,
 			expected: []string{
-				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
 				buildOperationHTMLCell(shared_test.RemovalOp, 2),
@@ -72,7 +72,7 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 			},
 			mode: fullPkgRowMode,
 			expected: []string{
-				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
 				buildOperationHTMLCell(shared_test.SameOp, 2),
@@ -88,7 +88,7 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 			},
 			mode: withOperationPkgRowMode,
 			expected: []string{
-				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
 				buildOperationHTMLCell(shared_test.DowngradeMajorOp, 0),
@@ -102,7 +102,7 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 			},
 			mode: withOperationPkgRowMode,
 			expected: []string{
-				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildOperationHTMLCell(shared_test.AdditionOp, 0),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
@@ -116,7 +116,7 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 			},
 			mode: withOperationPkgRowMode,
 			expected: []string{
-				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
 				buildOperationHTMLCell(shared_test.RemovalOp, 0),
@@ -130,7 +130,7 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 			},
 			mode: withOperationPkgRowMode,
 			expected: []string{
-				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
 				buildOperationHTMLCell(shared_test.SameOp, 0),
@@ -146,7 +146,7 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 			},
 			mode: versionOnlyPkgRowMode,
 			expected: []string{
-				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
 			},
@@ -159,7 +159,7 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 			},
 			mode: versionOnlyPkgRowMode,
 			expected: []string{
-				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
 			},
@@ -172,7 +172,7 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 			},
 			mode: versionOnlyPkgRowMode,
 			expected: []string{
-				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
 			},
@@ -185,7 +185,7 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 			},
 			mode: versionOnlyPkgRowMode,
 			expected: []string{
-				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
 			},
