@@ -210,6 +210,13 @@
 <details>
   <summary>Captions</summary>
 
+  #### Versions
+
+  <table>
+    <tr><td align="center">_VERSION_❗</td><td align="left">Version is not semver compliant.<br/>Usually a commit ref or branch.</td></tr>
+  </table>
+
+
   #### Operations
 
   <table>
@@ -234,7 +241,7 @@
     <tr><td align="center">🗄</td><td align="left">Package is explicitly required for production usage</td></tr>
     <tr><td align="center">🧰</td><td align="left">Package is explicitly required for dev-only usage</td></tr>
     <tr><td align="center">🔗️</td><td align="left">Transitive dependency package</td></tr>
-    <tr><td align="center">💀</td><td align="left">Package is declared abandoned. You should replace it.</td></tr>
+    <tr><td align="center">💀</td><td align="left">Package is declared abandoned.<br/>You should replace it.</td></tr>
   </table>
 
 
