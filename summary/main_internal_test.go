@@ -1,60 +1,140 @@
 package summary
 
 import (
+	"slices"
 	"testing"
 
 	"github.com/yoanm/go-deps-diff/shared"
 	"github.com/yoanm/go-deps-diff/shared_test"
 )
 
-func Test_buildItemMrkRowCells_count(t *testing.T) {
+func Test_buildItemMrkRowCells(t *testing.T) {
 	t.Parallel()
 
 	pkg := shared_test.GetDummyPackage()
+	prevVersion := shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3"}
 
 	tests := []struct {
-		name          string
-		change        *shared.PackageChange
-		mode          pkgRowMode
-		expectedCount int
+		name     string
+		change   *shared.PackageChange
+		mode     pkgRowMode
+		expected []string
 	}{
 		{
 			name: "Name, version, operation and previous version - operation with previous version",
 			change: &shared.PackageChange{
 				Package:         pkg,
 				Operation:       shared_test.DowngradeMajorOp,
-				PreviousVersion: shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3"},
+				PreviousVersion: prevVersion,
 			},
-			mode:          fullPkgRowMode,
-			expectedCount: 4,
+			mode: fullPkgRowMode,
+			expected: []string{
+				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				buildPackageNameHTMLCell(pkg),
+				buildPackageVersionHTMLCell(prevVersion),
+				buildOperationHTMLCell(shared_test.DowngradeMajorOp, 0),
+				buildPackageVersionHTMLCell(pkg.GetVersion()),
+			},
 		},
 		{
-			name: "Name, version, operation and previous version - operation with only one version",
+			name: "Name, version, operation and previous version - operation with only one version - Addition",
 			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
 				Package:   pkg,
 				Operation: shared_test.AdditionOp,
 			},
-			mode:          fullPkgRowMode,
-			expectedCount: 3,
+			mode: fullPkgRowMode,
+			expected: []string{
+				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				buildPackageNameHTMLCell(pkg),
+				buildOperationHTMLCell(shared_test.AdditionOp, 2),
+				buildPackageVersionHTMLCell(pkg.GetVersion()),
+			},
 		},
 		{
+			name: "Name, version, operation and previous version - operation with only one version - Removal",
+			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
+				Package:   pkg,
+				Operation: shared_test.RemovalOp,
+			},
+			mode: fullPkgRowMode,
+			expected: []string{
+				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				buildPackageNameHTMLCell(pkg),
+				buildPackageVersionHTMLCell(pkg.GetVersion()),
+				buildOperationHTMLCell(shared_test.RemovalOp, 2),
+			},
+		},
+		{
+			name: "Name, version, operation and previous version - operation with only one version - Same",
+			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
+				Package:   pkg,
+				Operation: shared_test.SameOp,
+			},
+			mode: fullPkgRowMode,
+			expected: []string{
+				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				buildPackageNameHTMLCell(pkg),
+				buildPackageVersionHTMLCell(pkg.GetVersion()),
+				buildOperationHTMLCell(shared_test.SameOp, 2),
+			},
+		},
+		{
+			// Case is not actually expected to happen (it should be withOperationPkgRowMode mode in that case)
 			name: "Name, version and operation - operation with previous version",
 			change: &shared.PackageChange{
 				Package:         pkg,
 				Operation:       shared_test.DowngradeMajorOp,
-				PreviousVersion: shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3"},
+				PreviousVersion: prevVersion,
 			},
-			mode:          withOperationPkgRowMode,
-			expectedCount: 3,
+			mode: withOperationPkgRowMode,
+			expected: []string{
+				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				buildPackageNameHTMLCell(pkg),
+				buildPackageVersionHTMLCell(pkg.GetVersion()),
+				buildOperationHTMLCell(shared_test.DowngradeMajorOp, 0),
+			},
 		},
 		{
-			name: "Name, version and operation - operation with only one version",
+			name: "Name, version and operation - operation with only one version - Addition",
 			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
 				Package:   pkg,
 				Operation: shared_test.AdditionOp,
 			},
-			mode:          withOperationPkgRowMode,
-			expectedCount: 3,
+			mode: withOperationPkgRowMode,
+			expected: []string{
+				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				buildPackageNameHTMLCell(pkg),
+				buildOperationHTMLCell(shared_test.AdditionOp, 0),
+				buildPackageVersionHTMLCell(pkg.GetVersion()),
+			},
+		},
+		{
+			name: "Name, version and operation - operation with only one version - Removal",
+			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
+				Package:   pkg,
+				Operation: shared_test.RemovalOp,
+			},
+			mode: withOperationPkgRowMode,
+			expected: []string{
+				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				buildPackageNameHTMLCell(pkg),
+				buildPackageVersionHTMLCell(pkg.GetVersion()),
+				buildOperationHTMLCell(shared_test.RemovalOp, 0),
+			},
+		},
+		{
+			name: "Name, version and operation - operation with only one version - Same",
+			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
+				Package:   pkg,
+				Operation: shared_test.SameOp,
+			},
+			mode: withOperationPkgRowMode,
+			expected: []string{
+				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				buildPackageNameHTMLCell(pkg),
+				buildPackageVersionHTMLCell(pkg.GetVersion()),
+				buildOperationHTMLCell(shared_test.SameOp, 0),
+			},
 		},
 		{
 			// Case is not actually expected to happen (it should be withOperationPkgRowMode mode in that case)
@@ -62,19 +142,53 @@ func Test_buildItemMrkRowCells_count(t *testing.T) {
 			change: &shared.PackageChange{
 				Package:         pkg,
 				Operation:       shared_test.DowngradeMajorOp,
-				PreviousVersion: shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3"},
+				PreviousVersion: prevVersion,
 			},
-			mode:          versionOnlyPkgRowMode,
-			expectedCount: 2,
+			mode: versionOnlyPkgRowMode,
+			expected: []string{
+				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				buildPackageNameHTMLCell(pkg),
+				buildPackageVersionHTMLCell(pkg.GetVersion()),
+			},
 		},
 		{
-			name: "Name and version only - operation with only one version",
+			name: "Name and version only - operation with only one version - Addition",
 			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
 				Package:   pkg,
 				Operation: shared_test.AdditionOp,
 			},
-			mode:          versionOnlyPkgRowMode,
-			expectedCount: 2,
+			mode: versionOnlyPkgRowMode,
+			expected: []string{
+				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				buildPackageNameHTMLCell(pkg),
+				buildPackageVersionHTMLCell(pkg.GetVersion()),
+			},
+		},
+		{
+			name: "Name and version only - operation with only one version - Removal",
+			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
+				Package:   pkg,
+				Operation: shared_test.RemovalOp,
+			},
+			mode: versionOnlyPkgRowMode,
+			expected: []string{
+				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				buildPackageNameHTMLCell(pkg),
+				buildPackageVersionHTMLCell(pkg.GetVersion()),
+			},
+		},
+		{
+			name: "Name and version only - operation with only one version - Same",
+			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
+				Package:   pkg,
+				Operation: shared_test.SameOp,
+			},
+			mode: versionOnlyPkgRowMode,
+			expected: []string{
+				// Rely on helper method, goal here is to check the cell count and order, not the content !
+				buildPackageNameHTMLCell(pkg),
+				buildPackageVersionHTMLCell(pkg.GetVersion()),
+			},
 		},
 	}
 	for _, testCase := range tests {
@@ -83,8 +197,8 @@ func Test_buildItemMrkRowCells_count(t *testing.T) {
 
 			current := buildItemMrkRowCells(testCase.change, testCase.mode)
 
-			if len(current) != testCase.expectedCount {
-				t.Errorf("unexpected cell count: got %d, want %d (cells:%s)", len(current), testCase.expectedCount, current)
+			if !slices.Equal(current, testCase.expected) {
+				t.Errorf("unexpected result: got %s, want %s", current, testCase.expected)
 			}
 		})
 	}

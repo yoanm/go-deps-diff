@@ -26,7 +26,7 @@ func getSectionDescriptionFor(section markdownSection) string {
 	case warningSection:
 		return "⚠️ Changes that may not cause trouble in production but are likely unexpected and/or prone to cause trouble" //nolint:lll // Meaningless here
 	case importantSection:
-		return "🕵️ Changes unlikely to cause production issues, but worth noting if problems arise"
+		return "🕵️ Changes that are unlikely to cause production issues, but worth noting if problems arise"
 	case tipSection:
 		return "👀 Changes that are unlikely to cause trouble in production"
 	case noteSection:

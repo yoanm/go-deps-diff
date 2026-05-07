@@ -69,7 +69,7 @@
 </details>
 <hr/>
 
-## Noteworthy changes<br/><sub><sup>🕵️ Changes unlikely to cause production issues, but worth noting if problems arise</sub></sup>
+## Noteworthy changes<br/><sub><sup>🕵️ Changes that are unlikely to cause production issues, but worth noting if problems arise</sub></sup>
 
 
 ### Production usage <sup>🏭</sup>
