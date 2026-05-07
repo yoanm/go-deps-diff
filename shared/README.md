@@ -2,7 +2,7 @@
 
 ## Functions
 
-### func [IsSemverValid](./semver.go#L31)
+### func [IsSemverValid](./semver.go#L33)
 
 `func IsSemverValid(value string) bool`
 
@@ -102,7 +102,7 @@ Key is the package name (e.g., "vendor/package"), value is a wrapper providing p
 
 `type SemverVersion struct { ... }`
 
-#### func [ParseSemverVersion](./semver.go#L38)
+#### func [ParseSemverVersion](./semver.go#L42)
 
 `func ParseSemverVersion(version string) (*SemverVersion, error)`
 
