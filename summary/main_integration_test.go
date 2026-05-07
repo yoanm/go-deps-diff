@@ -29,6 +29,11 @@ func TestIntegration_GenerateForChanges(t *testing.T) {
 			changes:    _integrationOnlyThreeColumnsNeeded,
 			goldenFile: "./testdata/golden-3columns-summary.md",
 		},
+		{
+			name:       "Special case - force opened/closed details",
+			changes:    _integrationForceOpenedClosed,
+			goldenFile: "./testdata/golden-force_opened_details.md",
+		},
 	}
 	for _, testCase := range tests {
 		t.Run(testCase.name, func(t *testing.T) {
@@ -1264,5 +1269,69 @@ var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
 			RootDevRequirement: false,
 		},
 		Operation: shared.Operation{Name: "ADDITION", SemverType: "NONE"},
+	},
+}
+
+//nolint:gochecknoglobals // Just to keep it outside the function
+var _integrationForceOpenedClosed = shared.DiffMap{
+	"note-dev_only_usage-requirement/SAME": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "note-dev_only_usage-requirement/SAME",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            true,
+			RootRequirement:    false,
+			RootDevRequirement: true,
+		},
+		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+	},
+	"note-dev_only_usage-requirement/SAME-2": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "note-dev_only_usage-requirement/SAME-2",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            true,
+			RootRequirement:    false,
+			RootDevRequirement: true,
+		},
+		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+	},
+	"note-dev_only_usage-requirement/SAME-3": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "note-dev_only_usage-requirement/SAME-3",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            true,
+			RootRequirement:    false,
+			RootDevRequirement: true,
+		},
+		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+	},
+	"note-dev_only_usage-requirement/SAME-4": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "note-dev_only_usage-requirement/SAME-4",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            true,
+			RootRequirement:    false,
+			RootDevRequirement: true,
+		},
+		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
+	},
+	"note-prod_usage-requirement/SAME": {
+		Package: &shared_test.TestPkgWrapper{
+			Name:               "note-prod_usage-requirement/SAME",
+			Abandoned:          false,
+			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Link:               "http://www.squizlabs.com/php-codesniffer",
+			DevOnly:            false,
+			RootRequirement:    true,
+			RootDevRequirement: false,
+		},
+		Operation: shared.Operation{Name: "NONE", SemverType: "NONE"},
 	},
 }
