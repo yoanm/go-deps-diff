@@ -1,4 +1,4 @@
-name: CI Benchmark
+name: Benchmark
 
 on:
   pull_request:
@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   benchmark:
-    name: Benchmark regression check
+    name: Regression check
     if: github.event_name == 'push' || ( github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'with-benchmark') )
     runs-on: ubuntu-latest
     steps:
