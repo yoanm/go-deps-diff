@@ -63,9 +63,32 @@ func ValidatePackageVersion(actualVersion, expectedVersion shared.PkgVersion) er
 	if actualVersion.Label != expectedVersion.Label {
 		return fmt.Errorf("unexpected Label value. Expected: %v Actual: %v", expectedVersion.Label, actualVersion.Label)
 	}
+	if err := ValidatePackageVersionSemver(actualVersion, expectedVersion); err != nil {
+		return err
+	}
 
 	if !reflect.DeepEqual(actualVersion, expectedVersion) {
 		return fmt.Errorf("unexpected differences. Expected: %+v, Actual: %+v", expectedVersion, expectedVersion)
+	}
+
+	return nil
+}
+
+func ValidatePackageVersionSemver(actualVersion, expectedVersion shared.PkgVersion) error {
+	if actualVersion.Semver == nil && expectedVersion.Semver == nil {
+		return nil
+	} else if actualVersion.Semver == nil && expectedVersion.Semver != nil {
+		return fmt.Errorf("unexpected Semver value. Expected: %v Actual: NIL", expectedVersion.Semver)
+	} else if actualVersion.Semver != nil && expectedVersion.Semver == nil {
+		return fmt.Errorf("unexpected Semver value. Expected: NIL Actual: %v", actualVersion.Semver)
+	} else if actualVersion.Semver.Major != expectedVersion.Semver.Major {
+		return fmt.Errorf("unexpected Semver Major value. Expected: %d Actual: %d", expectedVersion.Semver.Major, actualVersion.Semver.Major)
+	} else if actualVersion.Semver.Minor != expectedVersion.Semver.Minor {
+		return fmt.Errorf("unexpected Semver Minor value. Expected: %d Actual: %d", expectedVersion.Semver.Minor, actualVersion.Semver.Minor)
+	} else if actualVersion.Semver.Patch != expectedVersion.Semver.Patch {
+		return fmt.Errorf("unexpected Semver Patch value. Expected: %d Actual: %d", expectedVersion.Semver.Patch, actualVersion.Semver.Patch)
+	} else if actualVersion.Semver.Extra != expectedVersion.Semver.Extra {
+		return fmt.Errorf("unexpected Semver Extra value. Expected: %s Actual: %s", expectedVersion.Semver.Extra, actualVersion.Semver.Extra)
 	}
 
 	return nil

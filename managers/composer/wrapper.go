@@ -2,6 +2,7 @@ package composer
 
 import (
 	"fmt"
+	"log/slog"
 
 	"github.com/yoanm/go-deps-diff/shared"
 )
@@ -83,23 +84,32 @@ const shortRefLength = 7
 
 // parsePkgVersion parses a version string into a PkgVersionOld.
 func parsePkgVersion(pkg *Package) shared.PkgVersion {
-	if !shared.IsSemverValid(pkg.Version) { // Not semver - check if there is a commit reference
-		if ref := getPkgRef(pkg); ref != "" {
+	var (
+		semver *shared.SemverVersion
+		err    error
+	)
+
+	if semver, err = shared.ParseSemverVersion(pkg.Version); err != nil {
+		if shared.IsSemverValid(pkg.Version) { // Something went wrong during parsing then (unlikely to happen though)
+			slog.Warn(fmt.Errorf("error while parsing semver version %s: %w", pkg.Version, err).Error())
+		} else if ref := getPkgRef(pkg); ref != "" { // Not semver - check if there is a commit reference
 			shortRef := ref
 			if len(shortRef) > shortRefLength {
 				shortRef = shortRef[:shortRefLength]
 			}
 
 			return shared.PkgVersion{
-				Raw:   ref,
-				Label: pkg.Version + "#" + shortRef,
+				Raw:    ref,
+				Label:  pkg.Version + "#" + shortRef,
+				Semver: nil,
 			}
 		}
 	}
 
 	return shared.PkgVersion{
-		Raw:   pkg.Version,
-		Label: pkg.Version,
+		Raw:    pkg.Version,
+		Label:  pkg.Version,
+		Semver: semver,
 	}
 }
 

@@ -2,13 +2,13 @@
 
 ## Functions
 
-### func [BuildMap](./wrapper.go#L24)
+### func [BuildMap](./wrapper.go#L25)
 
 `func BuildMap(reqData *ComposerReq, lockData *ComposerLock) (shared.PackageMap, error)`
 
 BuildMap creates an efficient lookup map for composer packages.
 
-### func [BuildMapFromBytes](./wrapper.go#L9)
+### func [BuildMapFromBytes](./wrapper.go#L10)
 
 `func BuildMapFromBytes(reqContent, lockContent []byte) (shared.PackageMap, error)`
 

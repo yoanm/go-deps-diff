@@ -26,6 +26,10 @@ type PkgWrapper interface {
 }
 
 type PkgVersion struct {
-	Raw   string // Raw value as defined in the lock file
-	Label string // Human-readable label (e.g., "1.2.3", "dev-master#abcd123")
+	// Raw is the value as defined in the lock file
+	Raw string
+	// Label is the Human-readable title for the version (e.g., "1.2.3", "dev-master#abcd123")
+	Label string
+	// Semver will be defined only if Raw version is semver compliant, otherwise it will be nil
+	Semver *SemverVersion
 }

@@ -41,13 +41,17 @@ var (
 
 `func ValidatePackageVersion(actualVersion, expectedVersion shared.PkgVersion) error`
 
+### func [ValidatePackageVersionSemver](./validate.go#L77)
+
+`func ValidatePackageVersionSemver(actualVersion, expectedVersion shared.PkgVersion) error`
+
 ### func [ValidateWrapperPackage](./validate.go#L33)
 
 `func ValidateWrapperPackage(actualPackage, expectedPackage shared.PkgWrapper) error`
 
 ## Types
 
-### type [TestPkgWrapper](./validate.go#L74)
+### type [TestPkgWrapper](./validate.go#L97)
 
 `type TestPkgWrapper struct { ... }`
 
@@ -55,31 +59,31 @@ var (
 
 `func GetDummyPackage() *TestPkgWrapper`
 
-#### func (*TestPkgWrapper) [GetLink](./validate.go#L93)
+#### func (*TestPkgWrapper) [GetLink](./validate.go#L116)
 
 `func (w *TestPkgWrapper) GetLink() string`
 
-#### func (*TestPkgWrapper) [GetName](./validate.go#L84)
+#### func (*TestPkgWrapper) [GetName](./validate.go#L107)
 
 `func (w *TestPkgWrapper) GetName() string`
 
-#### func (*TestPkgWrapper) [GetVersion](./validate.go#L90)
+#### func (*TestPkgWrapper) [GetVersion](./validate.go#L113)
 
 `func (w *TestPkgWrapper) GetVersion() shared.PkgVersion`
 
-#### func (*TestPkgWrapper) [IsAbandoned](./validate.go#L87)
+#### func (*TestPkgWrapper) [IsAbandoned](./validate.go#L110)
 
 `func (w *TestPkgWrapper) IsAbandoned() bool`
 
-#### func (*TestPkgWrapper) [IsDevOnly](./validate.go#L96)
+#### func (*TestPkgWrapper) [IsDevOnly](./validate.go#L119)
 
 `func (w *TestPkgWrapper) IsDevOnly() bool`
 
-#### func (*TestPkgWrapper) [IsRootDevRequirement](./validate.go#L102)
+#### func (*TestPkgWrapper) [IsRootDevRequirement](./validate.go#L125)
 
 `func (w *TestPkgWrapper) IsRootDevRequirement() bool`
 
-#### func (*TestPkgWrapper) [IsRootRequirement](./validate.go#L99)
+#### func (*TestPkgWrapper) [IsRootRequirement](./validate.go#L122)
 
 `func (w *TestPkgWrapper) IsRootRequirement() bool`
 
