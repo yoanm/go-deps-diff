@@ -4,31 +4,25 @@
 
 ### Production usage <sup>🏭</sup>
 
-<details open>
+<details>
   <summary>🟰<sup>1</sup></summary>
-  <details open>
-    <summary>Unchanged packages 🟰<sup>1</sup></summary>
-    <table>
-      <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">note-prod_usage-requirement/SAME</a></td><td align="right">3.1.1</td></tr>
-    </table>
+  <table>
+    <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">note-prod_usage-requirement/SAME</a></td><td align="right">3.1.1</td></tr>
+  </table>
 
-  </details>
 </details>
 
 ### Dev-only usage <sup>🧪</sup>
 
-<details open>
+<details>
   <summary>🟰<sup>4</sup></summary>
-  <details open>
-    <summary>Unchanged packages 🟰<sup>4</sup></summary>
-    <table>
-      <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">note-dev_only_usage-requirement/SAME</a></td><td align="right">3.1.1</td></tr>
-      <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">note-dev_only_usage-requirement/SAME-2</a></td><td align="right">3.1.1</td></tr>
-      <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">note-dev_only_usage-requirement/SAME-3</a></td><td align="right">3.1.1</td></tr>
-      <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">note-dev_only_usage-requirement/SAME-4</a></td><td align="right">3.1.1</td></tr>
-    </table>
+  <table>
+    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">note-dev_only_usage-requirement/SAME</a></td><td align="right">3.1.1</td></tr>
+    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">note-dev_only_usage-requirement/SAME-2</a></td><td align="right">3.1.1</td></tr>
+    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">note-dev_only_usage-requirement/SAME-3</a></td><td align="right">3.1.1</td></tr>
+    <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">note-dev_only_usage-requirement/SAME-4</a></td><td align="right">3.1.1</td></tr>
+  </table>
 
-  </details>
 </details>
 <hr/>
 

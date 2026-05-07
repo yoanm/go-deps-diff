@@ -116,7 +116,7 @@
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">note-prod_usage-transitive/ADDITION</a></td><td align="center">➕️</td><td align="right">1.18.4</td></tr>
   </table>
 
-  <details open>
+  <details>
     <summary>Unchanged packages 🟰<sup>1</sup></summary>
     <table>
       <tr><td align="left"><sup>🗄️</sup><a href="http://www.squizlabs.com/php-codesniffer">note-prod_usage-requirement/SAME</a></td><td align="right">3.1.1</td></tr>
@@ -133,7 +133,7 @@
     <tr><td align="left"><sup>🔗</sup><a href="http://www.squizlabs.com/php-codesniffer">note-dev_only_usage-transitive/ADDITION</a></td><td align="center">➕️</td><td align="right">1.18.4</td></tr>
   </table>
 
-  <details open>
+  <details>
     <summary>Unchanged packages 🟰<sup>1</sup></summary>
     <table>
       <tr><td align="left"><sup>🧰</sup><a href="http://www.squizlabs.com/php-codesniffer">note-dev_only_usage-requirement/SAME</a></td><td align="right">3.1.1</td></tr>
