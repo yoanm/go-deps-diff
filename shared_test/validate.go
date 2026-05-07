@@ -63,8 +63,7 @@ func ValidatePackageVersion(actualVersion, expectedVersion shared.PkgVersion) er
 	if actualVersion.Label != expectedVersion.Label {
 		return fmt.Errorf("unexpected Label value. Expected: %v Actual: %v", expectedVersion.Label, actualVersion.Label)
 	}
-	err := ValidatePackageVersionSemver(actualVersion, expectedVersion)
-	if err != nil {
+	if err := ValidatePackageVersionSemver(actualVersion, expectedVersion); err != nil {
 		return err
 	}
 
@@ -76,7 +75,7 @@ func ValidatePackageVersion(actualVersion, expectedVersion shared.PkgVersion) er
 }
 
 func ValidatePackageVersionSemver(actualVersion, expectedVersion shared.PkgVersion) error {
-	if actualVersion.Semver == expectedVersion.Semver {
+	if actualVersion.Semver == nil && expectedVersion.Semver == nil {
 		return nil
 	} else if actualVersion.Semver == nil && expectedVersion.Semver != nil {
 		return fmt.Errorf("unexpected Semver value. Expected: %v Actual: NIL", expectedVersion.Semver)
