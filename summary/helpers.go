@@ -6,7 +6,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/yoanm/go-deps-diff/shared"
+	"github.com/yoanm/go-deps-diff/contract"
 )
 
 func splitItemList(subCategoriesMap subCategoriesMap) (pkgList, pkgList) {
@@ -23,7 +23,7 @@ func splitItemList(subCategoriesMap subCategoriesMap) (pkgList, pkgList) {
 				itemsMap,
 				getItemsOrder(),
 				func(itemName markdownItem, pkgList pkgList) {
-					slices.SortFunc(pkgList, func(changeA, changeB *shared.PackageChange) int {
+					slices.SortFunc(pkgList, func(changeA, changeB *contract.PackageChange) int {
 						return strings.Compare(changeA.Package.GetName(), changeB.Package.GetName())
 					})
 
@@ -33,7 +33,7 @@ func splitItemList(subCategoriesMap subCategoriesMap) (pkgList, pkgList) {
 						// - No change items are far less meaningful than the other items
 						// Idea behind the comment is to quickly spot a change which may lead to an issue or caused an
 						// issue, so more visibility to actual changes.
-						if shared.NoChangeOperation == item.Operation.Name && item.Package.GetVersion().Semver != nil {
+						if contract.NoChangeOperation == item.Operation.Name && item.Package.GetVersion().Semver != nil {
 							noChangePkgList = append(noChangePkgList, item)
 						} else {
 							otherChangePkgList = append(otherChangePkgList, item)
@@ -50,12 +50,12 @@ func splitItemList(subCategoriesMap subCategoriesMap) (pkgList, pkgList) {
 func guessShortestPkgRowMode(abandonedPkgList pkgList) pkgRowMode {
 	needsFullTableWidth := slices.ContainsFunc(
 		abandonedPkgList,
-		func(item *shared.PackageChange) bool {
+		func(item *contract.PackageChange) bool {
 			// The following operations only need two cells (version + operation), any other would need one more
 			// to display both the previous and current versions
-			return item.Operation.Name != shared.AdditionOperation &&
-				item.Operation.Name != shared.RemovalOperation &&
-				item.Operation.Name != shared.NoChangeOperation
+			return item.Operation.Name != contract.AdditionOperation &&
+				item.Operation.Name != contract.RemovalOperation &&
+				item.Operation.Name != contract.NoChangeOperation
 		},
 	)
 
@@ -118,9 +118,9 @@ func buildItemsCounters(subCategoriesMap subCategoriesMap) sectionSummaryCntMap 
 	return cntMap
 }
 
-func findSemverExtraUpdateChange(pkgList pkgList) *shared.PackageChange {
+func findSemverExtraUpdateChange(pkgList pkgList) *contract.PackageChange {
 	for _, pkg := range pkgList {
-		if pkg.Operation.SemverType != shared.SemverExtraUpdate {
+		if pkg.Operation.SemverType != contract.SemverExtraUpdate {
 			return pkg
 		}
 	}

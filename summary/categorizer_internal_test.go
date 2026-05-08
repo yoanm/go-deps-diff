@@ -3,8 +3,8 @@ package summary
 import (
 	"testing"
 
-	"github.com/yoanm/go-deps-diff/shared"
-	"github.com/yoanm/go-deps-diff/shared_test"
+	"github.com/yoanm/go-deps-diff/contract"
+	difftesting "github.com/yoanm/go-deps-diff/testing"
 )
 
 func Test_getMarkdownItemType(t *testing.T) {
@@ -12,113 +12,112 @@ func Test_getMarkdownItemType(t *testing.T) {
 
 	tests := []struct {
 		name     string
-		change   *shared.PackageChange
+		change   *contract.PackageChange
 		expected markdownItem
 	}{
 		{
 			name: "UnknownUpdateOperation",
-			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
-				Operation: shared.Operation{Name: shared.UnknownUpdateOperation, SemverType: shared.SemverUnknownUpdate},
+			change: &contract.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
+				Operation: difftesting.UnknownUpdateOp,
 			},
 			expected: unknownUpdateItem,
 		},
 		{
 			name: "RemovalOperation",
-			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
-				Operation: shared.Operation{Name: shared.RemovalOperation, SemverType: shared.SemverNoUpdate},
+			change: &contract.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
+				Operation: difftesting.RemovalOp,
 			},
 			expected: removalItem,
 		},
 		{
 			name: "AdditionOperation",
-			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
-				Operation: shared.Operation{Name: shared.AdditionOperation, SemverType: shared.SemverNoUpdate},
+			change: &contract.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
+				Operation: difftesting.AdditionOp,
 			},
 			expected: additionItem,
 		},
 		{
 			name: "NoChangeOperation",
-			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
-				Operation: shared.Operation{Name: shared.NoChangeOperation, SemverType: shared.SemverNoUpdate},
+			change: &contract.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
+				Operation: difftesting.SameOp,
 			},
 			expected: sameItem,
 		},
 		{
 			name: "Upgrade - SemverMajorUpdate",
-			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
-				Operation: shared.Operation{Name: shared.UpgradeOperation, SemverType: shared.SemverMajorUpdate},
+			change: &contract.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
+				Operation: difftesting.UpgradeMajorOp,
 			},
 			expected: semverMajorUpgradeItem,
 		},
 		{
 			name: "Upgrade - SemverMinorUpdate",
-			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
-				Operation: shared.Operation{Name: shared.UpgradeOperation, SemverType: shared.SemverMinorUpdate},
+			change: &contract.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
+				Operation: difftesting.UpgradeMinorOp,
 			},
 			expected: semverMinorUpgradeItem,
 		},
 		{
 			name: "Upgrade - SemverPatchUpdate",
-			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
-				Operation: shared.Operation{Name: shared.UpgradeOperation, SemverType: shared.SemverPatchUpdate},
+			change: &contract.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
+				Operation: difftesting.UpgradePatchOp,
 			},
 			expected: semverPatchUpgradeItem,
 		},
 		{
-			name: "Upgrade - SemverExtraUpdate",
-			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
-				Operation: shared.Operation{Name: shared.UpgradeOperation, SemverType: shared.SemverExtraUpdate},
+			name: "Upgrade - SemverExtraUpdate - not expected to exist, but should be categorized as unknown update",
+			change: &contract.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
+				Operation: contract.Operation{Name: contract.UpgradeOperation, SemverType: contract.SemverExtraUpdate},
 			},
 			expected: unknownUpdateItem,
 		},
 		{
-			name: "Upgrade - SemverExtraUpdate",
-			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
-				Operation: shared.Operation{Name: shared.UpgradeOperation, SemverType: shared.SemverUnknownUpdate},
+			name: "Upgrade - SemverUnknownUpdate - not expected to exist, but should be categorized as unknown update",
+			change: &contract.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
+				Operation: contract.Operation{Name: contract.UpgradeOperation, SemverType: contract.SemverUnknownUpdate},
 			},
 			expected: unknownUpdateItem,
 		},
 		{
 			name: "Downgrade - SemverMajorUpdate",
-			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
-				Operation: shared.Operation{Name: shared.DowngradeOperation, SemverType: shared.SemverMajorUpdate},
+			change: &contract.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
+				Operation: difftesting.DowngradeMajorOp,
 			},
 			expected: semverMajorDowngradeItem,
 		},
 		{
 			name: "Downgrade - SemverMinorUpdate",
-			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
-				Operation: shared.Operation{Name: shared.DowngradeOperation, SemverType: shared.SemverMinorUpdate},
+			change: &contract.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
+				Operation: difftesting.DowngradeMinorOp,
 			},
 			expected: semverMinorDowngradeItem,
 		},
 
 		{
 			name: "Downgrade - SemverPatchUpdate",
-			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
-				Operation: shared.Operation{Name: shared.DowngradeOperation, SemverType: shared.SemverPatchUpdate},
+			change: &contract.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
+				Operation: difftesting.DowngradePatchOp,
 			},
 			expected: semverPatchDowngradeItem,
 		},
 		{
-			name: "Downgrade - SemverExtraUpdate",
-			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
-				Operation: shared.Operation{Name: shared.DowngradeOperation, SemverType: shared.SemverExtraUpdate},
+			name: "Downgrade - SemverExtraUpdate - not expected to exist, but should be categorized as unknown update",
+			change: &contract.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
+				Operation: contract.Operation{Name: contract.DowngradeOperation, SemverType: contract.SemverExtraUpdate},
 			},
 			expected: unknownUpdateItem,
 		},
 		{
-			name: "Downgrade - SemverExtraUpdate",
-			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
-				Operation: shared.Operation{Name: shared.DowngradeOperation, SemverType: shared.SemverUnknownUpdate},
+			name: "Downgrade - SemverUnknownUpdate - not expected to exist, but should be categorized as unknown update",
+			change: &contract.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
+				Operation: contract.Operation{Name: contract.DowngradeOperation, SemverType: contract.SemverUnknownUpdate},
 			},
 			expected: unknownUpdateItem,
 		},
 		{
 			name: "Unknown for unmanaged case",
-			change: &shared.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
-				// Following operation (downgrade + semver no update)is not expected to exist
-				Operation: shared.Operation{Name: shared_test.InvalidOperationName, SemverType: shared.SemverNoUpdate},
+			change: &contract.PackageChange{ //nolint:exhaustruct // Useless for the test purpose
+				Operation: difftesting.InvalidOp,
 			},
 			expected: unknownUpdateItem,
 		},

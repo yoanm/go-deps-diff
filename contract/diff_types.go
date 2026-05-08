@@ -1,4 +1,6 @@
-package shared
+package contract
+
+type DiffMap map[string]*PackageChange
 
 // PackageChange contains detailed information about a package difference.
 type PackageChange struct {
@@ -7,5 +9,3 @@ type PackageChange struct {
 
 	PreviousVersion PkgVersion // Only available for updated packages ! Empty (zero value) otherwise.
 }
-
-type DiffMap map[string]*PackageChange

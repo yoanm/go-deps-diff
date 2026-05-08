@@ -1,8 +1,8 @@
 package summary
 
-import "github.com/yoanm/go-deps-diff/shared"
+import "github.com/yoanm/go-deps-diff/contract"
 
-func getPackageSymbol(pkg shared.PkgWrapper) string {
+func getPackageSymbol(pkg contract.PkgWrapper) string {
 	switch {
 	case pkg.IsRootRequirement():
 		return "🗄️"
@@ -13,41 +13,41 @@ func getPackageSymbol(pkg shared.PkgWrapper) string {
 	}
 }
 
-func getOperationSymbol(operation shared.Operation) string {
+func getOperationSymbol(operation contract.Operation) string {
 	switch operation.Name {
-	case shared.UnknownUpdateOperation:
-		if operation.SemverType == shared.SemverExtraUpdate {
+	case contract.UnknownUpdateOperation:
+		if operation.SemverType == contract.SemverExtraUpdate {
 			return "<sub><sup>🔹.🔹.🔹❓</sup></sub>"
 		}
 
 		return "❓"
-	case shared.UpgradeOperation:
+	case contract.UpgradeOperation:
 		return getUpdateOperationSymbol(operation, false)
-	case shared.DowngradeOperation:
+	case contract.DowngradeOperation:
 		return getUpdateOperationSymbol(operation, true)
-	case shared.RemovalOperation:
+	case contract.RemovalOperation:
 		return "❌"
-	case shared.AdditionOperation:
+	case contract.AdditionOperation:
 		return "➕️"
-	case shared.NoChangeOperation:
+	case contract.NoChangeOperation:
 		return "🟰"
 	}
 
 	return "❔"
 }
 
-func getUpdateOperationSymbol(operation shared.Operation, isDowngrade bool) string {
+func getUpdateOperationSymbol(operation contract.Operation, isDowngrade bool) string {
 	emojiUpdated := "🔺"
 	if isDowngrade {
 		emojiUpdated = "🔻"
 	}
 
 	switch operation.SemverType { //nolint:exhaustive // Only those cases can be managed, fallback to unknown otherwise
-	case shared.SemverMajorUpdate:
+	case contract.SemverMajorUpdate:
 		return "<sub><sup>" + emojiUpdated + ".🔹.🔹</sup></sub>"
-	case shared.SemverMinorUpdate:
+	case contract.SemverMinorUpdate:
 		return "<sub><sup>🔹." + emojiUpdated + ".🔹</sup></sub>"
-	case shared.SemverPatchUpdate:
+	case contract.SemverPatchUpdate:
 		return "<sub><sup>🔹.🔹." + emojiUpdated + "</sup></sub>"
 	}
 

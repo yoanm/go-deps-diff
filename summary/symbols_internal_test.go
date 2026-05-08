@@ -3,8 +3,8 @@ package summary
 import (
 	"testing"
 
-	"github.com/yoanm/go-deps-diff/shared"
-	"github.com/yoanm/go-deps-diff/shared_test"
+	"github.com/yoanm/go-deps-diff/contract"
+	difftesting "github.com/yoanm/go-deps-diff/testing"
 )
 
 func Test_getOperationSymbol(t *testing.T) {
@@ -12,23 +12,23 @@ func Test_getOperationSymbol(t *testing.T) {
 
 	tests := []struct {
 		name      string
-		operation shared.Operation
+		operation contract.Operation
 		expected  string
 	}{
-		{name: "Addition", operation: shared_test.AdditionOp, expected: "➕️"},
-		{name: "Removal", operation: shared_test.RemovalOp, expected: "❌"},
-		{name: "Same", operation: shared_test.SameOp, expected: "🟰"},
-		{name: "Major Upgrade", operation: shared_test.UpgradeMajorOp, expected: "<sub><sup>🔺.🔹.🔹</sup></sub>"},
-		{name: "Minor Upgrade", operation: shared_test.UpgradeMinorOp, expected: "<sub><sup>🔹.🔺.🔹</sup></sub>"},
-		{name: "Patch Upgrade", operation: shared_test.UpgradePatchOp, expected: "<sub><sup>🔹.🔹.🔺</sup></sub>"},
-		{name: "Major Downgrade", operation: shared_test.DowngradeMajorOp, expected: "<sub><sup>🔻.🔹.🔹</sup></sub>"},
-		{name: "Minor Downgrade", operation: shared_test.DowngradeMinorOp, expected: "<sub><sup>🔹.🔻.🔹</sup></sub>"},
-		{name: "Patch Downgrade", operation: shared_test.DowngradePatchOp, expected: "<sub><sup>🔹.🔹.🔻</sup></sub>"},
-		{name: "UnknownUpdate", operation: shared_test.UnknownUpdateOp, expected: "❓"},
-		{name: "SemverExtra Update", operation: shared_test.SemverExtraUpdateOp, expected: "<sub><sup>🔹.🔹.🔹❓</sup></sub>"},
-		{name: "Unknown operation", operation: shared_test.InvalidOp, expected: "❔"},
-		{name: "Unmanaged upgrade", operation: shared_test.InvalidUpgradeOp, expected: "❔"},
-		{name: "Unmanaged downgrade", operation: shared_test.InvalidDowngradeOp, expected: "❔"},
+		{name: "Addition", operation: difftesting.AdditionOp, expected: "➕️"},
+		{name: "Removal", operation: difftesting.RemovalOp, expected: "❌"},
+		{name: "Same", operation: difftesting.SameOp, expected: "🟰"},
+		{name: "Major Upgrade", operation: difftesting.UpgradeMajorOp, expected: "<sub><sup>🔺.🔹.🔹</sup></sub>"},
+		{name: "Minor Upgrade", operation: difftesting.UpgradeMinorOp, expected: "<sub><sup>🔹.🔺.🔹</sup></sub>"},
+		{name: "Patch Upgrade", operation: difftesting.UpgradePatchOp, expected: "<sub><sup>🔹.🔹.🔺</sup></sub>"},
+		{name: "Major Downgrade", operation: difftesting.DowngradeMajorOp, expected: "<sub><sup>🔻.🔹.🔹</sup></sub>"},
+		{name: "Minor Downgrade", operation: difftesting.DowngradeMinorOp, expected: "<sub><sup>🔹.🔻.🔹</sup></sub>"},
+		{name: "Patch Downgrade", operation: difftesting.DowngradePatchOp, expected: "<sub><sup>🔹.🔹.🔻</sup></sub>"},
+		{name: "UnknownUpdate", operation: difftesting.UnknownUpdateOp, expected: "❓"},
+		{name: "SemverExtra Update", operation: difftesting.SemverExtraUpdateOp, expected: "<sub><sup>🔹.🔹.🔹❓</sup></sub>"},
+		{name: "Unknown operation", operation: difftesting.InvalidOp, expected: "❔"},
+		{name: "Unmanaged upgrade", operation: difftesting.InvalidUpgradeOp, expected: "❔"},
+		{name: "Unmanaged downgrade", operation: difftesting.InvalidDowngradeOp, expected: "❔"},
 	}
 	for _, testCase := range tests {
 		t.Run(testCase.name, func(t *testing.T) {

@@ -1,10 +1,10 @@
 package summary
 
 import (
-	"github.com/yoanm/go-deps-diff/shared"
+	"github.com/yoanm/go-deps-diff/contract"
 )
 
-func buildSectionsMap(changes shared.DiffMap) sectionsMap {
+func buildSectionsMap(changes contract.DiffMap) sectionsMap {
 	list := sectionsMap{}
 
 	for _, change := range changes {
@@ -43,7 +43,7 @@ func buildSectionsMap(changes shared.DiffMap) sectionsMap {
 func getMarkdownSectionType(
 	subCategoryType markdownSubCategory,
 	itemType markdownItem,
-	pkg shared.PkgWrapper,
+	pkg contract.PkgWrapper,
 ) markdownSection {
 	switch {
 	case isCandidateForCautionSection(subCategoryType, itemType, pkg):
@@ -84,7 +84,7 @@ func getMarkdownSectionType(
 func isCandidateForCautionSection(
 	subCategoryType markdownSubCategory,
 	itemType markdownItem,
-	pkg shared.PkgWrapper,
+	pkg contract.PkgWrapper,
 ) bool {
 	//# Caution
 	//## Production usage
@@ -111,7 +111,7 @@ func isCandidateForCautionSection(
 func isCandidateForWarningSection( //nolint:cyclop // 11 vs 10 allowed but easier to maintain that way
 	subCategoryType markdownSubCategory,
 	itemType markdownItem,
-	pkg shared.PkgWrapper,
+	pkg contract.PkgWrapper,
 ) bool {
 	//# Warning
 	//## Production usage
@@ -150,7 +150,7 @@ func isCandidateForWarningSection( //nolint:cyclop // 11 vs 10 allowed but easie
 func isCandidateForImportantSection(
 	subCategoryType markdownSubCategory,
 	itemType markdownItem,
-	pkg shared.PkgWrapper,
+	pkg contract.PkgWrapper,
 ) bool {
 	// # Important
 	//## Production usage
@@ -206,7 +206,7 @@ func isCandidateForTipSection(
 	return subCategoryType == transitiveSubCategory && (itemType == semverPatchDowngradeItem || itemType == removalItem)
 }
 
-func getMarkdownCategoryType(change *shared.PackageChange) (markdownCategory, markdownSubCategory) {
+func getMarkdownCategoryType(change *contract.PackageChange) (markdownCategory, markdownSubCategory) {
 	category := prodUsageCategory // By default, for security, better than defining a package as dev-only while it's not
 	if change.Package.IsDevOnly() {
 		category = devOnlyUsageCategory
@@ -219,7 +219,7 @@ func getMarkdownCategoryType(change *shared.PackageChange) (markdownCategory, ma
 	}
 }
 
-func getMarkdownItemType(change *shared.PackageChange) markdownItem {
+func getMarkdownItemType(change *contract.PackageChange) markdownItem {
 	mrkItem, exists := getOperationToItemBaseMap()[change.Operation.Name]
 	if exists {
 		return mrkItem
@@ -230,27 +230,27 @@ func getMarkdownItemType(change *shared.PackageChange) markdownItem {
 	// - SEMVER_MAJOR_UPGRADE
 	// - SEMVER_MINOR_UPGRADE
 	// - SEMVER_PATCH_UPGRADE
-	case shared.UpgradeOperation:
+	case contract.UpgradeOperation:
 		//nolint:exhaustive // SemverExtra + SemverUnknown + SemverNoUpdate managed as unknownUpdateItem !
 		switch change.Operation.SemverType {
-		case shared.SemverMajorUpdate:
+		case contract.SemverMajorUpdate:
 			return semverMajorUpgradeItem
-		case shared.SemverMinorUpdate:
+		case contract.SemverMinorUpdate:
 			return semverMinorUpgradeItem
-		case shared.SemverPatchUpdate:
+		case contract.SemverPatchUpdate:
 			return semverPatchUpgradeItem
 		}
 	// - SEMVER_MAJOR_DOWNGRADE
 	// - SEMVER_MINOR_DOWNGRADE
 	// - SEMVER_PATCH_DOWNGRADE
-	case shared.DowngradeOperation:
+	case contract.DowngradeOperation:
 		//nolint:exhaustive // SemverExtra + SemverUnknown + SemverNoUpdate managed as unknownUpdateItem !
 		switch change.Operation.SemverType {
-		case shared.SemverMajorUpdate:
+		case contract.SemverMajorUpdate:
 			return semverMajorDowngradeItem
-		case shared.SemverMinorUpdate:
+		case contract.SemverMinorUpdate:
 			return semverMinorDowngradeItem
-		case shared.SemverPatchUpdate:
+		case contract.SemverPatchUpdate:
 			return semverPatchDowngradeItem
 		}
 	}
@@ -264,7 +264,7 @@ func _debugPackageList(
 	categoryType markdownCategory,
 	subCategoryType markdownSubCategory,
 	itemType markdownItem,
-	change *shared.PackageChange,
+	change *contract.PackageChange,
 ) {
 	expectedTypeKey := strings.ToLower(string(sectionType)) +
 		"-" + strings.ToLower(string(categoryType)) +
@@ -274,7 +274,7 @@ func _debugPackageList(
 	}
 
 	expectedTypeKey += "/" + string(itemType)
-	if itemType == unknownUpdateItem && change.Operation.SemverType == shared.SemverExtraUpdate {
+	if itemType == unknownUpdateItem && change.Operation.SemverType == contract.SemverExtraUpdate {
 		expectedTypeKey += "+SEMVER_EXTRA"
 	} else if change.Package.IsAbandoned() {
 		expectedTypeKey += "+ABANDONED"

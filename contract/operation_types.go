@@ -1,4 +1,4 @@
-package shared
+package contract
 
 // Operation describes what changed (operation, semver type) about a package
 

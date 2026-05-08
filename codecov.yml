@@ -12,4 +12,4 @@ github_checks:
     annotations: true
 
 ignore:
-  - "shared_test/**" # Not covered as for test purpose only
+  - "testing/**" # Not covered as for test purpose only

@@ -1,14 +1,11 @@
 package depsdiff_test
 
 import (
-	"fmt"
 	"os"
-	"reflect"
 	"testing"
 
 	depsdiff "github.com/yoanm/go-deps-diff"
-	"github.com/yoanm/go-deps-diff/shared"
-	"github.com/yoanm/go-deps-diff/shared_test"
+	"github.com/yoanm/go-deps-diff/contract"
 )
 
 func TestIntegration_Fixtures(t *testing.T) {
@@ -70,7 +67,7 @@ func TestIntegration_Fixtures(t *testing.T) {
 			}
 
 			for _, change := range out {
-				if change.Operation.Name != shared.NoChangeOperation {
+				if change.Operation.Name != contract.NoChangeOperation {
 					t.Errorf(
 						"Diff() result check failed: expected all packages to be unchanged, but %s isn't",
 						change.Package.GetName(),
@@ -79,57 +76,4 @@ func TestIntegration_Fixtures(t *testing.T) {
 			}
 		})
 	}
-}
-
-func validateChanges(actual, expectedChanges shared.DiffMap) []error {
-	var errList []error
-
-	for _, expectedChange := range expectedChanges {
-		pkgName := expectedChange.Package.GetName()
-		actualChange, exists := actual[pkgName]
-
-		if !exists {
-			errList = append(errList, fmt.Errorf("Package %s is expected to exist", pkgName))
-		} else {
-			if err := shared_test.ValidateWrapperPackage(actualChange.Package, expectedChange.Package); err != nil {
-				errList = append(errList, fmt.Errorf("package %s has unexpected Package differences: %w", pkgName, err))
-			}
-
-			if err := ValidateWrapperOperation(actualChange.Operation, expectedChange.Operation); err != nil {
-				errList = append(errList, fmt.Errorf("package %s has unexpected Operation differences: %w", pkgName, err))
-			}
-
-			if err := shared_test.ValidatePackageVersion(actualChange.PreviousVersion, expectedChange.PreviousVersion); err != nil { //nolint:lll // Meaningless here
-				errList = append(errList, fmt.Errorf("package %s has unexpected PreviousVersion differences: %w", pkgName, err))
-			}
-		}
-	}
-
-	for pkgName := range actual {
-		if change, exists := expectedChanges[pkgName]; !exists {
-			errList = append(errList, fmt.Errorf("package %s is not expected to exist. %+v", pkgName, change))
-		}
-	}
-
-	return errList
-}
-
-func ValidateWrapperOperation(actualOperation, expectedOperation shared.Operation) error {
-	if actualOperation.Name != expectedOperation.Name {
-		return fmt.Errorf("unexpected Name value. Expected: %s Actual: %s", expectedOperation.Name, actualOperation.Name)
-	}
-
-	if actualOperation.SemverType != expectedOperation.SemverType {
-		return fmt.Errorf(
-			"unexpected SemverType value. Expected: %s Actual: %s",
-			expectedOperation.SemverType,
-			actualOperation.SemverType,
-		)
-	}
-
-	if !reflect.DeepEqual(actualOperation, expectedOperation) {
-		return fmt.Errorf("unexpected differences. Expected: %+v, Actual: %+v", expectedOperation, actualOperation)
-	}
-
-	return nil
 }

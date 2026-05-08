@@ -5,23 +5,24 @@ import (
 	"testing"
 
 	depsdiff "github.com/yoanm/go-deps-diff"
-	"github.com/yoanm/go-deps-diff/shared"
-	"github.com/yoanm/go-deps-diff/shared_test"
+	"github.com/yoanm/go-deps-diff/contract"
+	"github.com/yoanm/go-deps-diff/contract/semver"
+	difftesting "github.com/yoanm/go-deps-diff/testing"
 )
 
 func TestDiff_NoChange(t *testing.T) {
 	t.Parallel()
 
-	previous := map[string]shared.PkgWrapper{
-		"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
+	previous := map[string]contract.PkgWrapper{
+		"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 			Name:    "vendor/pkg",
-			Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 		},
 	}
-	current := map[string]shared.PkgWrapper{
-		"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
+	current := map[string]contract.PkgWrapper{
+		"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 			Name:    "vendor/pkg",
-			Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 		},
 	}
 
@@ -34,17 +35,17 @@ func TestDiff_NoChange(t *testing.T) {
 	switch {
 	case !pkgExists:
 		t.Fatal("package 'vendor/pkg' is expected in the package map")
-	case change.Operation.Name != shared.NoChangeOperation:
+	case change.Operation.Name != contract.NoChangeOperation:
 		t.Fatalf(
 			"unexpected Operation: got %s, want %s",
 			change.Operation.Name,
-			shared.NoChangeOperation,
+			contract.NoChangeOperation,
 		)
-	case change.Operation.SemverType != shared.SemverNoUpdate:
+	case change.Operation.SemverType != contract.SemverNoUpdate:
 		t.Fatalf(
 			"unexpected SemverType: got %s, want %s",
 			change.Operation.SemverType,
-			shared.SemverNoUpdate,
+			contract.SemverNoUpdate,
 		)
 	}
 }
@@ -54,103 +55,103 @@ func TestDiff_BasicComparison(t *testing.T) {
 
 	tests := []struct {
 		name                  string
-		previous              shared.PackageMap
-		current               shared.PackageMap
-		expectedOperationName shared.OperationName
-		expectedSemverType    shared.OperationSemverType
+		previous              contract.PackageMap
+		current               contract.PackageMap
+		expectedOperationName contract.OperationName
+		expectedSemverType    contract.OperationSemverType
 	}{
 		{
 			name:     "added package",
-			previous: map[string]shared.PkgWrapper{},
-			current: map[string]shared.PkgWrapper{
-				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
+			previous: map[string]contract.PkgWrapper{},
+			current: map[string]contract.PkgWrapper{
+				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 				},
 			},
-			expectedOperationName: shared.AdditionOperation,
-			expectedSemverType:    shared.SemverNoUpdate,
+			expectedOperationName: contract.AdditionOperation,
+			expectedSemverType:    contract.SemverNoUpdate,
 		},
 		{
 			name: "unchanged package",
-			previous: map[string]shared.PkgWrapper{
-				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
+			previous: map[string]contract.PkgWrapper{
+				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 				},
 			},
-			current: map[string]shared.PkgWrapper{
-				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
+			current: map[string]contract.PkgWrapper{
+				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 				},
 			},
-			expectedOperationName: shared.NoChangeOperation,
-			expectedSemverType:    shared.SemverNoUpdate,
+			expectedOperationName: contract.NoChangeOperation,
+			expectedSemverType:    contract.SemverNoUpdate,
 		},
 		{
 			name: "removed package",
-			previous: map[string]shared.PkgWrapper{
-				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
+			previous: map[string]contract.PkgWrapper{
+				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 				},
 			},
-			current:               map[string]shared.PkgWrapper{},
-			expectedOperationName: shared.RemovalOperation,
-			expectedSemverType:    shared.SemverNoUpdate,
+			current:               map[string]contract.PkgWrapper{},
+			expectedOperationName: contract.RemovalOperation,
+			expectedSemverType:    contract.SemverNoUpdate,
 		},
 		{
 			name: "upgraded package",
-			previous: map[string]shared.PkgWrapper{
-				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
+			previous: map[string]contract.PkgWrapper{
+				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 				},
 			},
-			current: map[string]shared.PkgWrapper{
-				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
+			current: map[string]contract.PkgWrapper{
+				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "2.0.0", Label: "2.0.0", Semver: &shared.SemverVersion{Major: 2, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+					Version: contract.PkgVersion{Raw: "2.0.0", Label: "2.0.0", Semver: &semver.Version{Major: 2, Minor: 0, Patch: 0, Extra: ""}},
 				},
 			},
-			expectedOperationName: shared.UpgradeOperation,
-			expectedSemverType:    shared.SemverMajorUpdate,
+			expectedOperationName: contract.UpgradeOperation,
+			expectedSemverType:    contract.SemverMajorUpdate,
 		},
 		{
 			name: "downgraded package",
-			previous: map[string]shared.PkgWrapper{
-				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
+			previous: map[string]contract.PkgWrapper{
+				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "1.1.0", Label: "1.1.0", Semver: &shared.SemverVersion{Major: 1, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+					Version: contract.PkgVersion{Raw: "1.1.0", Label: "1.1.0", Semver: &semver.Version{Major: 1, Minor: 1, Patch: 0, Extra: ""}},
 				},
 			},
-			current: map[string]shared.PkgWrapper{
-				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
+			current: map[string]contract.PkgWrapper{
+				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &shared.SemverVersion{Major: 1, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 				},
 			},
-			expectedOperationName: shared.DowngradeOperation,
-			expectedSemverType:    shared.SemverMinorUpdate,
+			expectedOperationName: contract.DowngradeOperation,
+			expectedSemverType:    contract.SemverMinorUpdate,
 		},
 		{
 			name: "unknown update",
-			previous: map[string]shared.PkgWrapper{
-				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
+			previous: map[string]contract.PkgWrapper{
+				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "abcdef", Label: "dev-master#abcdef", Semver: nil},
+					Version: contract.PkgVersion{Raw: "abcdef", Label: "dev-master#abcdef", Semver: nil},
 				},
 			},
-			current: map[string]shared.PkgWrapper{
-				"vendor/pkg": &shared_test.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
+			current: map[string]contract.PkgWrapper{
+				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: shared.PkgVersion{Raw: "fedcba", Label: "1.0.0#fedcba", Semver: nil},
+					Version: contract.PkgVersion{Raw: "fedcba", Label: "1.0.0#fedcba", Semver: nil},
 				},
 			},
 
-			expectedOperationName: shared.UnknownUpdateOperation,
-			expectedSemverType:    shared.SemverUnknownUpdate,
+			expectedOperationName: contract.UnknownUpdateOperation,
+			expectedSemverType:    contract.SemverUnknownUpdate,
 		},
 	}
 

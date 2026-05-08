@@ -4,7 +4,7 @@
 
 ### func [GenerateForChanges](./main.go#L17)
 
-`func GenerateForChanges(changes shared.DiffMap) string`
+`func GenerateForChanges(changes contract.DiffMap) string`
 
 ## Sub Packages
 

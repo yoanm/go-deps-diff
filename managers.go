@@ -3,11 +3,11 @@ package depsdiff
 import (
 	"fmt"
 
+	"github.com/yoanm/go-deps-diff/contract"
 	"github.com/yoanm/go-deps-diff/managers/composer"
-	"github.com/yoanm/go-deps-diff/shared"
 )
 
-func ComposerDiff(previous, current *PkgManagerInput) (shared.DiffMap, error) {
+func ComposerDiff(previous, current *PkgManagerInput) (contract.DiffMap, error) {
 	previousMap, err := composer.BuildMapFromBytes(previous.Requirement, previous.Lock)
 	if err != nil {
 		return nil, fmt.Errorf("building previous package map: %w", err)

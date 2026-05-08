@@ -190,7 +190,18 @@ linters:
         path: benchmark_test\.go
       - linters:
           - err113
+          - cyclop
+          - gochecknoglobals
+          - lll
+          - gosec
         path: _test\.go
+      - linters:
+          - err113
+          - cyclop
+          - gochecknoglobals
+          - lll
+          - gosec
+        path: testing/.*
     paths:
       - third_party$
       - builtin$
