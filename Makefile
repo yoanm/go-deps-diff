@@ -62,7 +62,7 @@ build: ## 🗜️  Build package
 #### Use build_o="..." to specify build options
 $(eval build_o ?=)
 build:
-	go build -v $(build_o)
+	go build -v $(build_o) ./...
 
 .PHONY: verify-deps
 verify-deps: ## 🗜️  Verify dependencies
