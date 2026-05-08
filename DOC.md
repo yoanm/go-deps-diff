@@ -16,10 +16,6 @@ Diff compares two packages maps and returns the differences.
 
 * [semver](./semver)
 
-* [summary](./summary)
-
-* [summary/markdown](./summary/markdown)
-
 * [testing](./testing)
 
 ---
