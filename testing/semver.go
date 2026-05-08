@@ -3,10 +3,10 @@ package difftesting
 import (
 	"fmt"
 
-	"github.com/yoanm/go-deps-diff/contract/semver"
+	"github.com/yoanm/go-deps-diff/contract"
 )
 
-func ValidateSemverVersion(actual, expected *semver.Version) error {
+func ValidateSemverVersion(actual, expected *contract.Semver) error {
 	switch {
 	case actual == nil && expected == nil:
 		return nil

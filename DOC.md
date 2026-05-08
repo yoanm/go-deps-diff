@@ -20,7 +20,7 @@ Diff compares two packages maps and returns the differences.
 
 * [contract](./contract)
 
-* [contract/semver](./contract/semver)
+* [semver](./semver)
 
 * [summary](./summary)
 

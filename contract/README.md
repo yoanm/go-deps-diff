@@ -61,24 +61,24 @@ const (
 
 PackageChange contains detailed information about a package difference.
 
-### type [PackageMap](./wrapper_types.go#L7)
+### type [PackageMap](./wrapper_types.go#L5)
 
 `type PackageMap map[string]PkgWrapper`
 
 PackageMap holds package information for efficient lookup
 Key is the package name (e.g., "vendor/package"), value is a wrapper providing package details and helper methods.
 
-### type [PkgVersion](./wrapper_types.go#L30)
+### type [PkgVersion](./wrapper_types.go#L28)
 
 `type PkgVersion struct { ... }`
 
-### type [PkgWrapper](./wrapper_types.go#L9)
+### type [PkgWrapper](./wrapper_types.go#L7)
 
 `type PkgWrapper interface { ... }`
 
-## Sub Packages
+### type [Semver](./semver.go#L3)
 
-* [semver](./semver)
+`type Semver struct { ... }`
 
 ---
 Readme created from Go doc with [goreadme](https://github.com/posener/goreadme)

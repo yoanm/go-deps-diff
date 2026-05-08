@@ -7,7 +7,6 @@ import (
 	"strconv"
 
 	"github.com/yoanm/go-deps-diff/contract"
-	"github.com/yoanm/go-deps-diff/contract/semver"
 )
 
 type TestPkgWrapper struct {
@@ -58,7 +57,7 @@ func GetDummyPackage() *TestPkgWrapper {
 	return &TestPkgWrapper{
 		Name:               "vendor/package-" + strconv.Itoa(rand.Int()),
 		Abandoned:          true,
-		Version:            contract.PkgVersion{Raw: version, Label: version, Semver: &semver.Version{Major: major, Minor: minor, Patch: patch, Extra: ""}},
+		Version:            contract.PkgVersion{Raw: version, Label: version, Semver: &contract.Semver{Major: major, Minor: minor, Patch: patch, Extra: ""}},
 		Link:               "",
 		DevOnly:            false,
 		RootRequirement:    false,

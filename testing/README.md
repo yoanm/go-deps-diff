@@ -45,53 +45,53 @@ var (
 
 `func ValidatePackageMap(actual, expectedChanges contract.PackageMap) []error`
 
-### func [ValidatePkgVersion](./wrapper.go#L101)
+### func [ValidatePkgVersion](./wrapper.go#L100)
 
 `func ValidatePkgVersion(actualVersion, expectedVersion contract.PkgVersion) error`
 
-### func [ValidatePkgWrapper](./wrapper.go#L69)
+### func [ValidatePkgWrapper](./wrapper.go#L68)
 
 `func ValidatePkgWrapper(actualPackage, expectedPackage contract.PkgWrapper) error`
 
 ### func [ValidateSemverVersion](./semver.go#L9)
 
-`func ValidateSemverVersion(actual, expected *semver.Version) error`
+`func ValidateSemverVersion(actual, expected *contract.Semver) error`
 
 ## Types
 
-### type [TestPkgWrapper](./wrapper.go#L13)
+### type [TestPkgWrapper](./wrapper.go#L12)
 
 `type TestPkgWrapper struct { ... }`
 
-#### func [GetDummyPackage](./wrapper.go#L54)
+#### func [GetDummyPackage](./wrapper.go#L53)
 
 `func GetDummyPackage() *TestPkgWrapper`
 
-#### func (*TestPkgWrapper) [GetLink](./wrapper.go#L38)
+#### func (*TestPkgWrapper) [GetLink](./wrapper.go#L37)
 
 `func (w *TestPkgWrapper) GetLink() string`
 
-#### func (*TestPkgWrapper) [GetName](./wrapper.go#L26)
+#### func (*TestPkgWrapper) [GetName](./wrapper.go#L25)
 
 `func (w *TestPkgWrapper) GetName() string`
 
-#### func (*TestPkgWrapper) [GetVersion](./wrapper.go#L34)
+#### func (*TestPkgWrapper) [GetVersion](./wrapper.go#L33)
 
 `func (w *TestPkgWrapper) GetVersion() contract.PkgVersion`
 
-#### func (*TestPkgWrapper) [IsAbandoned](./wrapper.go#L30)
+#### func (*TestPkgWrapper) [IsAbandoned](./wrapper.go#L29)
 
 `func (w *TestPkgWrapper) IsAbandoned() bool`
 
-#### func (*TestPkgWrapper) [IsDevOnly](./wrapper.go#L42)
+#### func (*TestPkgWrapper) [IsDevOnly](./wrapper.go#L41)
 
 `func (w *TestPkgWrapper) IsDevOnly() bool`
 
-#### func (*TestPkgWrapper) [IsRootDevRequirement](./wrapper.go#L50)
+#### func (*TestPkgWrapper) [IsRootDevRequirement](./wrapper.go#L49)
 
 `func (w *TestPkgWrapper) IsRootDevRequirement() bool`
 
-#### func (*TestPkgWrapper) [IsRootRequirement](./wrapper.go#L46)
+#### func (*TestPkgWrapper) [IsRootRequirement](./wrapper.go#L45)
 
 `func (w *TestPkgWrapper) IsRootRequirement() bool`
 

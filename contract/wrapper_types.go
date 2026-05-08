@@ -1,7 +1,5 @@
 package contract
 
-import "github.com/yoanm/go-deps-diff/contract/semver"
-
 // PackageMap holds package information for efficient lookup
 // Key is the package name (e.g., "vendor/package"), value is a wrapper providing package details and helper methods.
 type PackageMap map[string]PkgWrapper
@@ -33,5 +31,5 @@ type PkgVersion struct {
 	// Label is the Human-readable title for the version (e.g., "1.2.3", "dev-master#abcd123")
 	Label string
 	// Semver will be defined only if Raw version is semver compliant, otherwise it will be nil
-	Semver *semver.Version
+	Semver *Semver
 }

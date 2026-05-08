@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/yoanm/go-deps-diff/contract"
-	"github.com/yoanm/go-deps-diff/contract/semver"
+
 	difftesting "github.com/yoanm/go-deps-diff/testing"
 )
 
@@ -13,7 +13,7 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 	t.Parallel()
 
 	pkg := difftesting.GetDummyPackage()
-	prevVersion := contract.PkgVersion{Raw: "1.2.3", Label: "1.2.3", Semver: &semver.Version{Major: 1, Minor: 2, Patch: 3, Extra: ""}}
+	prevVersion := contract.PkgVersion{Raw: "1.2.3", Label: "1.2.3", Semver: &contract.Semver{Major: 1, Minor: 2, Patch: 3, Extra: ""}}
 
 	tests := []struct {
 		name     string

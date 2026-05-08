@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/yoanm/go-deps-diff/contract/semver"
+	"github.com/yoanm/go-deps-diff/contract"
+	"github.com/yoanm/go-deps-diff/semver"
+
 	difftesting "github.com/yoanm/go-deps-diff/testing"
 )
 
@@ -14,12 +16,12 @@ func TestParse(t *testing.T) {
 	tests := []struct {
 		name     string
 		version  string
-		expected *semver.Version
+		expected *contract.Semver
 	}{
-		{name: "simple semver", version: "1.2.3", expected: &semver.Version{Major: 1, Minor: 2, Patch: 3, Extra: ""}},
-		{name: "with v prefix", version: "v2.1.3", expected: &semver.Version{Major: 2, Minor: 1, Patch: 3, Extra: ""}},
-		{name: "with prerelease", version: "1.2.3-beta.1", expected: &semver.Version{Major: 1, Minor: 2, Patch: 3, Extra: "-beta.1"}},
-		{name: "with build metadata", version: "2.5.1+build.1", expected: &semver.Version{Major: 2, Minor: 5, Patch: 1, Extra: "+build.1"}},
+		{name: "simple semver", version: "1.2.3", expected: &contract.Semver{Major: 1, Minor: 2, Patch: 3, Extra: ""}},
+		{name: "with v prefix", version: "v2.1.3", expected: &contract.Semver{Major: 2, Minor: 1, Patch: 3, Extra: ""}},
+		{name: "with prerelease", version: "1.2.3-beta.1", expected: &contract.Semver{Major: 1, Minor: 2, Patch: 3, Extra: "-beta.1"}},
+		{name: "with build metadata", version: "2.5.1+build.1", expected: &contract.Semver{Major: 2, Minor: 5, Patch: 1, Extra: "+build.1"}},
 	}
 
 	for _, testCase := range tests {

@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/yoanm/go-deps-diff/contract"
+
 	difftesting "github.com/yoanm/go-deps-diff/testing"
 )
 

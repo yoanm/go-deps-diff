@@ -3,14 +3,9 @@ package semver
 import (
 	"regexp"
 	"strconv"
-)
 
-type Version struct {
-	Major int
-	Minor int
-	Patch int
-	Extra string
-}
+	"github.com/yoanm/go-deps-diff/contract"
+)
 
 type InvalidVersionError struct {
 	Version string
@@ -34,7 +29,7 @@ func IsValid(value string) bool {
 
 // Parse parses a semantic Version string
 // Returns nil if parsing fails.
-func Parse(version string) (*Version, error) {
+func Parse(version string) (*contract.Semver, error) {
 	matches := parseVersionRegexp.FindStringSubmatch(version)
 	if matches == nil {
 		return nil, &InvalidVersionError{Version: version}
@@ -56,7 +51,7 @@ func Parse(version string) (*Version, error) {
 		return nil, &InvalidComponentError{Version: version}
 	}
 
-	return &Version{Major: major, Minor: minor, Patch: patch, Extra: extra}, nil
+	return &contract.Semver{Major: major, Minor: minor, Patch: patch, Extra: extra}, nil
 }
 
 /**

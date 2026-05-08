@@ -6,7 +6,7 @@ import (
 
 	depsdiff "github.com/yoanm/go-deps-diff"
 	"github.com/yoanm/go-deps-diff/contract"
-	"github.com/yoanm/go-deps-diff/contract/semver"
+
 	difftesting "github.com/yoanm/go-deps-diff/testing"
 )
 
@@ -16,13 +16,13 @@ func TestDiff_NoChange(t *testing.T) {
 	previous := map[string]contract.PkgWrapper{
 		"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 			Name:    "vendor/pkg",
-			Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
+			Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &contract.Semver{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 		},
 	}
 	current := map[string]contract.PkgWrapper{
 		"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 			Name:    "vendor/pkg",
-			Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
+			Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &contract.Semver{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 		},
 	}
 
@@ -66,7 +66,7 @@ func TestDiff_BasicComparison(t *testing.T) {
 			current: map[string]contract.PkgWrapper{
 				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
+					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &contract.Semver{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 				},
 			},
 			expectedOperationName: contract.AdditionOperation,
@@ -77,13 +77,13 @@ func TestDiff_BasicComparison(t *testing.T) {
 			previous: map[string]contract.PkgWrapper{
 				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
+					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &contract.Semver{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 				},
 			},
 			current: map[string]contract.PkgWrapper{
 				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
+					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &contract.Semver{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 				},
 			},
 			expectedOperationName: contract.NoChangeOperation,
@@ -94,7 +94,7 @@ func TestDiff_BasicComparison(t *testing.T) {
 			previous: map[string]contract.PkgWrapper{
 				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
+					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &contract.Semver{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 				},
 			},
 			current:               map[string]contract.PkgWrapper{},
@@ -106,13 +106,13 @@ func TestDiff_BasicComparison(t *testing.T) {
 			previous: map[string]contract.PkgWrapper{
 				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
+					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &contract.Semver{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 				},
 			},
 			current: map[string]contract.PkgWrapper{
 				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: contract.PkgVersion{Raw: "2.0.0", Label: "2.0.0", Semver: &semver.Version{Major: 2, Minor: 0, Patch: 0, Extra: ""}},
+					Version: contract.PkgVersion{Raw: "2.0.0", Label: "2.0.0", Semver: &contract.Semver{Major: 2, Minor: 0, Patch: 0, Extra: ""}},
 				},
 			},
 			expectedOperationName: contract.UpgradeOperation,
@@ -123,13 +123,13 @@ func TestDiff_BasicComparison(t *testing.T) {
 			previous: map[string]contract.PkgWrapper{
 				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: contract.PkgVersion{Raw: "1.1.0", Label: "1.1.0", Semver: &semver.Version{Major: 1, Minor: 1, Patch: 0, Extra: ""}},
+					Version: contract.PkgVersion{Raw: "1.1.0", Label: "1.1.0", Semver: &contract.Semver{Major: 1, Minor: 1, Patch: 0, Extra: ""}},
 				},
 			},
 			current: map[string]contract.PkgWrapper{
 				"vendor/pkg": &difftesting.TestPkgWrapper{ //nolint:exhaustruct // Useless for the test purpose
 					Name:    "vendor/pkg",
-					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &semver.Version{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
+					Version: contract.PkgVersion{Raw: "1.0.0", Label: "1.0.0", Semver: &contract.Semver{Major: 1, Minor: 0, Patch: 0, Extra: ""}},
 				},
 			},
 			expectedOperationName: contract.DowngradeOperation,
