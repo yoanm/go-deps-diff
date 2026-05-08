@@ -6,9 +6,10 @@ import (
 
 	"github.com/andreyvit/diff"
 
-	"github.com/yoanm/go-deps-diff/shared"
-	"github.com/yoanm/go-deps-diff/shared_test"
+	"github.com/yoanm/go-deps-diff/contract"
 	"github.com/yoanm/go-deps-diff/summary"
+
+	difftesting "github.com/yoanm/go-deps-diff/testing"
 )
 
 func TestIntegration_GenerateForChanges(t *testing.T) {
@@ -16,7 +17,7 @@ func TestIntegration_GenerateForChanges(t *testing.T) {
 
 	tests := []struct {
 		name       string
-		changes    shared.DiffMap
+		changes    contract.DiffMap
 		goldenFile string
 	}{
 		{
@@ -55,1406 +56,1403 @@ func TestIntegration_GenerateForChanges(t *testing.T) {
 	}
 }
 
-//nolint:gochecknoglobals // Just to keep it outside the function
-var _integrationFullChanges = shared.DiffMap{
+var _integrationFullChanges = contract.DiffMap{
 	"caution-dev_only_usage-requirement/ADDITION+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "caution-dev_only_usage-requirement/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"caution-dev_only_usage-requirement/SEMVER_MAJOR_DOWNGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "caution-dev_only_usage-requirement/SEMVER_MAJOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0", Semver: &shared.SemverVersion{Major: 1, Minor: 2, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.2.0", Label: "1.2.0", Semver: &contract.Semver{Major: 1, Minor: 2, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.DowngradeMajorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.DowngradeMajorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.2", Label: "2.9.2", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 2, Extra: ""}},
 	},
 	"caution-dev_only_usage-requirement/UNKNOWN_UPDATE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "caution-dev_only_usage-requirement/UNKNOWN_UPDATE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567", Semver: nil}, //nolint:lll // Meaningless for tests !
+			Version:            contract.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567", Semver: nil},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.UnknownUpdateOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168", Semver: nil}, //nolint:lll // Meaningless for tests !
+		Operation:       difftesting.UnknownUpdateOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168", Semver: nil},
 	},
 	"caution-dev_only_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "caution-dev_only_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: ""}}, //nolint:lll // Meaningless for tests !
+			Version:            contract.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 2, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.SemverExtraUpdateOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: "+beta"}}, //nolint:lll // Meaningless for tests !
+		Operation:       difftesting.SemverExtraUpdateOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 2, Extra: "+beta"}},
 	},
 	"caution-prod_usage-requirement+dev_req/ADDITION+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement+dev_req/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"caution-prod_usage-requirement+dev_req/SEMVER_MAJOR_DOWNGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement+dev_req/SEMVER_MAJOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.DowngradeMajorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.DowngradeMajorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.2", Label: "2.9.2", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 2, Extra: ""}},
 	},
 	"caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567", Semver: nil}, //nolint:lll // Meaningless for tests !
+			Version:            contract.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567", Semver: nil},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.UnknownUpdateOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168", Semver: nil}, //nolint:lll // Meaningless for tests !
+		Operation:       difftesting.UnknownUpdateOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168", Semver: nil},
 	},
 	"caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE+SEMVER_EXTRA": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement+dev_req/UNKNOWN_UPDATE+SEMVER_EXTRA",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: ""}}, //nolint:lll // Meaningless for tests !
+			Version:            contract.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 2, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.SemverExtraUpdateOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: "+beta"}}, //nolint:lll // Meaningless for tests !
+		Operation:       difftesting.SemverExtraUpdateOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 2, Extra: "+beta"}},
 	},
 	"caution-prod_usage-requirement/ADDITION+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"caution-prod_usage-requirement/SEMVER_MAJOR_DOWNGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement/SEMVER_MAJOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.DowngradeMajorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.DowngradeMajorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.2", Label: "2.9.2", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 2, Extra: ""}},
 	},
 	"caution-prod_usage-requirement/UNKNOWN_UPDATE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement/UNKNOWN_UPDATE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567", Semver: nil}, //nolint:lll // Meaningless for tests !
+			Version:            contract.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567", Semver: nil},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.UnknownUpdateOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168", Semver: nil}, //nolint:lll // Meaningless for tests !
+		Operation:       difftesting.UnknownUpdateOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168", Semver: nil},
 	},
 	"caution-prod_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement/UNKNOWN_UPDATE+SEMVER_EXTRA",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: ""}}, //nolint:lll // Meaningless for tests !
+			Version:            contract.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 2, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.SemverExtraUpdateOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: "+beta"}}, //nolint:lll // Meaningless for tests !
+		Operation:       difftesting.SemverExtraUpdateOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 2, Extra: "+beta"}},
 	},
 	"warning-dev_only_usage-requirement/SEMVER_MAJOR_UPGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-requirement/SEMVER_MAJOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.UpgradeMajorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 3, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradeMajorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 3, Extra: ""}},
 	},
 	"warning-dev_only_usage-requirement/ADDITION_NOT_SEMVER": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-requirement/ADDITION_NOT_SEMVER",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Version:            contract.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"warning-dev_only_usage-requirement/SEMVER_MINOR_DOWNGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-requirement/SEMVER_MINOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.DowngradeMinorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.DowngradeMinorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 0, Extra: ""}},
 	},
 	"warning-dev_only_usage-transitive/ADDITION+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-transitive/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"warning-dev_only_usage-transitive/ADDITION_NOT_SEMVER": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-transitive/ADDITION_NOT_SEMVER",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Version:            contract.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"warning-dev_only_usage-transitive/SEMVER_MAJOR_DOWNGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-transitive/SEMVER_MAJOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0", Semver: &shared.SemverVersion{Major: 1, Minor: 2, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.2.0", Label: "1.2.0", Semver: &contract.Semver{Major: 1, Minor: 2, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.DowngradeMajorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.DowngradeMajorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.2", Label: "2.9.2", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 2, Extra: ""}},
 	},
 	"warning-dev_only_usage-transitive/UNKNOWN_UPDATE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-transitive/UNKNOWN_UPDATE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567", Semver: nil}, //nolint:lll // Meaningless for tests !
+			Version:            contract.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567", Semver: nil},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.UnknownUpdateOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168", Semver: nil}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UnknownUpdateOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168", Semver: nil},
 	},
 	"warning-dev_only_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: ""}}, //nolint:lll // Meaningless for tests !
+			Version:            contract.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 2, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.SemverExtraUpdateOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: "+beta"}}, //nolint:lll // Meaningless for tests !
+		Operation:       difftesting.SemverExtraUpdateOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 2, Extra: "+beta"}},
 	},
 	"warning-prod_usage-requirement+dev_req/SEMVER_MAJOR_UPGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-prod_usage-requirement+dev_req/SEMVER_MAJOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.UpgradeMajorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 3, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradeMajorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 3, Extra: ""}},
 	},
 	"warning-prod_usage-requirement+dev_req/SEMVER_MINOR_DOWNGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-prod_usage-requirement+dev_req/SEMVER_MINOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.DowngradeMinorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.DowngradeMinorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 0, Extra: ""}},
 	},
 	"warning-prod_usage-requirement/SEMVER_MAJOR_UPGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-prod_usage-requirement/SEMVER_MAJOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.UpgradeMajorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 3, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradeMajorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 3, Extra: ""}},
 	},
 	"warning-prod_usage-requirement/SEMVER_MINOR_DOWNGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-prod_usage-requirement/SEMVER_MINOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.DowngradeMinorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.DowngradeMinorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 0, Extra: ""}},
 	},
 	"warning-prod_usage-requirement/ADDITION_NOT_SEMVER": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-prod_usage-requirement/ADDITION_NOT_SEMVER",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Version:            contract.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.AdditionOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 3, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.AdditionOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 3, Extra: ""}},
 	},
 	"warning-prod_usage-requirement+dev_req/ADDITION_NOT_SEMVER": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-prod_usage-requirement+dev_req/ADDITION_NOT_SEMVER",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Version:            contract.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.AdditionOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 3, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.AdditionOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 3, Extra: ""}},
 	},
 	"warning-prod_usage-transitive/ADDITION+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-prod_usage-transitive/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"warning-prod_usage-transitive/ADDITION_NOT_SEMVER": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-prod_usage-transitive/ADDITION_NOT_SEMVER",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Version:            contract.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"warning-prod_usage-transitive/SEMVER_MAJOR_DOWNGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-prod_usage-transitive/SEMVER_MAJOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.2.0", Label: "1.2.0", Semver: &shared.SemverVersion{Major: 1, Minor: 2, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.2.0", Label: "1.2.0", Semver: &contract.Semver{Major: 1, Minor: 2, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.DowngradeMajorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2", Label: "2.9.2", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.DowngradeMajorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.2", Label: "2.9.2", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 2, Extra: ""}},
 	},
 	"warning-prod_usage-transitive/UNKNOWN_UPDATE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-prod_usage-transitive/UNKNOWN_UPDATE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567", Semver: nil}, //nolint:lll // Meaningless for tests !
+			Version:            contract.PkgVersion{Raw: "12345678", Label: "2.9.x-dev#1234567", Semver: nil},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.UnknownUpdateOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168", Semver: nil}, //nolint:lll // Meaningless for tests !
+		Operation:       difftesting.UnknownUpdateOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2acf168", Label: "2.9.x-dev#2acf168", Semver: nil},
 	},
 	"warning-prod_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-prod_usage-transitive/UNKNOWN_UPDATE+SEMVER_EXTRA",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: ""}}, //nolint:lll // Meaningless for tests !
+			Version:            contract.PkgVersion{Raw: "2.9.2+alpha", Label: "2.9.2+alpha", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 2, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.SemverExtraUpdateOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 2, Extra: "+beta"}}, //nolint:lll // Meaningless for tests !
+		Operation:       difftesting.SemverExtraUpdateOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.2+beta", Label: "2.9.2+beta", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 2, Extra: "+beta"}},
 	},
 	"important-dev_only_usage-requirement/REMOVAL": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-dev_only_usage-requirement/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"important-dev_only_usage-requirement/REMOVAL+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-dev_only_usage-requirement/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"important-dev_only_usage-requirement/SEMVER_PATCH_DOWNGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-dev_only_usage-requirement/SEMVER_PATCH_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.DowngradePatchOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.DowngradePatchOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 	},
 	"important-dev_only_usage-requirement/SAME_NOT_SEMVER": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-dev_only_usage-requirement/SAME_NOT_SEMVER",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Version:            contract.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"important-dev_only_usage-transitive/SEMVER_MAJOR_UPGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-dev_only_usage-transitive/SEMVER_MAJOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.UpgradeMajorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 3, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradeMajorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 3, Extra: ""}},
 	},
 	"important-dev_only_usage-transitive/SEMVER_MINOR_DOWNGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-dev_only_usage-transitive/SEMVER_MINOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.DowngradeMinorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.DowngradeMinorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 0, Extra: ""}},
 	},
 	"important-prod_usage-requirement+dev_req/REMOVAL": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement+dev_req/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"important-prod_usage-requirement+dev_req/REMOVAL+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement+dev_req/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"important-prod_usage-requirement+dev_req/SEMVER_PATCH_DOWNGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement+dev_req/SEMVER_PATCH_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.DowngradePatchOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.DowngradePatchOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 	},
 	"important-prod_usage-requirement/REMOVAL": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"important-prod_usage-requirement/REMOVAL+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"important-prod_usage-requirement/SEMVER_PATCH_DOWNGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement/SEMVER_PATCH_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.DowngradePatchOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.DowngradePatchOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 	},
 	"important-prod_usage-requirement/SAME_NOT_SEMVER": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement/SAME_NOT_SEMVER",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Version:            contract.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"important-prod_usage-requirement+dev_req/SAME_NOT_SEMVER": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement+dev_req/SAME_NOT_SEMVER",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Version:            contract.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"important-prod_usage-transitive/SEMVER_MAJOR_UPGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-prod_usage-transitive/SEMVER_MAJOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.UpgradeMajorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &shared.SemverVersion{Major: 2, Minor: 9, Patch: 3, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradeMajorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "2.9.3", Label: "2.9.3", Semver: &contract.Semver{Major: 2, Minor: 9, Patch: 3, Extra: ""}},
 	},
 	"important-prod_usage-transitive/SEMVER_MINOR_DOWNGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-prod_usage-transitive/SEMVER_MINOR_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.DowngradeMinorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.DowngradeMinorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 0, Extra: ""}},
 	},
 	"tip-dev_only_usage-requirement/ADDITION": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-requirement/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"tip-dev_only_usage-requirement/SEMVER_MINOR_UPGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-requirement/SEMVER_MINOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.UpgradeMinorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradeMinorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 	},
 	"tip-dev_only_usage-requirement/SEMVER_MINOR_UPGRADE+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-requirement/SEMVER_MINOR_UPGRADE+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.0", Label: "3.2.0", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.UpgradeMinorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradeMinorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 	},
 	"tip-dev_only_usage-transitive/REMOVAL": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-transitive/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"tip-dev_only_usage-transitive/REMOVAL+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-transitive/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"tip-dev_only_usage-transitive/SEMVER_PATCH_DOWNGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-transitive/SEMVER_PATCH_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.DowngradePatchOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.DowngradePatchOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 	},
 	"tip-dev_only_usage-transitive/SAME_NOT_SEMVER": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-transitive/SAME_NOT_SEMVER",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Version:            contract.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"tip-prod_usage-requirement+dev_req/ADDITION": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement+dev_req/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"tip-prod_usage-requirement+dev_req/SEMVER_MINOR_UPGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement+dev_req/SEMVER_MINOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.UpgradeMinorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradeMinorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 	},
 	"tip-prod_usage-requirement+dev_req/SEMVER_MINOR_UPGRADE+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement+dev_req/SEMVER_MINOR_UPGRADE+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.0", Label: "3.2.0", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.UpgradeMinorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradeMinorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 	},
 	"tip-prod_usage-requirement/ADDITION": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"tip-prod_usage-requirement/SEMVER_MINOR_UPGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement/SEMVER_MINOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.UpgradeMinorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradeMinorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 	},
 	"tip-prod_usage-requirement/SEMVER_MINOR_UPGRADE+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement/SEMVER_MINOR_UPGRADE+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.0", Label: "3.2.0", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.UpgradeMinorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradeMinorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 	},
 	"tip-prod_usage-transitive/REMOVAL": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-prod_usage-transitive/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"tip-prod_usage-transitive/REMOVAL+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-prod_usage-transitive/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"tip-prod_usage-transitive/SEMVER_PATCH_DOWNGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-prod_usage-transitive/SEMVER_PATCH_DOWNGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.DowngradePatchOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.DowngradePatchOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 	},
 	"tip-prod_usage-transitive/SAME_NOT_SEMVER": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-prod_usage-transitive/SAME_NOT_SEMVER",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
+			Version:            contract.PkgVersion{Raw: "abcdefghijk", Label: "dev-master#abcdefgh", Semver: nil},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.SameOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.SameOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 0, Extra: ""}},
 	},
 	"note-dev_only_usage-requirement/SAME": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-dev_only_usage-requirement/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-dev_only_usage-requirement/SAME+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-dev_only_usage-requirement/SAME+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-dev_only_usage-requirement/SEMVER_PATCH_UPGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-dev_only_usage-requirement/SEMVER_PATCH_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.UpgradePatchOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradePatchOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 	},
 	"note-dev_only_usage-transitive/ADDITION": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-dev_only_usage-transitive/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"note-dev_only_usage-transitive/SAME": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-dev_only_usage-transitive/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-dev_only_usage-transitive/SAME+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-dev_only_usage-transitive/SAME+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-dev_only_usage-transitive/SEMVER_MINOR_UPGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-dev_only_usage-transitive/SEMVER_MINOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.UpgradeMinorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradeMinorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 	},
 	"note-dev_only_usage-transitive/SEMVER_MINOR_UPGRADE+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-dev_only_usage-transitive/SEMVER_MINOR_UPGRADE+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.0", Label: "3.2.0", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.UpgradeMinorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradeMinorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 	},
 	"note-dev_only_usage-transitive/SEMVER_PATCH_UPGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-dev_only_usage-transitive/SEMVER_PATCH_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.UpgradePatchOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradePatchOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 0, Extra: ""}},
 	},
 	"note-prod_usage-requirement+dev_req/SAME": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-prod_usage-requirement+dev_req/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-prod_usage-requirement+dev_req/SAME+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-prod_usage-requirement+dev_req/SAME+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-prod_usage-requirement+dev_req/SEMVER_PATCH_UPGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-prod_usage-requirement+dev_req/SEMVER_PATCH_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation:       shared_test.UpgradePatchOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradePatchOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 0, Extra: ""}},
 	},
 	"note-prod_usage-requirement/SAME": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-prod_usage-requirement/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-prod_usage-requirement/SAME+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-prod_usage-requirement/SAME+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-prod_usage-requirement/SEMVER_PATCH_UPGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-prod_usage-requirement/SEMVER_PATCH_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.UpgradePatchOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradePatchOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 0, Extra: ""}},
 	},
 	"note-prod_usage-transitive/ADDITION": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-prod_usage-transitive/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"note-prod_usage-transitive/SAME": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-prod_usage-transitive/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-prod_usage-transitive/SAME+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-prod_usage-transitive/SAME+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-prod_usage-transitive/SEMVER_MINOR_UPGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-prod_usage-transitive/SEMVER_MINOR_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.UpgradeMinorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradeMinorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.0", Label: "3.0.0", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 0, Extra: ""}},
 	},
 	"note-prod_usage-transitive/SEMVER_MINOR_UPGRADE+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-prod_usage-transitive/SEMVER_MINOR_UPGRADE+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.0", Label: "3.2.0", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.0", Label: "3.2.0", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 0, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.UpgradeMinorOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradeMinorOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 	},
 	"note-prod_usage-transitive/SEMVER_PATCH_UPGRADE": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-prod_usage-transitive/SEMVER_PATCH_UPGRADE",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation:       shared_test.UpgradePatchOp,
-		PreviousVersion: shared.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 0, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+		Operation:       difftesting.UpgradePatchOp,
+		PreviousVersion: contract.PkgVersion{Raw: "3.1.0", Label: "3.1.0", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 0, Extra: ""}},
 	},
 }
 
-//nolint:gochecknoglobals // Just to keep it outside the function
-var _integrationOnlyThreeColumnsNeeded = shared.DiffMap{
+var _integrationOnlyThreeColumnsNeeded = contract.DiffMap{
 	"caution-dev_only_usage-requirement/ADDITION+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "caution-dev_only_usage-requirement/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"caution-prod_usage-requirement+dev_req/ADDITION+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement+dev_req/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"caution-prod_usage-requirement/ADDITION+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "caution-prod_usage-requirement/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"warning-dev_only_usage-transitive/ADDITION+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-dev_only_usage-transitive/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"warning-prod_usage-transitive/ADDITION+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "warning-prod_usage-transitive/ADDITION+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"important-dev_only_usage-requirement/REMOVAL": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-dev_only_usage-requirement/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"important-dev_only_usage-requirement/REMOVAL+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-dev_only_usage-requirement/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"important-prod_usage-requirement+dev_req/REMOVAL": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement+dev_req/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"important-prod_usage-requirement+dev_req/REMOVAL+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement+dev_req/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"important-prod_usage-requirement/REMOVAL": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"important-prod_usage-requirement/REMOVAL+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "important-prod_usage-requirement/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"tip-dev_only_usage-requirement/ADDITION": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-requirement/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"tip-dev_only_usage-transitive/REMOVAL": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-transitive/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"tip-dev_only_usage-transitive/REMOVAL+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-dev_only_usage-transitive/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"tip-prod_usage-requirement+dev_req/ADDITION": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement+dev_req/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"tip-prod_usage-requirement/ADDITION": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-prod_usage-requirement/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"tip-prod_usage-transitive/REMOVAL": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-prod_usage-transitive/REMOVAL",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &shared.SemverVersion{Major: 3, Minor: 0, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.0.1", Label: "3.0.1", Semver: &contract.Semver{Major: 3, Minor: 0, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"tip-prod_usage-transitive/REMOVAL+ABANDONED": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "tip-prod_usage-transitive/REMOVAL+ABANDONED",
 			Abandoned:          true,
-			Version:            shared.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &shared.SemverVersion{Major: 3, Minor: 2, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.2.1", Label: "3.2.1", Semver: &contract.Semver{Major: 3, Minor: 2, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.RemovalOp,
+		Operation: difftesting.RemovalOp,
 	},
 	"note-dev_only_usage-requirement/SAME": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-dev_only_usage-requirement/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-dev_only_usage-transitive/ADDITION": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-dev_only_usage-transitive/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 	"note-prod_usage-requirement/SAME": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-prod_usage-requirement/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-prod_usage-transitive/ADDITION": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-prod_usage-transitive/ADDITION",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &shared.SemverVersion{Major: 1, Minor: 18, Patch: 4, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "1.18.4", Label: "1.18.4", Semver: &contract.Semver{Major: 1, Minor: 18, Patch: 4, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    false,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.AdditionOp,
+		Operation: difftesting.AdditionOp,
 	},
 }
 
-//nolint:gochecknoglobals // Just to keep it outside the function
-var _integrationForceOpenedClosed = shared.DiffMap{
+var _integrationForceOpenedClosed = contract.DiffMap{
 	"note-dev_only_usage-requirement/SAME": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-dev_only_usage-requirement/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-dev_only_usage-requirement/SAME-2": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-dev_only_usage-requirement/SAME-2",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-dev_only_usage-requirement/SAME-3": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-dev_only_usage-requirement/SAME-3",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-dev_only_usage-requirement/SAME-4": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-dev_only_usage-requirement/SAME-4",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            true,
 			RootRequirement:    false,
 			RootDevRequirement: true,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 	"note-prod_usage-requirement/SAME": {
-		Package: &shared_test.TestPkgWrapper{
+		Package: &difftesting.TestPkgWrapper{
 			Name:               "note-prod_usage-requirement/SAME",
 			Abandoned:          false,
-			Version:            shared.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &shared.SemverVersion{Major: 3, Minor: 1, Patch: 1, Extra: ""}}, //nolint:lll // Meaningless for tests !,
+			Version:            contract.PkgVersion{Raw: "3.1.1", Label: "3.1.1", Semver: &contract.Semver{Major: 3, Minor: 1, Patch: 1, Extra: ""}},
 			Link:               "http://www.squizlabs.com/php-codesniffer",
 			DevOnly:            false,
 			RootRequirement:    true,
 			RootDevRequirement: false,
 		},
-		Operation: shared_test.SameOp,
+		Operation: difftesting.SameOp,
 	},
 }

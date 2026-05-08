@@ -2,17 +2,17 @@ engines:
   metric:
     exclude_paths:
       - "**_test.go"
-      - "shared_test/**"  # Not covered as for test purpose only
-      - "shared_test/**/*"  # Not covered as for test purpose only
+      - "testing/**"  # Not covered as for test purpose only
+      - "testing/**/*"  # Not covered as for test purpose only
   duplication:
     exclude_paths:
       - "**_test.go"
-      - "shared_test/**"  # Not covered as for test purpose only
-      - "shared_test/**/*"  # Not covered as for test purpose only
+      - "testing/**"  # Not covered as for test purpose only
+      - "testing/**/*"  # Not covered as for test purpose only
 exclude_paths:
-  - "shared_test/**"  # Not covered as for test purpose only
-  - "shared_test/**/*"  # Not covered as for test purpose only
+  - "testing/**"  # Not covered as for test purpose only
+  - "testing/**/*"  # Not covered as for test purpose only
   - "DOC.md" # Auto-generated doc
   - "composer/README.md" # Auto-generated doc
-  - "shared/README.md" # Auto-generated doc
-  - "shared_test/README.md" # Auto-generated doc
+  - "contract/README.md" # Auto-generated doc
+  - "testing/README.md" # Auto-generated doc

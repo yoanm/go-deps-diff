@@ -52,7 +52,7 @@ build-doc:
 	echo "Generate doc for main package ..."
 	goreadme -constants -variabless -types -methods -functions -factories -recursive > DOC.md
 	# Generate doc for sub-packages
-	find * -maxdepth 1 -type d \( -path "shared" -o -path "shared_test" -o -path "managers" -o -path "managers/composer" -o -path "summary" -o -path "summary/markdown" \) | while IFS= read -r d; do \
+	find * -maxdepth 1 -type d \( -path "contract" -o -path "semver" -o -path "testing" -o -path "summary" -o -path "summary/markdown" \) | while IFS= read -r d; do \
 		$(call buildDocForSubPackage,$$d) \
 	done
 
@@ -62,7 +62,7 @@ build: ## 🗜️  Build package
 #### Use build_o="..." to specify build options
 $(eval build_o ?=)
 build:
-	go build -v $(build_o)
+	go build -v $(build_o) ./...
 
 .PHONY: verify-deps
 verify-deps: ## 🗜️  Verify dependencies

@@ -1,87 +1,41 @@
-package shared_test
+package semver_test
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/yoanm/go-deps-diff/shared"
+	"github.com/yoanm/go-deps-diff/contract"
+	"github.com/yoanm/go-deps-diff/semver"
+
+	difftesting "github.com/yoanm/go-deps-diff/testing"
 )
 
-func TestParseSemverVersion(t *testing.T) {
+func TestParse(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
-		name    string
-		version string
-		check   func(version *shared.SemverVersion) error
+		name     string
+		version  string
+		expected *contract.Semver
 	}{
-		{
-			name:    "simple semver",
-			version: "1.2.3",
-			check: func(version *shared.SemverVersion) error {
-				return validateSemverVersion(version, 1, 2, 3, "")
-			},
-		},
-		{
-			name:    "with v prefix",
-			version: "v2.1.3",
-			check: func(version *shared.SemverVersion) error {
-				return validateSemverVersion(version, 2, 1, 3, "")
-			},
-		},
-		{
-			name:    "with prerelease",
-			version: "1.2.3-beta.1",
-			check: func(version *shared.SemverVersion) error {
-				return validateSemverVersion(version, 1, 2, 3, "-beta.1")
-			},
-		},
-		{
-			name:    "with build metadata",
-			version: "2.5.1+build.1",
-			check: func(version *shared.SemverVersion) error {
-				return validateSemverVersion(version, 2, 5, 1, "+build.1")
-			},
-		},
+		{name: "simple semver", version: "1.2.3", expected: &contract.Semver{Major: 1, Minor: 2, Patch: 3, Extra: ""}},
+		{name: "with v prefix", version: "v2.1.3", expected: &contract.Semver{Major: 2, Minor: 1, Patch: 3, Extra: ""}},
+		{name: "with prerelease", version: "1.2.3-beta.1", expected: &contract.Semver{Major: 1, Minor: 2, Patch: 3, Extra: "-beta.1"}},
+		{name: "with build metadata", version: "2.5.1+build.1", expected: &contract.Semver{Major: 2, Minor: 5, Patch: 1, Extra: "+build.1"}},
 	}
 
 	for _, testCase := range tests {
 		t.Run(testCase.name, func(t *testing.T) {
 			t.Parallel()
 
-			tag, err := shared.ParseSemverVersion(testCase.version)
+			version, err := semver.Parse(testCase.version)
 			if err != nil {
 				t.Error(fmt.Errorf("an error occurred: %w", err))
-			} else if err2 := testCase.check(tag); err2 != nil {
+			} else if err2 := difftesting.ValidateSemver(version, testCase.expected); err2 != nil {
 				t.Error(fmt.Errorf("checks failed: %w", err2))
 			}
 		})
 	}
-}
-
-func validateSemverVersion(
-	version *shared.SemverVersion,
-	expectedMajor, expectedMinor,
-	expectedPatch int,
-	expectedExtra string,
-) error {
-	if version.Major != expectedMajor {
-		return fmt.Errorf("unexpected major Version: got %d, want %d", version.Major, expectedMajor)
-	}
-
-	if version.Minor != expectedMinor {
-		return fmt.Errorf("unexpected minor Version: got %d, want %d", version.Minor, expectedMinor)
-	}
-
-	if version.Patch != expectedPatch {
-		return fmt.Errorf("unexpected patch Version: got %d, want %d", version.Patch, expectedPatch)
-	}
-
-	if version.Extra != expectedExtra {
-		return fmt.Errorf("unexpected extra part: got '%s', want '%s'", version.Extra, expectedExtra)
-	}
-
-	return nil
 }
 
 func TestParseSemverVersion_Error(t *testing.T) {
@@ -120,7 +74,7 @@ func TestParseSemverVersion_Error(t *testing.T) {
 		t.Run(testCase.name, func(t *testing.T) {
 			t.Parallel()
 
-			_, err := shared.ParseSemverVersion(testCase.version)
+			_, err := semver.Parse(testCase.version)
 			if err == nil {
 				t.Errorf("an error is expected")
 			} else if err2 := testCase.check(err); err2 != nil {
@@ -159,7 +113,7 @@ func TestIsSemverValid(t *testing.T) {
 		t.Run(testCase.name, func(t *testing.T) {
 			t.Parallel()
 
-			if !shared.IsSemverValid(testCase.version) {
+			if !semver.IsValid(testCase.version) {
 				t.Errorf("value is expected to be valid")
 			}
 		})
@@ -187,7 +141,7 @@ func TestIsSemverValid_Error(t *testing.T) {
 		t.Run(testCase.name, func(t *testing.T) {
 			t.Parallel()
 
-			if shared.IsSemverValid(testCase.version) {
+			if semver.IsValid(testCase.version) {
 				t.Errorf("value is expected to be invalid")
 			}
 		})
@@ -197,7 +151,7 @@ func TestIsSemverValid_Error(t *testing.T) {
 func TestInvalidSemverComponentError(t *testing.T) {
 	t.Parallel()
 
-	err := shared.InvalidSemverComponentError{Version: "dev-master"}
+	err := semver.InvalidComponentError{Version: "dev-master"}
 
 	if err.Error() != "invalid semver component: dev-master" {
 		t.Error(fmt.Errorf("unexpected error: %w", err))

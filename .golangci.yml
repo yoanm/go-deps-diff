@@ -181,6 +181,11 @@ linters:
           - gosec
           - noctx
           - wrapcheck
+          - err113
+          - cyclop
+          - gochecknoglobals
+          - lll
+          - gosec
         path: _test\.go
       - linters:
           - exhaustruct
@@ -190,7 +195,11 @@ linters:
         path: benchmark_test\.go
       - linters:
           - err113
-        path: _test\.go
+          - cyclop
+          - gochecknoglobals
+          - lll
+          - gosec
+        path: testing/.*
     paths:
       - third_party$
       - builtin$
@@ -208,6 +217,7 @@ formatters:
         - default
         - prefix(github.com/yoanm)
         - prefix(github.com/yoanm/go-deps-diff)
+        - prefix(github.com/yoanm/go-deps-diff/testing)
         - blank
         - dot
       custom-order: true

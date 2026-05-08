@@ -2,35 +2,25 @@
 
 ## Functions
 
-### func [ComposerDiff](/managers.go#L10)
-
-`func ComposerDiff(previous, current *PkgManagerInput) (shared.DiffMap, error)`
-
 ### func [Diff](/analyzer.go#L8)
 
-`func Diff(previous, current shared.PackageMap) (shared.DiffMap, error)`
+`func Diff(previous, current contract.PackageMap) (contract.DiffMap, error)`
 
 Diff compares two packages maps and returns the differences.
-
-## Types
-
-### type [PkgManagerInput](/types.go#L3)
-
-`type PkgManagerInput struct { ... }`
 
 ## Sub Packages
 
 * [.tools](./.tools)
 
-* [managers/composer](./managers/composer)
+* [contract](./contract)
 
-* [shared](./shared)
-
-* [shared_test](./shared_test)
+* [semver](./semver)
 
 * [summary](./summary)
 
 * [summary/markdown](./summary/markdown)
+
+* [testing](./testing)
 
 ---
 Readme created from Go doc with [goreadme](https://github.com/posener/goreadme)

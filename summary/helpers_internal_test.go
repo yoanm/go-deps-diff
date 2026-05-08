@@ -3,8 +3,9 @@ package summary
 import (
 	"testing"
 
-	"github.com/yoanm/go-deps-diff/shared"
-	"github.com/yoanm/go-deps-diff/shared_test"
+	"github.com/yoanm/go-deps-diff/contract"
+
+	difftesting "github.com/yoanm/go-deps-diff/testing"
 )
 
 func Test_guessShortestPkgRowMode(t *testing.T) {
@@ -18,30 +19,30 @@ func Test_guessShortestPkgRowMode(t *testing.T) {
 		{
 			name: "Only Addition - Version + Operation",
 			pkgList: pkgList{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.AdditionOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.AdditionOp},
 			},
 			expected: withOperationPkgRowMode,
 		},
 		{
 			name: "Only Removal - Version + Operation",
 			pkgList: pkgList{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.RemovalOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.RemovalOp},
 			},
 			expected: withOperationPkgRowMode,
 		},
 		{
 			name: "Only Same - Version + Operation",
 			pkgList: pkgList{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.SameOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.SameOp},
 			},
 			expected: withOperationPkgRowMode,
 		},
 		{
 			name: "Mix of Addition/Removal/Same - Version + Operation",
 			pkgList: pkgList{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.AdditionOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.RemovalOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.SameOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.AdditionOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.RemovalOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.SameOp},
 			},
 			expected: withOperationPkgRowMode,
 		},
@@ -49,34 +50,34 @@ func Test_guessShortestPkgRowMode(t *testing.T) {
 		{
 			name: "Mix of Addition and Update - Full",
 			pkgList: pkgList{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.AdditionOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradeMajorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.AdditionOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradeMajorOp},
 			},
 			expected: fullPkgRowMode,
 		},
 		{
 			name: "Mix of Removal and Update - Full",
 			pkgList: pkgList{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.RemovalOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradeMajorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.RemovalOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradeMajorOp},
 			},
 			expected: fullPkgRowMode,
 		},
 		{
 			name: "Mix of Same and Update - Full",
 			pkgList: pkgList{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.SameOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradeMajorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.SameOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradeMajorOp},
 			},
 			expected: fullPkgRowMode,
 		},
 		{
 			name: "Mix of Addition/Removal/Same and Update - Version + Operation",
 			pkgList: pkgList{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.AdditionOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.RemovalOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradeMajorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.SameOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.AdditionOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.RemovalOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradeMajorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.SameOp},
 			},
 			expected: fullPkgRowMode,
 		},
@@ -134,86 +135,85 @@ func Test_buildSectionCounters(t *testing.T) {
 	}
 }
 
-//nolint:gochecknoglobals // Just to keep it outside the function
 var (
 	//nolint:exhaustive // Meaningless in the test context
 	_testBuildSectionCountersBaseCategories = map[markdownSubCategory]itemsMap{
 		// Actual category  and content should not matter here !
 		requirementSubCategory: map[markdownItem]pkgList{
-			additionItem: []*shared.PackageChange{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.AdditionOp},
+			additionItem: []*contract.PackageChange{
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.AdditionOp},
 			},
-			removalItem: []*shared.PackageChange{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.RemovalOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.RemovalOp},
+			removalItem: []*contract.PackageChange{
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.RemovalOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.RemovalOp},
 			},
-			sameItem: []*shared.PackageChange{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.SameOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.SameOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.SameOp},
+			sameItem: []*contract.PackageChange{
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.SameOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.SameOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.SameOp},
 			},
-			semverMajorUpgradeItem: []*shared.PackageChange{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradeMajorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradeMajorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradeMajorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradeMajorOp},
+			semverMajorUpgradeItem: []*contract.PackageChange{
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradeMajorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradeMajorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradeMajorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradeMajorOp},
 			},
-			semverMinorUpgradeItem: []*shared.PackageChange{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradeMinorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradeMinorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradeMinorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradeMinorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradeMinorOp},
+			semverMinorUpgradeItem: []*contract.PackageChange{
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradeMinorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradeMinorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradeMinorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradeMinorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradeMinorOp},
 			},
-			semverPatchUpgradeItem: []*shared.PackageChange{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradePatchOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradePatchOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradePatchOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradePatchOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradePatchOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UpgradePatchOp},
+			semverPatchUpgradeItem: []*contract.PackageChange{
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradePatchOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradePatchOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradePatchOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradePatchOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradePatchOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UpgradePatchOp},
 			},
-			semverMajorDowngradeItem: []*shared.PackageChange{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradeMajorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradeMajorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradeMajorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradeMajorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradeMajorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradeMajorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradeMajorOp},
+			semverMajorDowngradeItem: []*contract.PackageChange{
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradeMajorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradeMajorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradeMajorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradeMajorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradeMajorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradeMajorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradeMajorOp},
 			},
-			semverMinorDowngradeItem: []*shared.PackageChange{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradeMinorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradeMinorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradeMinorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradeMinorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradeMinorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradeMinorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradeMinorOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradeMinorOp},
+			semverMinorDowngradeItem: []*contract.PackageChange{
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradeMinorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradeMinorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradeMinorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradeMinorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradeMinorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradeMinorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradeMinorOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradeMinorOp},
 			},
-			semverPatchDowngradeItem: []*shared.PackageChange{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradePatchOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradePatchOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradePatchOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradePatchOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradePatchOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradePatchOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradePatchOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradePatchOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.DowngradePatchOp},
+			semverPatchDowngradeItem: []*contract.PackageChange{
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradePatchOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradePatchOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradePatchOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradePatchOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradePatchOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradePatchOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradePatchOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradePatchOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.DowngradePatchOp},
 			},
-			unknownUpdateItem: []*shared.PackageChange{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UnknownUpdateOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.SemverExtraUpdateOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.InvalidOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.InvalidDowngradeOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.InvalidUpgradeOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.UnknownUpdateOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.SemverExtraUpdateOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.InvalidOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.InvalidDowngradeOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.InvalidUpgradeOp},
+			unknownUpdateItem: []*contract.PackageChange{
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UnknownUpdateOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.SemverExtraUpdateOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.InvalidOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.InvalidDowngradeOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.InvalidUpgradeOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.UnknownUpdateOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.SemverExtraUpdateOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.InvalidOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.InvalidDowngradeOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.InvalidUpgradeOp},
 			},
 		},
 	}
@@ -234,12 +234,12 @@ var (
 	_testBuildSectionCountersSemverExtraUpdateFallbackCategories = map[markdownSubCategory]itemsMap{
 		// Actual category  and content should not matter here !
 		requirementSubCategory: map[markdownItem]pkgList{ //nolint:exhaustive // Meaningless in the test context
-			unknownUpdateItem: []*shared.PackageChange{
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.SemverExtraUpdateOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.SemverExtraUpdateOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.SemverExtraUpdateOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.SemverExtraUpdateOp},
-				{Package: shared_test.GetDummyPackage(), Operation: shared_test.SemverExtraUpdateOp},
+			unknownUpdateItem: []*contract.PackageChange{
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.SemverExtraUpdateOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.SemverExtraUpdateOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.SemverExtraUpdateOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.SemverExtraUpdateOp},
+				{Package: difftesting.GetDummyPackage(), Operation: difftesting.SemverExtraUpdateOp},
 			},
 		},
 	}

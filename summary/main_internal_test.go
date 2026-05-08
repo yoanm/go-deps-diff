@@ -4,27 +4,28 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/yoanm/go-deps-diff/shared"
-	"github.com/yoanm/go-deps-diff/shared_test"
+	"github.com/yoanm/go-deps-diff/contract"
+
+	difftesting "github.com/yoanm/go-deps-diff/testing"
 )
 
 func Test_buildItemMrkRowCells(t *testing.T) {
 	t.Parallel()
 
-	pkg := shared_test.GetDummyPackage()
-	prevVersion := shared.PkgVersion{Raw: "1.2.3", Label: "1.2.3", Semver: &shared.SemverVersion{Major: 1, Minor: 2, Patch: 3, Extra: ""}} //nolint:lll // Meaningless for tests !
+	pkg := difftesting.GetDummyPackage()
+	prevVersion := contract.PkgVersion{Raw: "1.2.3", Label: "1.2.3", Semver: &contract.Semver{Major: 1, Minor: 2, Patch: 3, Extra: ""}}
 
 	tests := []struct {
 		name     string
-		change   *shared.PackageChange
+		change   *contract.PackageChange
 		mode     pkgRowMode
 		expected []string
 	}{
 		{
 			name: "Name, version, operation and previous version - operation with previous version",
-			change: &shared.PackageChange{
+			change: &contract.PackageChange{
 				Package:         pkg,
-				Operation:       shared_test.DowngradeMajorOp,
+				Operation:       difftesting.DowngradeMajorOp,
 				PreviousVersion: prevVersion,
 			},
 			mode: fullPkgRowMode,
@@ -32,58 +33,58 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(prevVersion),
-				buildOperationHTMLCell(shared_test.DowngradeMajorOp, 0),
+				buildOperationHTMLCell(difftesting.DowngradeMajorOp, 0),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
 			},
 		},
 		{
 			name: "Name, version, operation and previous version - operation with only one version - Addition",
-			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
+			change: &contract.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
 				Package:   pkg,
-				Operation: shared_test.AdditionOp,
+				Operation: difftesting.AdditionOp,
 			},
 			mode: fullPkgRowMode,
 			expected: []string{
 				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
-				buildOperationHTMLCell(shared_test.AdditionOp, 2),
+				buildOperationHTMLCell(difftesting.AdditionOp, 2),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
 			},
 		},
 		{
 			name: "Name, version, operation and previous version - operation with only one version - Removal",
-			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
+			change: &contract.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
 				Package:   pkg,
-				Operation: shared_test.RemovalOp,
+				Operation: difftesting.RemovalOp,
 			},
 			mode: fullPkgRowMode,
 			expected: []string{
 				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
-				buildOperationHTMLCell(shared_test.RemovalOp, 2),
+				buildOperationHTMLCell(difftesting.RemovalOp, 2),
 			},
 		},
 		{
 			name: "Name, version, operation and previous version - operation with only one version - Same",
-			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
+			change: &contract.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
 				Package:   pkg,
-				Operation: shared_test.SameOp,
+				Operation: difftesting.SameOp,
 			},
 			mode: fullPkgRowMode,
 			expected: []string{
 				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
-				buildOperationHTMLCell(shared_test.SameOp, 2),
+				buildOperationHTMLCell(difftesting.SameOp, 2),
 			},
 		},
 		{
 			// Case is not actually expected to happen (it should be withOperationPkgRowMode mode in that case)
 			name: "Name, version and operation - operation with previous version",
-			change: &shared.PackageChange{
+			change: &contract.PackageChange{
 				Package:         pkg,
-				Operation:       shared_test.DowngradeMajorOp,
+				Operation:       difftesting.DowngradeMajorOp,
 				PreviousVersion: prevVersion,
 			},
 			mode: withOperationPkgRowMode,
@@ -91,57 +92,57 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
-				buildOperationHTMLCell(shared_test.DowngradeMajorOp, 0),
+				buildOperationHTMLCell(difftesting.DowngradeMajorOp, 0),
 			},
 		},
 		{
 			name: "Name, version and operation - operation with only one version - Addition",
-			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
+			change: &contract.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
 				Package:   pkg,
-				Operation: shared_test.AdditionOp,
+				Operation: difftesting.AdditionOp,
 			},
 			mode: withOperationPkgRowMode,
 			expected: []string{
 				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
-				buildOperationHTMLCell(shared_test.AdditionOp, 0),
+				buildOperationHTMLCell(difftesting.AdditionOp, 0),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
 			},
 		},
 		{
 			name: "Name, version and operation - operation with only one version - Removal",
-			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
+			change: &contract.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
 				Package:   pkg,
-				Operation: shared_test.RemovalOp,
+				Operation: difftesting.RemovalOp,
 			},
 			mode: withOperationPkgRowMode,
 			expected: []string{
 				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
-				buildOperationHTMLCell(shared_test.RemovalOp, 0),
+				buildOperationHTMLCell(difftesting.RemovalOp, 0),
 			},
 		},
 		{
 			name: "Name, version and operation - operation with only one version - Same",
-			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
+			change: &contract.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
 				Package:   pkg,
-				Operation: shared_test.SameOp,
+				Operation: difftesting.SameOp,
 			},
 			mode: withOperationPkgRowMode,
 			expected: []string{
 				// Rely on helper methods, goal here is to check the cell count and order, not the content !
 				buildPackageNameHTMLCell(pkg),
 				buildPackageVersionHTMLCell(pkg.GetVersion()),
-				buildOperationHTMLCell(shared_test.SameOp, 0),
+				buildOperationHTMLCell(difftesting.SameOp, 0),
 			},
 		},
 		{
 			// Case is not actually expected to happen (it should be withOperationPkgRowMode mode in that case)
 			name: "Name and version only - operation with previous version",
-			change: &shared.PackageChange{
+			change: &contract.PackageChange{
 				Package:         pkg,
-				Operation:       shared_test.DowngradeMajorOp,
+				Operation:       difftesting.DowngradeMajorOp,
 				PreviousVersion: prevVersion,
 			},
 			mode: versionOnlyPkgRowMode,
@@ -153,9 +154,9 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 		},
 		{
 			name: "Name and version only - operation with only one version - Addition",
-			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
+			change: &contract.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
 				Package:   pkg,
-				Operation: shared_test.AdditionOp,
+				Operation: difftesting.AdditionOp,
 			},
 			mode: versionOnlyPkgRowMode,
 			expected: []string{
@@ -166,9 +167,9 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 		},
 		{
 			name: "Name and version only - operation with only one version - Removal",
-			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
+			change: &contract.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
 				Package:   pkg,
-				Operation: shared_test.RemovalOp,
+				Operation: difftesting.RemovalOp,
 			},
 			mode: versionOnlyPkgRowMode,
 			expected: []string{
@@ -179,9 +180,9 @@ func Test_buildItemMrkRowCells(t *testing.T) {
 		},
 		{
 			name: "Name and version only - operation with only one version - Same",
-			change: &shared.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
+			change: &contract.PackageChange{ // //nolint:exhaustruct // Useless for the test purpose
 				Package:   pkg,
-				Operation: shared_test.SameOp,
+				Operation: difftesting.SameOp,
 			},
 			mode: versionOnlyPkgRowMode,
 			expected: []string{
@@ -217,7 +218,7 @@ func Test_buildItemMrkRowCells_panic(t *testing.T) {
 
 	_ = buildItemMrkRowCells(
 		//nolint:exhaustruct // Useless for the test purpose
-		&shared.PackageChange{Package: shared_test.GetDummyPackage(), Operation: shared_test.AdditionOp},
+		&contract.PackageChange{Package: difftesting.GetDummyPackage(), Operation: difftesting.AdditionOp},
 		_testInvalidPkgRowMode,
 	)
 

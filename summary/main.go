@@ -5,7 +5,7 @@ import (
 	"log/slog"
 	"strconv"
 
-	"github.com/yoanm/go-deps-diff/shared"
+	"github.com/yoanm/go-deps-diff/contract"
 	"github.com/yoanm/go-deps-diff/summary/markdown"
 )
 
@@ -14,7 +14,7 @@ const (
 	categoryHeaderLevel = 3
 )
 
-func GenerateForChanges(changes shared.DiffMap) string {
+func GenerateForChanges(changes contract.DiffMap) string {
 	mrkMap := buildSectionsMap(changes)
 	builder := markdown.NewBuilder()
 
@@ -105,7 +105,7 @@ func processPkgList(builder *markdown.Builder, pkgList pkgList, tableMode pkgRow
 	)
 }
 
-func buildItemMrkRowCells(item *shared.PackageChange, tableMode pkgRowMode) []string {
+func buildItemMrkRowCells(item *contract.PackageChange, tableMode pkgRowMode) []string {
 	cellList := []string{
 		buildPackageNameHTMLCell(item.Package),
 	}
@@ -118,7 +118,7 @@ func buildItemMrkRowCells(item *shared.PackageChange, tableMode pkgRowMode) []st
 
 	case withOperationPkgRowMode:
 		operationCell := buildOperationHTMLCell(item.Operation, 0)
-		if item.Operation.Name != shared.AdditionOperation {
+		if item.Operation.Name != contract.AdditionOperation {
 			cellList = append(cellList, pkgVersionCell, operationCell)
 		} else {
 			cellList = append(cellList, operationCell, pkgVersionCell)
@@ -134,10 +134,10 @@ func buildItemMrkRowCells(item *shared.PackageChange, tableMode pkgRowMode) []st
 	return cellList
 }
 
-func buildItemMrkFullPkgRowCells(item *shared.PackageChange, cellList []string, pkgVersionCell string) []string {
-	if item.Operation.Name != shared.AdditionOperation { // Version will be printed at the end for added package !
+func buildItemMrkFullPkgRowCells(item *contract.PackageChange, cellList []string, pkgVersionCell string) []string {
+	if item.Operation.Name != contract.AdditionOperation { // Version will be printed at the end for added package !
 		switch item.Operation.Name {
-		case shared.UnknownUpdateOperation, shared.UpgradeOperation, shared.DowngradeOperation:
+		case contract.UnknownUpdateOperation, contract.UpgradeOperation, contract.DowngradeOperation:
 			cellList = append(cellList, buildPackageVersionHTMLCell(item.PreviousVersion))
 		default:
 			cellList = append(cellList, pkgVersionCell)
@@ -145,23 +145,23 @@ func buildItemMrkFullPkgRowCells(item *shared.PackageChange, cellList []string, 
 	}
 
 	colspan := 0
-	if shared.NoChangeOperation == item.Operation.Name ||
-		shared.AdditionOperation == item.Operation.Name ||
-		shared.RemovalOperation == item.Operation.Name {
+	if contract.NoChangeOperation == item.Operation.Name ||
+		contract.AdditionOperation == item.Operation.Name ||
+		contract.RemovalOperation == item.Operation.Name {
 		colspan = 2
 	}
 
 	cellList = append(cellList, buildOperationHTMLCell(item.Operation, colspan))
 
 	switch item.Operation.Name { //nolint:exhaustive // Only those cases should be handled here !
-	case shared.AdditionOperation, shared.UnknownUpdateOperation, shared.UpgradeOperation, shared.DowngradeOperation:
+	case contract.AdditionOperation, contract.UnknownUpdateOperation, contract.UpgradeOperation, contract.DowngradeOperation: //nolint:lll // Meaningless here
 		cellList = append(cellList, pkgVersionCell)
 	}
 
 	return cellList
 }
 
-func buildOperationHTMLCell(operation shared.Operation, colspan int) string {
+func buildOperationHTMLCell(operation contract.Operation, colspan int) string {
 	opColspanDirective := ""
 	if colspan > 1 {
 		opColspanDirective = fmt.Sprintf(" colspan=\"%d\"", colspan)
@@ -170,7 +170,7 @@ func buildOperationHTMLCell(operation shared.Operation, colspan int) string {
 	return "<td align=\"center\"" + opColspanDirective + ">" + getOperationSymbol(operation) + "</td>"
 }
 
-func buildPackageVersionHTMLCell(version shared.PkgVersion) string {
+func buildPackageVersionHTMLCell(version contract.PkgVersion) string {
 	label := version.Label
 	if version.Semver == nil {
 		label += "❗"
@@ -179,7 +179,7 @@ func buildPackageVersionHTMLCell(version shared.PkgVersion) string {
 	return "<td align=\"right\">" + label + "</td>"
 }
 
-func buildPackageNameHTMLCell(pkg shared.PkgWrapper) string {
+func buildPackageNameHTMLCell(pkg contract.PkgWrapper) string {
 	pkgTitle := pkg.GetName()
 	if pkg.GetLink() != "" {
 		pkgTitle = "<a href=\"" + pkg.GetLink() + "\">" + pkgTitle + "</a>"

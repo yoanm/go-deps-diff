@@ -1,6 +1,6 @@
 package summary
 
-import "github.com/yoanm/go-deps-diff/shared"
+import "github.com/yoanm/go-deps-diff/contract"
 
 type markdownSection string
 
@@ -42,7 +42,7 @@ const (
 )
 
 type (
-	pkgList          []*shared.PackageChange
+	pkgList          []*contract.PackageChange
 	itemsMap         map[markdownItem]pkgList
 	subCategoriesMap map[markdownSubCategory]itemsMap
 	categoriesMap    map[markdownCategory]subCategoriesMap
