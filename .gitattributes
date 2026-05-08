@@ -28,3 +28,5 @@
 /Makefile                       export-ignore
 /**_test.go                     export-ignore
 /testing                        export-ignore
+/testdata                       export-ignore
+/.tools                         export-ignore

@@ -1,32 +1,10 @@
-# shared
-
-## Functions
-
-### func [IsSemverValid](./semver.go#L33)
-
-`func IsSemverValid(value string) bool`
+# contract
 
 ## Types
 
-### type [DiffMap](./diff_types.go#L11)
+### type [DiffMap](./diff_types.go#L3)
 
 `type DiffMap map[string]*PackageChange`
-
-### type [InvalidSemverComponentError](./semver.go#L23)
-
-`type InvalidSemverComponentError struct { ... }`
-
-#### func (InvalidSemverComponentError) [Error](./semver.go#L27)
-
-`func (e InvalidSemverComponentError) Error() string`
-
-### type [InvalidSemverVersionError](./semver.go#L15)
-
-`type InvalidSemverVersionError struct { ... }`
-
-#### func (InvalidSemverVersionError) [Error](./semver.go#L19)
-
-`func (e InvalidSemverVersionError) Error() string`
 
 ### type [Operation](./operation_types.go#L37)
 
@@ -77,37 +55,30 @@ const (
 )
 ```
 
-### type [PackageChange](./diff_types.go#L4)
+### type [PackageChange](./diff_types.go#L6)
 
 `type PackageChange struct { ... }`
 
 PackageChange contains detailed information about a package difference.
 
-### type [PackageMap](./wrapper_types.go#L5)
+### type [PackageMap](./wrapper_types.go#L7)
 
 `type PackageMap map[string]PkgWrapper`
 
 PackageMap holds package information for efficient lookup
 Key is the package name (e.g., "vendor/package"), value is a wrapper providing package details and helper methods.
 
-### type [PkgVersion](./wrapper_types.go#L28)
+### type [PkgVersion](./wrapper_types.go#L30)
 
 `type PkgVersion struct { ... }`
 
-### type [PkgWrapper](./wrapper_types.go#L7)
+### type [PkgWrapper](./wrapper_types.go#L9)
 
 `type PkgWrapper interface { ... }`
 
-### type [SemverVersion](./semver.go#L8)
+## Sub Packages
 
-`type SemverVersion struct { ... }`
-
-#### func [ParseSemverVersion](./semver.go#L42)
-
-`func ParseSemverVersion(version string) (*SemverVersion, error)`
-
-ParseSemverVersion parses a semantic Version string
-Returns nil if parsing fails.
+* [semver](./semver)
 
 ---
 Readme created from Go doc with [goreadme](https://github.com/posener/goreadme)
