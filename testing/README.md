@@ -41,7 +41,7 @@ var (
 
 `func ValidateOperation(actualOperation, expectedOperation contract.Operation) error`
 
-### func [ValidatePackageMap](./validate.go#L9)
+### func [ValidatePackageMap](./package_map.go#L9)
 
 `func ValidatePackageMap(actual, expectedChanges contract.PackageMap) []error`
 
@@ -53,9 +53,9 @@ var (
 
 `func ValidatePkgWrapper(actualPackage, expectedPackage contract.PkgWrapper) error`
 
-### func [ValidateSemverVersion](./semver.go#L9)
+### func [ValidateSemver](./semver.go#L9)
 
-`func ValidateSemverVersion(actual, expected *contract.Semver) error`
+`func ValidateSemver(actual, expected *contract.Semver) error`
 
 ## Types
 

@@ -8,12 +8,6 @@
 
 Diff compares two packages maps and returns the differences.
 
-## Types
-
-### type [PkgManagerInput](/types.go#L3)
-
-`type PkgManagerInput struct { ... }`
-
 ## Sub Packages
 
 * [.tools](./.tools)

@@ -6,7 +6,7 @@ import (
 	"github.com/yoanm/go-deps-diff/contract"
 )
 
-func ValidateSemverVersion(actual, expected *contract.Semver) error {
+func ValidateSemver(actual, expected *contract.Semver) error {
 	switch {
 	case actual == nil && expected == nil:
 		return nil

@@ -106,7 +106,7 @@ func ValidatePkgVersion(actualVersion, expectedVersion contract.PkgVersion) erro
 		return fmt.Errorf("unexpected Label value. Expected: %v Actual: %v", expectedVersion.Label, actualVersion.Label)
 	}
 
-	if err := ValidateSemverVersion(actualVersion.Semver, expectedVersion.Semver); err != nil {
+	if err := ValidateSemver(actualVersion.Semver, expectedVersion.Semver); err != nil {
 		return err
 	}
 

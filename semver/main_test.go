@@ -31,7 +31,7 @@ func TestParse(t *testing.T) {
 			version, err := semver.Parse(testCase.version)
 			if err != nil {
 				t.Error(fmt.Errorf("an error occurred: %w", err))
-			} else if err2 := difftesting.ValidateSemverVersion(version, testCase.expected); err2 != nil {
+			} else if err2 := difftesting.ValidateSemver(version, testCase.expected); err2 != nil {
 				t.Error(fmt.Errorf("checks failed: %w", err2))
 			}
 		})
