@@ -6,7 +6,6 @@ import (
 
 // Diff compares two packages maps and returns the differences.
 func Diff(previous, current contract.PackageMap) (contract.DiffMap, error) {
-	// Find differences
 	output := contract.DiffMap{}
 
 	// Find added and updated packages
