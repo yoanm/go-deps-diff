@@ -9,7 +9,7 @@ This file provides context for AI assistants working in this Go library project.
 
 ## Project Overview
 
-**deps-diff** is a Go library module (module: `depsdiff`) for comparing PHP Composer lock files. See README.md and SPECIFICATION.md for full details.
+**deps-diff** is a Go library module (module: `depsdiff`) for comparing two version of package locks. See README.md for full details.
 
 ## Build, Test, and Lint
 

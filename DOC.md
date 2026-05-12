@@ -2,15 +2,13 @@
 
 ## Functions
 
-### func [Diff](/analyzer.go#L8)
+### func [Diff](/main.go#L8)
 
 `func Diff(previous, current contract.PackageMap) (contract.DiffMap, error)`
 
 Diff compares two packages maps and returns the differences.
 
 ## Sub Packages
-
-* [.tools](./.tools)
 
 * [contract](./contract)
 
