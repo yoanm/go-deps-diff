@@ -75,6 +75,5 @@ jobs:
         run: |
           # Return to the original branch/commit !
           git -c advice.detachedHead=false checkout - >/dev/null && \
-            echo "## Regressions" >> $GITHUB_STEP_SUMMARY && \
-            cat benchstat.txt | bench-reg 10 | tee -a $GITHUB_STEP_SUMMARY
+            cat benchstat.txt | bench-reg 10 
   
