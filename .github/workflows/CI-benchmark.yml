@@ -35,8 +35,8 @@ jobs:
       - name: Install benchstat tool
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-        go install golang.org/x/perf/cmd/benchstat@latest && \
-          go install github.com/yoanm/go-bench-regression/cmd/bench-reg@latest
+          go install golang.org/x/perf/cmd/benchstat@latest && \
+            go install github.com/yoanm/go-bench-regression/cmd/bench-reg@latest
 
       - name: Run benchmarks on current code
         run: make benchmark bench_o="-count=7" | tee current.txt
