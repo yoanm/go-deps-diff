@@ -5,10 +5,10 @@ on:
     types:
       - opened
       - synchronize
-#    paths: ["**.go"] # TO REVERT !!!
+    paths: ["**.go"]
   push:
     branches: [master]
-#    paths: ["**.go"] # TO REVERT !!!
+    paths: ["**.go"]
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.head_ref || github.ref }}"
@@ -16,7 +16,7 @@ concurrency:
 
 defaults:
   run:
-    shell: bash # Mandatory to take advantage of "-o pipefail" and stop execution at first error even with pipe involved
+    shell: bash # Mandatory to take advantage of "-o pipefail" and stop execution at first error even with "cmd | tee ..."
 
 jobs:
   benchmark:
@@ -43,7 +43,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
           go install golang.org/x/perf/cmd/benchstat@latest
-          go install github.com/yoanm/go-bench-regression/cmd/bench-reg@v0.1.1-0.20260513123315-45d2e6576413
+          go install github.com/yoanm/go-bench-regression/cmd/bench-reg@v0.1.1-0.20260513133110-63b9e634cc9a
 
       - name: Run benchmarks on current code
         run: make benchmark bench_o="-count=7" | tee ${{ runner.temp }}/current.txt
@@ -60,7 +60,7 @@ jobs:
         run: benchstat Previous=${{ runner.temp }}/previous.txt Current=${{ runner.temp }}/current.txt | tee ${{ runner.temp }}/benchstat.txt
 
       - name: Upload benchmark results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: benchmark-results
           path: |
@@ -80,7 +80,7 @@ jobs:
           PIPE_FILE: ${{ runner.temp }}/pipe
         run: |
           # /!\ Use fifo rather than pipe to continue execution (in order to close the markdow code block) even
-          # in case of error with bench-reg (which is the case when there is regression)
+          # in case of error with bench-reg (which is the case when there is regressions)
           PIPE_FILE="${{ runner.temp }}/pipe"
           mkfifo $PIPE_FILE
           tee -a $GITHUB_STEP_SUMMARY < $PIPE_FILE &
