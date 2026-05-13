@@ -59,7 +59,7 @@ jobs:
       - name: Compare benchmarks
         run: |
           set -o pipefail
-          benchstat previous.txt ${{ runner.temp }}/current.txt | tee benchstat.txt
+          benchstat Previous=previous.txt Current=current.txt | tee benchstat.txt
 
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
@@ -83,7 +83,7 @@ jobs:
           echo "## Regressions" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
           cat benchstat.txt | bench-reg 10 | tee $GITHUB_STEP_SUMMARY
-          res=$PIPESTATUS # Be sure to capture exit code from bench-reg rather than tee !
+          res=${PIPESTATUS[1]} # Be sure to capture exit code from bench-reg rather than tee !
           echo '```' >> $GITHUB_STEP_SUMMARY
           
           exit $res
