@@ -1,11 +1,41 @@
+// Package depsdiff provides functionality to compare two dependency package maps and identify differences.
+//
+// The main API is the Diff function, which compares two PackageMaps (representing lock file states
+// at different points in time) and returns a DiffMap containing detailed information about what changed:
+// added, removed, and updated packages with semantic version analysis.
+//
+// Example usage:
+//
+//	previousMap := contract.PackageMap{/* packages from old lock file */}
+//	currentMap := contract.PackageMap{/* packages from new lock file */}
+//
+//	for pkgName, change := range depsdiff.Diff(previousMap, currentMap) {
+//		fmt.Printf("%s: %s\n", pkgName, change.Operation.Name)
+//	}
 package depsdiff
 
 import (
 	"github.com/yoanm/go-deps-diff/contract"
 )
 
-// Diff compares two packages maps and returns the differences.
-func Diff(previous, current contract.PackageMap) (contract.DiffMap, error) {
+// Diff compares two package maps and returns detailed information about differences.
+//
+// Parameters:
+//   - previous: PackageMap representing the previous state (e.g., packages from old lock file)
+//   - current: PackageMap representing the current state (e.g., packages from new lock file)
+//
+// Returns:
+//   - DiffMap: A map where keys are package names and values contain PackageChange information
+//     including the operation type (added, removed, upgraded, downgraded, etc.) and semantic
+//     version analysis for updated packages.
+//
+// For each package in the diff result:
+//   - PackageChange.Package field holds a reference to the package wrapper (agnostic of the package manager).
+//     See contract.PkgWrapper for more information.
+//   - PackageChange.Operation indicates what changed (ADDITION, REMOVAL, UPGRADE, DOWNGRADE, etc.)
+//   - PackageChange.Operation.SemverType indicates the type of change (MAJOR, MINOR, PATCH, EXTRA, UNKNOWN, NONE)
+//   - PackageChange.PreviousVersion is only populated for updated packages
+func Diff(previous, current contract.PackageMap) contract.DiffMap {
 	output := contract.DiffMap{}
 
 	// Find added and updated packages
@@ -38,7 +68,7 @@ func Diff(previous, current contract.PackageMap) (contract.DiffMap, error) {
 		}
 	}
 
-	return output, nil
+	return output
 }
 
 // guessUpdateOperation detects the type and direction of a version update.

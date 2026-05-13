@@ -110,9 +110,9 @@ func BenchmarkDiff_SmallPackageMap(b *testing.B) {
 	b.ResetTimer()
 
 	for range b.N {
-		_, err := depsdiff.Diff(previous, current)
-		if err != nil {
-			b.Fatalf("Diff failed: %v", err)
+		changes := depsdiff.Diff(previous, current)
+		if nil == changes { // Just to avoid the compiler to optimize the call away !
+			b.Fatal("Nil changes !")
 		}
 	}
 }
@@ -134,9 +134,9 @@ func BenchmarkDiff_MediumPackageMap(b *testing.B) {
 	b.ResetTimer()
 
 	for range b.N {
-		_, err := depsdiff.Diff(previous, current)
-		if err != nil {
-			b.Fatalf("Diff failed: %v", err)
+		changes := depsdiff.Diff(previous, current)
+		if nil == changes { // Just to avoid the compiler to optimize the call away !
+			b.Fatal("Nil changes !")
 		}
 	}
 }
@@ -159,9 +159,9 @@ func BenchmarkDiff_ManyChanges(b *testing.B) {
 	b.ResetTimer()
 
 	for range b.N {
-		_, err := depsdiff.Diff(previous, current)
-		if err != nil {
-			b.Fatalf("Diff failed: %v", err)
+		changes := depsdiff.Diff(previous, current)
+		if nil == changes { // Just to avoid the compiler to optimize the call away !
+			b.Fatal("Nil changes !")
 		}
 	}
 }
@@ -183,9 +183,9 @@ func BenchmarkDiff_NoChanges(b *testing.B) {
 	b.ResetTimer()
 
 	for range b.N {
-		_, err := depsdiff.Diff(previous, current)
-		if err != nil {
-			b.Fatalf("Diff failed: %v", err)
+		changes := depsdiff.Diff(previous, current)
+		if nil == changes { // Just to avoid the compiler to optimize the call away !
+			b.Fatal("Nil changes !")
 		}
 	}
 }
