@@ -70,7 +70,9 @@ jobs:
           echo '```' >> $GITHUB_STEP_SUMMARY
           cat benchstat.txt >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Regressions" >> $GITHUB_STEP_SUMMARY
 
       - name: Detect regressions
-        run: cat benchstat.txt | bench-reg 10
+        run: cat benchstat.txt | bench-reg 10 | tee $GITHUB_STEP_SUMMARY
   
