@@ -2,10 +2,12 @@ package depsdiff
 
 import (
 	"github.com/yoanm/go-deps-diff/contract"
+	"time"
 )
 
 // Diff compares two packages maps and returns the differences.
 func Diff(previous, current contract.PackageMap) (contract.DiffMap, error) {
+	time.Sleep(1 * time.Millisecond)
 	output := contract.DiffMap{}
 
 	// Find added and updated packages
