@@ -42,7 +42,9 @@ jobs:
           go install github.com/yoanm/go-bench-regression/cmd/bench-reg@v0.1.1-0.20260513103403-6cfb94b77c74
 
       - name: Run benchmarks on current code
-        run: (make benchmark bench_o="-count=7" || exit 1) | tee ${{ runner.temp }}/current.txt
+        run: |
+          set -o pipefail
+          make benchmark bench_o="-count=7" | tee ${{ runner.temp }}/current.txt
 
       - name: Checkout original code
         uses: actions/checkout@v6
@@ -50,10 +52,14 @@ jobs:
           ref: ${{ github.event.pull_request.base.sha || github.event.before }}
 
       - name: Run benchmarks on original code
-        run: (make benchmark bench_o="-count=7" || exit 1) | tee previous.txt
+        run: |
+          set -o pipefail
+          make benchmark bench_o="-count=7" | tee previous.txt
 
       - name: Compare benchmarks
-        run: (benchstat previous.txt ${{ runner.temp }}/current.txt || exit 1) | tee benchstat.txt
+        run: |
+          set -o pipefail
+          benchstat previous.txt ${{ runner.temp }}/current.txt | tee benchstat.txt
 
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
@@ -76,8 +82,8 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## Regressions" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
-          ((cat benchstat.txt | bench-reg 10) || exit 1) | tee $GITHUB_STEP_SUMMARY
-          res=$?
+          cat benchstat.txt | bench-reg 10 | tee $GITHUB_STEP_SUMMARY
+          res=$PIPESTATUS # Be sure to capture exit code from bench-reg rather than tee !
           echo '```' >> $GITHUB_STEP_SUMMARY
           
           exit $res
