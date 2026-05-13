@@ -124,7 +124,7 @@ jobs:
           # /!\ Use fifo rather than pipe to continue execution (in order to close the markdow code block) even
           # in case of error with bench-reg (which is the case when there is regressions)
           mkfifo "$PIPE_FILE"
-          tee -a "$GITHUB_STEP_SUMMARY < "$PIPE_FILE &""
+          tee -a "$GITHUB_STEP_SUMMARY < "$PIPE_FILE" &
 
 
           echo "" >> "$GITHUB_STEP_SUMMARY"
