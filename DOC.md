@@ -19,7 +19,7 @@ for pkgName, change := range depsdiff.Diff(previousMap, currentMap) {
 
 ## Functions
 
-### func [Diff](/main.go#L36)
+### func [Diff](/main.go#L38)
 
 `func Diff(previous, current contract.PackageMap) contract.DiffMap`
 
@@ -43,6 +43,8 @@ Returns:
 For each package in the diff result:
 
 ```diff
+- PackageChange.Package field holds a reference to the package wrapper (agnostic of the package manager).
+  See contract.PkgWrapper for more information.
 - PackageChange.Operation indicates what changed (ADDITION, REMOVAL, UPGRADE, DOWNGRADE, etc.)
 - PackageChange.Operation.SemverType indicates the type of change (MAJOR, MINOR, PATCH, EXTRA, UNKNOWN, NONE)
 - PackageChange.PreviousVersion is only populated for updated packages

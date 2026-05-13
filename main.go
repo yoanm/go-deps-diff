@@ -30,6 +30,8 @@ import (
 //     version analysis for updated packages.
 //
 // For each package in the diff result:
+//   - PackageChange.Package field holds a reference to the package wrapper (agnostic of the package manager).
+//     See contract.PkgWrapper for more information.
 //   - PackageChange.Operation indicates what changed (ADDITION, REMOVAL, UPGRADE, DOWNGRADE, etc.)
 //   - PackageChange.Operation.SemverType indicates the type of change (MAJOR, MINOR, PATCH, EXTRA, UNKNOWN, NONE)
 //   - PackageChange.PreviousVersion is only populated for updated packages

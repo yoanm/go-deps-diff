@@ -287,27 +287,3 @@ for pkgName, change := range changes {
     }
 }
 ```
-
-### Parse and Use Semantic Versions
-
-```go
-import "github.com/yoanm/go-deps-diff/semver"
-
-// Parse a version
-parsed, err := semver.Parse("2.0.0-rc.1+build.123")
-if err != nil {
-    log.Fatal(err)
-}
-
-fmt.Printf("Version: %d.%d.%d (extra: %s)\n",
-    parsed.Major,
-    parsed.Minor,
-    parsed.Patch,
-    parsed.Extra)
-
-// Validate before parsing
-if semver.IsValid("1.2.3") {
-    version, _ := semver.Parse("1.2.3")
-    fmt.Printf("Valid semver: %d.%d.%d\n", version.Major, version.Minor, version.Patch)
-}
-```

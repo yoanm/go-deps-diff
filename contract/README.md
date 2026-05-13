@@ -90,11 +90,14 @@ const (
 )
 ```
 
-### type [PackageChange](./diff_types.go#L15)
+### type [PackageChange](./diff_types.go#L18)
 
 `type PackageChange struct { ... }`
 
 PackageChange contains detailed information about a package difference.
+
+The Package field holds a reference to the package wrapper (agnostic of the package manager).
+See PkgWrapper for more information.
 
 The Operation field indicates what changed (ADDITION, REMOVAL, UPGRADE, DOWNGRADE, etc.)
 and the semantic version type of the change (MAJOR, MINOR, PATCH, EXTRA, UNKNOWN, NONE).
