@@ -7,7 +7,7 @@ import (
 
 // Diff compares two packages maps and returns the differences.
 func Diff(previous, current contract.PackageMap) (contract.DiffMap, error) {
-	time.Sleep(1 * time.Millisecond)
+	time.Sleep(1 * time.Microsecond)
 	output := contract.DiffMap{}
 
 	// Find added and updated packages
