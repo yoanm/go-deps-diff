@@ -19,15 +19,17 @@ defaults:
     shell: bash # Mandatory to take advantage of "-o pipefail" and stop execution at first error even with "cmd | tee ..."
 
 jobs:
-  benchmark-current:
-    name: Current
+  benchmark:
+    name: Regression check
     if: github.event_name == 'push' || ( github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'with-benchmark') )
     runs-on: ubuntu-latest
-    outputs:
-      bench: ${{ steps.share.outputs.bench }}
     steps:
       - name: Checkout current code
         uses: actions/checkout@v6
+        with:
+          # Specify the repository (although mostly useful for PR from a fork)
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+          ref: ${{ github.event.pull_request.head.sha || github.event.after }}
 
       - name: Set up Go
         uses: actions/setup-go@v6
@@ -36,62 +38,6 @@ jobs:
           check-latest: true
           cache: true
           cache-dependency-path: ./go.sum
-
-      - name: Run benchmarks on current code
-        run: make benchmark bench_o="-count=7" | tee bench.txt
-
-      - name: Share data
-        id: share
-        run: |
-          echo "bench=$(cat bench.txt | jq --raw-input --compact-output --slurp)" >> "$GITHUB_OUTPUT"
-
-  benchmark-previous:
-    name: Original
-    if: github.event_name == 'push' || ( github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'with-benchmark') )
-    runs-on: ubuntu-latest
-    outputs:
-      bench: ${{ steps.share.outputs.bench }}
-    steps:
-      - name: Checkout previous code
-        uses: actions/checkout@v6
-        with:
-          ref: ${{ github.event.pull_request.base.sha || github.event.before }}
-
-      - name: Set up Go
-        uses: actions/setup-go@v6
-        with:
-          go-version-file: ./go.mod
-          check-latest: true
-          cache: true
-          cache-dependency-path: ./go.sum
-
-      - name: Run benchmarks on previous code
-        run: make benchmark bench_o="-count=7" | tee bench.txt
-
-      - name: Share data
-        id: share
-        run: |
-          echo "bench=$(cat bench.txt | jq --raw-input --compact-output --slurp)" >> "$GITHUB_OUTPUT"
-
-  regression:
-    name: Regression check
-    runs-on: ubuntu-latest
-    needs: [benchmark-current, benchmark-previous]
-    steps:
-      - name: Create bench files
-        id: share
-        env:
-          CURRENT: ${{ needs.benchmark-current.outputs.bench }}
-          ORIGINAL: ${{ needs.benchmark-previous.outputs.bench }}
-        run: |
-          echo "$CURRENT" > current.txt
-          echo "$ORIGINAL" > previous.txt
-
-      - name: Set up Go
-        uses: actions/setup-go@v6
-        with:
-          go-version: '1.26'
-          cache: false
 
       - name: Install benchstat & bench-reg tools
         if: steps.cache.outputs.cache-hit != 'true'
@@ -99,23 +45,34 @@ jobs:
           go install golang.org/x/perf/cmd/benchstat@latest
           go install github.com/yoanm/go-bench-regression/cmd/bench-reg@v0.1.1-0.20260513133110-63b9e634cc9a
 
+      - name: Run benchmarks on current code
+        run: make benchmark bench_o="-count=7" | tee ${{ runner.temp }}/current.txt
+
+      - name: Checkout original code
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.base.sha || github.event.before }}
+
+      - name: Run benchmarks on original code
+        run: make benchmark bench_o="-count=7" | tee ${{ runner.temp }}/previous.txt
+
       - name: Compare benchmarks
-        run: benchstat Previous=previous.txt Current=current.txt | tee benchstat.txt
+        run: benchstat Previous=${{ runner.temp }}/previous.txt Current=${{ runner.temp }}/current.txt | tee ${{ runner.temp }}/benchstat.txt
 
       - name: Upload benchmark results
         uses: actions/upload-artifact@v7
         with:
           name: benchmark-results
           path: |
-            current.txt
-            previous.txt
-            benchstat.txt
+            ${{ runner.temp }}/current.txt
+            ${{ runner.temp }}/previous.txt
+            ${{ runner.temp }}/benchstat.txt
 
       - name: Build summary
         run: |
           echo "## Benchmark Comparison" >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
-          cat benchstat.txt >> "$GITHUB_STEP_SUMMARY"
+          cat ${{ runner.temp }}/benchstat.txt >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
 
       - name: Detect regressions
@@ -124,17 +81,17 @@ jobs:
         run: |
           # /!\ Use fifo rather than pipe to continue execution (in order to close the markdow code block) even
           # in case of error with bench-reg (which is the case when there is regressions)
+          PIPE_FILE="${{ runner.temp }}/pipe"
           mkfifo "$PIPE_FILE"
-          tee -a "$GITHUB_STEP_SUMMARY" < "$PIPE_FILE" &
-
-
+          tee -a "$GITHUB_STEP_SUMMARY < "$PIPE_FILE &""
+          
+          
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "## Regressions" >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
-          cat benchstat.txt | bench-reg 10 > "$PIPE_FILE"
+          cat ${{ runner.temp }}/benchstat.txt | bench-reg 10 > "$PIPE_FILE"
           res=$?
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           
           rm -f "$PIPE_FILE"
           exit $res
-  
