@@ -14,6 +14,10 @@ concurrency:
   group: "${{ github.workflow }}-${{ github.head_ref || github.ref }}"
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash # Mandatory to take advantage of "-o pipefail" and stop execution at first error even with pipe involved
+
 jobs:
   benchmark:
     name: Regression check
@@ -42,16 +46,7 @@ jobs:
           go install github.com/yoanm/go-bench-regression/cmd/bench-reg@v0.1.1-0.20260513103403-6cfb94b77c74
 
       - name: Run benchmarks on current code
-        run: |
-          PIPE_FILE="${{ runner.temp }}/pipe"
-          mkfifo $PIPE_FILE
-          tee ${{ runner.temp }}/current.txt < $PIPE_FILE &
-          
-          make benchmark bench_o="-count=7" > $PIPE_FILE
-          res=$?
-          
-          rm -f $PIPE_FILE
-          exit $res
+        run: make benchmark2 bench_o="-count=7" | tee ${{ runner.temp }}/current.txt
 
       - name: Checkout original code
         uses: actions/checkout@v6
@@ -59,28 +54,10 @@ jobs:
           ref: ${{ github.event.pull_request.base.sha || github.event.before }}
 
       - name: Run benchmarks on original code
-        run: |
-          PIPE_FILE="${{ runner.temp }}/pipe"
-          mkfifo $PIPE_FILE
-          tee ${{ runner.temp }}/previous.txt < $PIPE_FILE &
-          
-          make benchmark bench_o="-count=7" > $PIPE_FILE
-          res=$?
-          
-          rm -f $PIPE_FILE
-          exit $res
+        run: make benchmark2 bench_o="-count=7" | tee ${{ runner.temp }}/previous.txt
 
       - name: Compare benchmarks
-        run: |
-          PIPE_FILE="${{ runner.temp }}/pipe"
-          mkfifo $PIPE_FILE
-          tee ${{ runner.temp }}/benchstat.txt < $PIPE_FILE &
-          
-          benchstat Previous=${{ runner.temp }}/previous.txt Current=${{ runner.temp }}/current.txt > $PIPE_FILE
-          res=$?
-          
-          rm -f $PIPE_FILE
-          exit $res
+        run: benchstat Previous=${{ runner.temp }}/previous.txt Current=${{ runner.temp }}/current.txt | tee ${{ runner.temp }}/benchstat.txt
 
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
@@ -99,14 +76,18 @@ jobs:
           echo '```' >> $GITHUB_STEP_SUMMARY
 
       - name: Detect regressions
+        env:
+          PIPE_FILE: ${{ runner.temp }}/pipe
         run: |
-          PIPE_FILE="${{ runner.temp }}/pipe"
-          mkfifo $PIPE_FILE
-          tee -a $GITHUB_STEP_SUMMARY < $PIPE_FILE &
-          
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## Regressions" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
+          
+          # /!\ Use fifo rather than pipe to continue execution (in order to close the markdow code block) even
+          # in case of error with bench-reg (which is the case when there is regression)
+          PIPE_FILE="${{ runner.temp }}/pipe"
+          mkfifo $PIPE_FILE
+          tee -a $GITHUB_STEP_SUMMARY < $PIPE_FILE &
           
           cat ${{ runner.temp }}/benchstat.txt | bench-reg 10 > $PIPE_FILE
           res=$?
