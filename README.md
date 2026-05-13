@@ -1,4 +1,4 @@
-# go-deps-diff<br/><sup><sub>Manager agnostic deps comparator</sub></sup>
+# depsdiff<br/><sup><sub>Dependency comparator library - manager agnostic</sub></sup>
 
 [![License](https://img.shields.io/github/license/yoanm/go-deps-diff.svg)](https://github.com/yoanm/go-deps-diff)
 [![Code size](https://img.shields.io/github/languages/code-size/yoanm/go-deps-diff.svg)](https://github.com/yoanm/go-deps-diff)
@@ -40,7 +40,7 @@ import (
     "fmt"
     "os"
     
-    "github.com/yoanm/go-deps-diff"
+    depsdiff "github.com/yoanm/go-deps-diff"
 )
 
 func main() {
