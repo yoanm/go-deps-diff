@@ -8,7 +8,7 @@ import (
 func Diff(previous, current contract.PackageMap) (contract.DiffMap, error) {
 	output := contract.DiffMap{}
 
-	// Find added and updated packages
+	//  Find added and updated packages
 	for name, currentPkg := range current {
 		pkgChange := contract.PackageChange{ //nolint:exhaustruct // Other properties will be filled based on the operation
 			Package: currentPkg,
