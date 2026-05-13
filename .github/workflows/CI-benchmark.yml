@@ -76,7 +76,7 @@ jobs:
           mkfifo $PIPE_FILE
           tee ${{ runner.temp }}/benchstat.txt < $PIPE_FILE &
           
-          benchstat Previous=previous.txt Current=current.txt > $PIPE_FILE
+          benchstat Previous=${{ runner.temp }}/previous.txt Current=${{ runner.temp }}/current.txt > $PIPE_FILE
           res=$?
           
           rm -f $PIPE_FILE
@@ -88,14 +88,14 @@ jobs:
           name: benchmark-results
           path: |
             ${{ runner.temp }}/current.txt
-            previous.txt
-            benchstat.txt
+            ${{ runner.temp }}/previous.txt
+            ${{ runner.temp }}/benchstat.txt
 
       - name: Build summary
         run: |
           echo "## Benchmark Comparison" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
-          cat benchstat.txt >> $GITHUB_STEP_SUMMARY
+          cat ${{ runner.temp }}/benchstat.txt >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
 
       - name: Detect regressions
@@ -108,7 +108,7 @@ jobs:
           echo '```' >> $GITHUB_STEP_SUMMARY
           
           tee $GITHUB_STEP_SUMMARY < $PIPE_FILE &
-          cat benchstat.txt | bench-reg 10 > $PIPE_FILE
+          cat ${{ runner.temp }}/benchstat.txt | bench-reg 10 > $PIPE_FILE
           res=$?
         
           echo '```' >> $GITHUB_STEP_SUMMARY
