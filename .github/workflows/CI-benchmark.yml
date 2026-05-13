@@ -27,7 +27,7 @@ jobs:
       - name: Checkout current code
         uses: actions/checkout@v6
         with:
-          # Specify the repository (mostly useful for PR from a fork though)
+          # Specify the repository (although mostly useful for PR from a fork)
           repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
           ref: ${{ github.event.pull_request.head.sha || github.event.after }}
 
@@ -43,7 +43,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
           go install golang.org/x/perf/cmd/benchstat@latest
-          go install github.com/yoanm/go-bench-regression/cmd/bench-reg@v0.1.1-0.20260513103403-6cfb94b77c74
+          go install github.com/yoanm/go-bench-regression/cmd/bench-reg@v0.1.1-0.20260513122524-571426bde6a5
 
       - name: Run benchmarks on current code
         run: make benchmark bench_o="-count=7" | tee ${{ runner.temp }}/current.txt
@@ -79,19 +79,18 @@ jobs:
         env:
           PIPE_FILE: ${{ runner.temp }}/pipe
         run: |
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "## Regressions" >> $GITHUB_STEP_SUMMARY
-          echo '```' >> $GITHUB_STEP_SUMMARY
-          
           # /!\ Use fifo rather than pipe to continue execution (in order to close the markdow code block) even
           # in case of error with bench-reg (which is the case when there is regression)
           PIPE_FILE="${{ runner.temp }}/pipe"
           mkfifo $PIPE_FILE
           tee -a $GITHUB_STEP_SUMMARY < $PIPE_FILE &
-          
+
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Regressions" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
           cat ${{ runner.temp }}/benchstat.txt | bench-reg 10 > $PIPE_FILE
           res=$?
-        
           echo '```' >> $GITHUB_STEP_SUMMARY
           
           rm -f $PIPE_FILE
