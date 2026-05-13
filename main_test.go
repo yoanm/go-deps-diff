@@ -1,7 +1,6 @@
 package depsdiff_test
 
 import (
-	"fmt"
 	"testing"
 
 	depsdiff "github.com/yoanm/go-deps-diff"
@@ -26,12 +25,9 @@ func TestDiff_NoChange(t *testing.T) {
 		},
 	}
 
-	out, err := depsdiff.Diff(previous, current)
-	if err != nil {
-		t.Fatal(fmt.Errorf("error during diff process: %w", err))
-	}
+	changes := depsdiff.Diff(previous, current)
 
-	change, pkgExists := out["vendor/pkg"]
+	change, pkgExists := changes["vendor/pkg"]
 	switch {
 	case !pkgExists:
 		t.Fatal("package 'vendor/pkg' is expected in the package map")
@@ -159,12 +155,9 @@ func TestDiff_BasicComparison(t *testing.T) {
 		t.Run(testData.name, func(t *testing.T) {
 			t.Parallel()
 
-			out, err := depsdiff.Diff(testData.previous, testData.current)
-			if err != nil {
-				t.Fatal(fmt.Errorf("error during diff process: %w", err))
-			}
+			changes := depsdiff.Diff(testData.previous, testData.current)
 
-			change, pkgExists := out["vendor/pkg"]
+			change, pkgExists := changes["vendor/pkg"]
 			switch {
 			case !pkgExists:
 				t.Fatal("package 'vendor/pkg' is expected in the package map")
