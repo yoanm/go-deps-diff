@@ -43,8 +43,15 @@ jobs:
 
       - name: Run benchmarks on current code
         run: |
-          make benchmark bench_o="-count=7" | tee ${{ runner.temp }}/current.txt
-          exit ${PIPESTATUS[0]} # Be sure to capture exit code from "make" rather than "tee" !
+          PIPE_FILE="${{ runner.temp }}/pipe"
+          mkfifo $PIPE_FILE
+          tee ${{ runner.temp }}/current.txt < $PIPE_FILE &
+          
+          make benchmark bench_o="-count=7" > $PIPE_FILE
+          res=$?
+          
+          rm -f $PIPE_FILE
+          exit $res
 
       - name: Checkout original code
         uses: actions/checkout@v6
@@ -53,13 +60,27 @@ jobs:
 
       - name: Run benchmarks on original code
         run: |
-          make benchmark bench_o="-count=7" | tee previous.txt
-          exit ${PIPESTATUS[0]} # Be sure to capture exit code from "make" rather than "tee" !
+          PIPE_FILE="${{ runner.temp }}/pipe"
+          mkfifo $PIPE_FILE
+          tee ${{ runner.temp }}/previous.txt < $PIPE_FILE &
+          
+          make benchmark bench_o="-count=7" > $PIPE_FILE
+          res=$?
+          
+          rm -f $PIPE_FILE
+          exit $res
 
       - name: Compare benchmarks
         run: |
-          benchstat Previous=previous.txt Current=current.txt | tee benchstat.txt
-          exit ${PIPESTATUS[0]} # Be sure to capture exit code from "benchstat" rather than "tee" !
+          PIPE_FILE="${{ runner.temp }}/pipe"
+          mkfifo $PIPE_FILE
+          tee ${{ runner.temp }}/benchstat.txt < $PIPE_FILE &
+          
+          benchstat Previous=previous.txt Current=current.txt > $PIPE_FILE
+          res=$?
+          
+          rm -f $PIPE_FILE
+          exit $res
 
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
@@ -79,12 +100,19 @@ jobs:
 
       - name: Detect regressions
         run: |
+          PIPE_FILE="${{ runner.temp }}/pipe"
+          mkfifo $PIPE_FILE
+          
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "## Regressions" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
-          cat benchstat.txt | bench-reg 10 | tee $GITHUB_STEP_SUMMARY
-          res=${PIPESTATUS[1]} # Be sure to capture exit code from "bench-reg" rather than "cat" or "tee" !
+          
+          tee $GITHUB_STEP_SUMMARY < $PIPE_FILE &
+          cat benchstat.txt | bench-reg 10 > $PIPE_FILE
+          res=$?
+        
           echo '```' >> $GITHUB_STEP_SUMMARY
           
+          rm -f $PIPE_FILE
           exit $res
   
