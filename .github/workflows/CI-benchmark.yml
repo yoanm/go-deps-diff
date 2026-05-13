@@ -46,7 +46,7 @@ jobs:
           go install github.com/yoanm/go-bench-regression/cmd/bench-reg@v0.1.1-0.20260513103403-6cfb94b77c74
 
       - name: Run benchmarks on current code
-        run: make benchmark2 bench_o="-count=7" | tee ${{ runner.temp }}/current.txt
+        run: make benchmark bench_o="-count=7" | tee ${{ runner.temp }}/current.txt
 
       - name: Checkout original code
         uses: actions/checkout@v6
@@ -54,7 +54,7 @@ jobs:
           ref: ${{ github.event.pull_request.base.sha || github.event.before }}
 
       - name: Run benchmarks on original code
-        run: make benchmark2 bench_o="-count=7" | tee ${{ runner.temp }}/previous.txt
+        run: make benchmark bench_o="-count=7" | tee ${{ runner.temp }}/previous.txt
 
       - name: Compare benchmarks
         run: benchstat Previous=${{ runner.temp }}/previous.txt Current=${{ runner.temp }}/current.txt | tee ${{ runner.temp }}/benchstat.txt
