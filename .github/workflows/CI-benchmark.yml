@@ -43,8 +43,8 @@ jobs:
 
       - name: Run benchmarks on current code
         run: |
-          set -o pipefail
           make benchmark bench_o="-count=7" | tee ${{ runner.temp }}/current.txt
+          exit ${PIPESTATUS[0]} # Be sure to capture exit code from "make" rather than "tee" !
 
       - name: Checkout original code
         uses: actions/checkout@v6
@@ -53,13 +53,13 @@ jobs:
 
       - name: Run benchmarks on original code
         run: |
-          set -o pipefail
           make benchmark bench_o="-count=7" | tee previous.txt
+          exit ${PIPESTATUS[0]} # Be sure to capture exit code from "make" rather than "tee" !
 
       - name: Compare benchmarks
         run: |
-          set -o pipefail
           benchstat Previous=previous.txt Current=current.txt | tee benchstat.txt
+          exit ${PIPESTATUS[0]} # Be sure to capture exit code from "benchstat" rather than "tee" !
 
       - name: Upload benchmark results
         uses: actions/upload-artifact@v4
@@ -83,7 +83,7 @@ jobs:
           echo "## Regressions" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
           cat benchstat.txt | bench-reg 10 | tee $GITHUB_STEP_SUMMARY
-          res=${PIPESTATUS[1]} # Be sure to capture exit code from bench-reg rather than tee !
+          res=${PIPESTATUS[1]} # Be sure to capture exit code from "bench-reg" rather than "cat" or "tee" !
           echo '```' >> $GITHUB_STEP_SUMMARY
           
           exit $res
