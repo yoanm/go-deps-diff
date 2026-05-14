@@ -24,6 +24,13 @@ jobs:
       - name: Run tests
         run: make test-go gotest_o="-race -covermode=atomic -coverprofile=coverage.out"
 
+      # Codacy is so dumb that ignoring files from the configuration has no effect on files coverage .....
+      # From the doc: Updating the list of ignored files won't have an impact on the amount of coverable and covered lines of the commits 
+      # that Codacy compares to calculate the coverage variation metric. Codacy calculates Coverage based solely on what is included in the coverage report. 
+      # Therefore, if there are files you wish to keep from being included in the calculation, you should ensure they are not included in the coverage report.
+      - name: Strip away unwanted files coverage
+        run: sed -i '/github.com\/yoanm\/go-deps-diff\/testing\//d' coverage.out
+
       - name: Create coverage group
         id: tests-coverage-group
         uses: yoanm/temp-reports-group-workspace/create-group@v0
